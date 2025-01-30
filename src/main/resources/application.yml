@@ -18,3 +18,13 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
+
+logging:
+  level:
+    root: INFO
+    org.swyp.weddy: DEBUG      # 프로젝트 패키지는 DEBUG 레벨로 설정
+    org.springframework: INFO
+    org.mybatis: DEBUG         # MyBatis SQL 로그 확인용
+    org.h2.server: DEBUG       # H2 데이터베이스 로그
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
