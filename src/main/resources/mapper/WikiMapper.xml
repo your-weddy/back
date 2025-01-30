@@ -5,7 +5,7 @@
 
 <mapper namespace="org.swyp.weddy.domain.wiki.dao.WikiMapper">
 
-    <select id="selectWiki" parameterType="String" resultType="org.swyp.weddy.domain.wiki.domain.Wiki">
+    <select id="selectWiki" parameterType="String" resultType="org.swyp.weddy.domain.wiki.entity.Wiki">
         SELECT title
         FROM wiki
         WHERE title = #{title}

@@ -1,4 +1,4 @@
-package org.swyp.weddy.domain.wiki.domain;
+package org.swyp.weddy.domain.wiki.entity;
 
 public class Wiki {
     private String title;

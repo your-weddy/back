@@ -1,6 +1,6 @@
 package org.swyp.weddy.domain.wiki.web.response;
 
-import org.swyp.weddy.domain.wiki.domain.Wiki;
+import org.swyp.weddy.domain.wiki.entity.Wiki;
 
 public class WikiResponse {
     private String title;
