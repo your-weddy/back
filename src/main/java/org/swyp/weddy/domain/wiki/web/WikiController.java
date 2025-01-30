@@ -25,6 +25,7 @@ public class WikiController {
     public ResponseEntity<WikiResponse> getWiki(@RequestParam(name = "title") String title) {
         log.info("로그 메시지");
         log.error("에러 메시지");
+        log.warn("경고 메시지");
 
         WikiResponse wikiResponse = wikiService.findWiki(WikiDto.from(title));
         return ResponseEntity.ok().body(wikiResponse);
