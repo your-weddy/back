@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: weddy
+  datasource:
+    url: jdbc:h2:mem:test
+    driver-class-name: org.h2.Driver
+    username: sa
+  h2:
+    console:
+      enabled: true
+      path: /h2-console  # url: localhost:8080/h2-console
+  sql:
+    init:
+      platform: h2
+      mode: embedded
+      schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:sql/data.sql
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+
+logging:
+  level:
+    root: INFO
+    org.swyp.weddy: DEBUG      # 프로젝트 패키지는 DEBUG 레벨로 설정
+    org.springframework: INFO
+    org.mybatis: DEBUG         # MyBatis SQL 로그 확인용
+    org.h2.server: DEBUG       # H2 데이터베이스 로그
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr(%-5level) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %msg%n"

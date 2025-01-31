@@ -1,0 +1,5 @@
+###
+GET http://localhost:8080/wiki?title=위키 제목
+
+###
+GET http://localhost:8080/wiki?title=없는 위키 제목
