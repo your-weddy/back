@@ -2,7 +2,7 @@ spring:
   application:
     name: weddy
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:tcp://localhost/~/loginTest
     driver-class-name: org.h2.Driver
     username: sa
   h2:
@@ -19,11 +19,18 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
 
+kakao:
+  auth:
+    client: 9f29e33b8a15254447b4b72f3f550b13
+    redirect: http://localhost:8080/auth/login/kakao
+    tokenUrl: https://kauth.kakao.com/oauth/token
+    userInfoUrl: https://kapi.kakao.com/v2/user/me
+
 logging:
   level:
     root: INFO
     org.swyp.weddy: DEBUG      # 프로젝트 패키지는 DEBUG 레벨로 설정
-    org.springframework: INFO
+    org.springframework: DEBUG
     org.mybatis: DEBUG         # MyBatis SQL 로그 확인용
     org.h2.server: DEBUG       # H2 데이터베이스 로그
   pattern:

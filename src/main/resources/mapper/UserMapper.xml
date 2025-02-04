@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.swyp.weddy.domain.auth.dao.UserMapper">
+
+    <insert id="saveUser" parameterType="org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo">
+        INSERT INTO users (email, nickname, created_at, updated_at)
+        VALUES (#{email}, #{nickname}, NOW(), NOW())
+    </insert>
+
+    <update id="updateUser" parameterType="org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo">
+        UPDATE users
+        SET email = #{email},
+        nickname = #{nickname},
+        updated_at = NOW()
+        WHERE email = #{email}
+    </update>
+
+    <select id="findByKakaoEmail" parameterType="string" resultType="org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo">
+        SELECT
+        email,
+        nickname
+        FROM users
+        WHERE email = #{email}
+    </select>
+
+</mapper>
