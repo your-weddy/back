@@ -1,5 +1,7 @@
 package org.swyp.weddy.domain.checklist.service;
 
+import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+
 public interface ChecklistService {
-    String assignChecklist(String memberId);
+    int assignChecklist(ChecklistDto memberId);
 }
