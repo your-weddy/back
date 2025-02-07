@@ -19,6 +19,16 @@ class ChecklistServiceTest {
         Assertions.assertThat(service.assignChecklist(dto)).isEqualTo(1);
     }
 
+    @DisplayName("사용자에 할당된 체크리스트가 있는지 확인할 수 있다")
+    @Test
+    public void check_if_member_has_checklist() {
+        String memberId = "1";
+        ChecklistDto dto = ChecklistDto.from(memberId);
+
+        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+        Assertions.assertThat(service.hasChecklist(dto)).isEqualTo(true);
+    }
+
     private static class FakeChecklistService implements ChecklistService {
         private final ChecklistMapper mapper;
 
@@ -26,8 +36,14 @@ class ChecklistServiceTest {
             this.mapper = mapper;
         }
 
+        @Override
         public int assignChecklist(ChecklistDto dto) {
             return mapper.insertChecklist(null);
+        }
+
+        @Override
+        public boolean hasChecklist(ChecklistDto dto) {
+            return true;
         }
     }
 

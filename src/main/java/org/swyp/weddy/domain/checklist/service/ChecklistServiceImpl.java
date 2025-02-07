@@ -23,4 +23,9 @@ public class ChecklistServiceImpl implements ChecklistService {
 
         return checklist.getId();
     }
+
+    @Override
+    public boolean hasChecklist(ChecklistDto dto) {
+        throw new UnsupportedOperationException("not implemented yet!");
+    }
 }
