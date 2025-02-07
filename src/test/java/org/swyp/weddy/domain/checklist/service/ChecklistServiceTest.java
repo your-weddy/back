@@ -4,34 +4,37 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
+import org.swyp.weddy.domain.checklist.entity.Checklist;
+import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 
 class ChecklistServiceTest {
-    private ChecklistService service;
 
     @DisplayName("사용자에게 체크리스트를 할당할 수 있다")
     @Test
     public void add_checklist_to_member() {
         String memberId = "1";
-        service = new FakeChecklistService(new FakeChecklistMapper());
-        Assertions.assertThat(service.assignChecklist(memberId)).isEqualTo("checklist_id");
+        ChecklistDto dto = ChecklistDto.from(memberId);
+
+        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+        Assertions.assertThat(service.assignChecklist(dto)).isEqualTo(1);
     }
 
     private static class FakeChecklistService implements ChecklistService {
-        private ChecklistMapper mapper;
+        private final ChecklistMapper mapper;
 
         public FakeChecklistService(ChecklistMapper mapper) {
             this.mapper = mapper;
         }
 
-        public String assignChecklist(String memberId) {
-            return mapper.insertChecklist(memberId);
+        public int assignChecklist(ChecklistDto dto) {
+            return mapper.insertChecklist(null);
         }
     }
 
     private static class FakeChecklistMapper implements ChecklistMapper {
         @Override
-        public String insertChecklist(String memberId) {
-            return "checklist_id";
+        public int insertChecklist(Checklist checklist) {
+            return 1;
         }
     }
 }
