@@ -11,17 +11,40 @@ public class KakaoUserResponse {
     @JsonProperty("kakao_account")
     private KakaoAccount kakaoAccount;
 
-    @JsonProperty("properties")
-    private KakaoProperties properties;
+    @JsonProperty("id")
+    private Long oAuthId;
 
     @Getter
     @NoArgsConstructor
-    public static class KakaoAccount{
-        String email;
+    private static class KakaoAccount {
+        @JsonProperty("email")
+        private String email;
+
+        @JsonProperty("profile")
+        private Profile profile;
+
     }
     @Getter
     @NoArgsConstructor
-    public static class KakaoProperties{
-        String nickname;
+    private static class Profile {
+        @JsonProperty("nickname")
+        private String nickname;
+        @JsonProperty("thumbnail_image_url")
+        private String thumbnailImageUrl;
+
+        @JsonProperty("profile_image_url")
+        private String profileImageUrl;
     }
+    public String getEmail() {
+        return this.getKakaoAccount().getEmail();
+    }
+    public String getNickname() {
+        return this.getKakaoAccount().getProfile().getNickname();
+    }
+
+    public String getProfileImageUrl() {
+        return this.getKakaoAccount().getProfile().getProfileImageUrl();
+    }
+
+
 }
