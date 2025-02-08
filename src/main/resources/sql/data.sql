@@ -5,3 +5,8 @@ insert into `member` (`email`, `name`, `profile_image_url`, `created_at`, `updat
 values ('x@a.com', 'tester1', 'url', current_timestamp, null, 0);
 insert into `member` (`email`, `name`, `profile_image_url`, `created_at`, `updated_at`, `is_deleted`)
 values ('y@a.com', 'tester2', 'url', current_timestamp, null, 0);
+
+insert into `checklist` (`member_id`, `d_day`, `created_at`, `updated_at`, `is_deleted`)
+values (1, null, current_timestamp, null, 0);
+insert into `checklist` (`member_id`, `d_day`, `created_at`, `updated_at`, `is_deleted`)
+values (2, null, current_timestamp, null, 0);

@@ -19,3 +19,9 @@ Content-Type: application/json
 {
   "memberId": "2"
 }
+
+###
+GET http://localhost:8080/checklist?memberId=1
+
+###
+GET http://localhost:8080/checklist?memberId=3
