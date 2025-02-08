@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserResponse;
@@ -20,7 +18,7 @@ import org.swyp.weddy.domain.auth.service.dto.OAuthTokenResponse;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class OAuth2TokenService {
+public class OAuth2Service {
     @Value("${kakao.auth.tokenUrl}")
     private String tokenUrl;
     @Value("${kakao.auth.userInfoUrl}")
@@ -69,8 +67,10 @@ public class OAuth2TokenService {
 
         KakaoUserResponse userResponse = response.getBody();
         return KakaoUserInfo.builder()
-                .email(userResponse.getKakaoAccount().getEmail())
-                .nickname(userResponse.getProperties().getNickname())
+                .oAuthId(userResponse.getOAuthId())
+                .email(userResponse.getEmail())
+                .nickname(userResponse.getNickname())
+                .imgUrl(userResponse.getProfileImageUrl())
                 .build();
 
     }
