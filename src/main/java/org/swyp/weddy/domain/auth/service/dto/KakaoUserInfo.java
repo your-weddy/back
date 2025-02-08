@@ -7,7 +7,9 @@ import lombok.Getter;
 @Getter
 @Builder
 public class KakaoUserInfo {
-//    private String id;
+    private Integer id;
+    private Long oAuthId;
     private String email;
     private String nickname;
+    private String imgUrl;
 }
