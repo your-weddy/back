@@ -1,9 +1,12 @@
 package org.swyp.weddy.domain.checklist.service;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
+import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -26,9 +29,23 @@ class ChecklistServiceTest {
     public void check_if_member_has_checklist() {
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
-
         ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+
+        service.assignChecklist(dto);
+
         assertThat(service.hasChecklist(dto)).isEqualTo(true);
+    }
+
+    @DisplayName("사용자에게 할당된 체크리스트가 있다면, 추가로 할당하지 않는다")
+    @Test
+    public void prevent_adding_checklist_if_member_already_has_one() {
+        String memberId = "1";
+        ChecklistDto dto = ChecklistDto.from(memberId);
+        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+
+        service.assignChecklist(dto);
+        Assertions.assertThrows(ChecklistAlreadyAssignedException.class, () ->
+                service.assignChecklist(dto));
     }
 
     @Test
@@ -49,6 +66,10 @@ class ChecklistServiceTest {
 
         @Override
         public int assignChecklist(ChecklistDto dto) {
+            if (hasChecklist(dto)) {
+                throw new ChecklistAlreadyAssignedException(ErrorCode.BAD_REQUEST);
+            }
+
             return mapper.insertChecklist(null);
         }
 
@@ -61,14 +82,21 @@ class ChecklistServiceTest {
     }
 
     private static class FakeChecklistMapper implements ChecklistMapper {
+        private boolean hasChecklist = false;
+
         @Override
         public int insertChecklist(Checklist checklist) {
+            hasChecklist = true;
             return 1;
         }
 
         @Override
         public Checklist selectChecklistByMemberId(Long memberId) {
-            ChecklistDto dto = ChecklistDto.from("1");
+            if (!hasChecklist) {
+                return null;
+            }
+
+            ChecklistDto dto = ChecklistDto.from(memberId.toString());
             return Checklist.from(dto);
         }
     }
