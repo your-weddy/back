@@ -1,11 +1,13 @@
 package org.swyp.weddy.domain.checklist.service;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ChecklistServiceTest {
 
@@ -16,7 +18,7 @@ class ChecklistServiceTest {
         ChecklistDto dto = ChecklistDto.from(memberId);
 
         ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
-        Assertions.assertThat(service.assignChecklist(dto)).isEqualTo(1);
+        assertThat(service.assignChecklist(dto)).isEqualTo(1);
     }
 
     @DisplayName("사용자에 할당된 체크리스트가 있는지 확인할 수 있다")
@@ -26,7 +28,16 @@ class ChecklistServiceTest {
         ChecklistDto dto = ChecklistDto.from(memberId);
 
         ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
-        Assertions.assertThat(service.hasChecklist(dto)).isEqualTo(true);
+        assertThat(service.hasChecklist(dto)).isEqualTo(true);
+    }
+
+    @Test
+    public void test_input_of_Long_valueOf() {
+        String sLong = "1";
+        assertThat(Long.valueOf(sLong)).isEqualTo(1L);
+
+        String sLong2 = "1l";
+        assertThrows(NumberFormatException.class, () -> Long.valueOf(sLong2));
     }
 
     private static class FakeChecklistService implements ChecklistService {
@@ -43,7 +54,9 @@ class ChecklistServiceTest {
 
         @Override
         public boolean hasChecklist(ChecklistDto dto) {
-            return true;
+            Long memberId = Long.valueOf(dto.getMemberId());
+            Checklist checklist = mapper.selectChecklistByMemberId(memberId);
+            return checklist != null;
         }
     }
 
@@ -51,6 +64,12 @@ class ChecklistServiceTest {
         @Override
         public int insertChecklist(Checklist checklist) {
             return 1;
+        }
+
+        @Override
+        public Checklist selectChecklistByMemberId(Long memberId) {
+            ChecklistDto dto = ChecklistDto.from("1");
+            return Checklist.from(dto);
         }
     }
 }
