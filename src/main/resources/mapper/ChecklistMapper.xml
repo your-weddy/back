@@ -17,4 +17,15 @@
                 #{isDeleted})
     </insert>
 
+    <select id="selectChecklistByMemberId" parameterType="Long"
+            resultType="org.swyp.weddy.domain.checklist.entity.Checklist">
+        SELECT id,
+                member_id,
+                d_day,
+                created_at,
+                updated_at,
+                is_deleted
+        FROM checklist
+        WHERE member_id = #{memberId}
+    </select>
 </mapper>

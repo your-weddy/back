@@ -26,6 +26,9 @@ public class ChecklistServiceImpl implements ChecklistService {
 
     @Override
     public boolean hasChecklist(ChecklistDto dto) {
-        throw new UnsupportedOperationException("not implemented yet!");
+        Long memberId = Long.valueOf(dto.getMemberId());
+        Checklist checklist = mapper.selectChecklistByMemberId(memberId);
+
+        return checklist != null;
     }
 }

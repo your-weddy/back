@@ -13,6 +13,18 @@ public class Checklist {
     private Timestamp updatedAt;
     private Boolean isDeleted;
 
+    public Checklist() {
+    }
+
+    public Checklist(Integer id, String memberId, Date dDay, Timestamp createdAt, Timestamp updatedAt, Boolean isDeleted) {
+        this.id = id;
+        this.memberId = memberId;
+        this.dDay = dDay;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isDeleted = isDeleted;
+    }
+
     public Checklist(String memberId, Date dDay, Timestamp createdAt, Timestamp updatedAt, Boolean isDeleted) {
         this.memberId = memberId;
         this.dDay = dDay;
