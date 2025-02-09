@@ -9,7 +9,7 @@ import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
 public class CookieService {
 
     public void setCookies(HttpServletResponse response, TokenInfo tokenInfo) {
-        addCookie(response, "accessToken", tokenInfo.getAccessToken(), "/", 3600);
+        addCookie(response, "accessToken", tokenInfo.getAccessToken(), "/", 60 * 60 * 24 * 14);
         addCookie(response, "refreshToken", tokenInfo.getRefreshToken(), "/auth/refresh", 60 * 60 * 24 * 365);
     }
 
