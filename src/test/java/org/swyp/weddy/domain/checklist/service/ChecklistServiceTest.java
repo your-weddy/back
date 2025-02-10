@@ -65,6 +65,7 @@ class ChecklistServiceTest {
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+        service.assignChecklist(dto);
 
         ChecklistResponse checklistResponse = service.findChecklist(dto);
         Assertions.assertNotNull(checklistResponse);
@@ -109,11 +110,13 @@ class ChecklistServiceTest {
         @Override
         public ChecklistResponse findChecklist(ChecklistDto dto) {
             Long memberId = Long.valueOf(dto.getMemberId());
-            if (memberId == 1L) {
-                return ChecklistResponse.from(Checklist.from(dto));
+            Checklist checklist = mapper.selectChecklistByMemberId(memberId);
+
+            if (checklist == null) {
+                throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
             }
 
-            throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
+            return ChecklistResponse.from(Checklist.from(dto));
         }
     }
 
