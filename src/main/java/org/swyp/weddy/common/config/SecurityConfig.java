@@ -1,4 +1,4 @@
-package org.swyp.weddy.domain.auth.config;
+package org.swyp.weddy.common.config;
 
 
 import jakarta.servlet.http.HttpServletResponse;
