@@ -12,6 +12,7 @@ CREATE TABLE `member`
     `email`             varchar(255),
     `name`              varchar(255),
     `profile_image_url` varchar(255) COMMENT 'link to user profile image',
+    `oauth_id`           varchar(255),
     `created_at`        timestamp,
     `updated_at`        timestamp,
     `is_deleted`        bool
@@ -76,4 +77,8 @@ ALTER TABLE `small_category_item`
     ADD FOREIGN KEY (`status_id`) REFERENCES `small_category_item_status` (`id`);
 
 ALTER TABLE `small_category_item`
+<<<<<<< HEAD
     ADD FOREIGN KEY (`assignee_id`) REFERENCES `small_category_item_assignee` (`id`);
+=======
+    ADD FOREIGN KEY (`assignee_id`) REFERENCES `small_category_item_assignee` (`id`);
+>>>>>>> main
