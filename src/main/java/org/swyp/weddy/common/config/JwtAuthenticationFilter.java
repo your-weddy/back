@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
@@ -22,9 +23,11 @@ import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
+@Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final UriFilter uriFilter;
 
     @Value("${app.login-page-url}")
     private String LOGIN_PAGE_URL;
@@ -32,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //JWT 검증을 건너뜀
-        if (isSkipUri(request.getRequestURI())) {
+        if (uriFilter.isSkipUri(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
@@ -54,6 +57,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private boolean isAuthenticateFail(Map<String, String> token, HttpServletResponse response) throws IOException {
         try {
             if (jwtService.validateToken(token.get("accessToken"))) {
+                log.error("=====인증된 사용자======");
                 Authentication authentication = jwtService.getAuthentication(token.get("accessToken"));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
