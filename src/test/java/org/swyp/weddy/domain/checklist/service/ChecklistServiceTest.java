@@ -8,6 +8,7 @@ import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,6 +58,17 @@ class ChecklistServiceTest {
         assertThrows(NumberFormatException.class, () -> Long.valueOf(sLong2));
     }
 
+    @DisplayName("회원 아이디에 할당된 체크리스트를 가져올 수 있다")
+    @Test
+    public void find_checklist_by_id() {
+        String memberId = "1";
+        ChecklistDto dto = ChecklistDto.from(memberId);
+        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+
+        ChecklistResponse checklistResponse = service.findChecklist(dto);
+        Assertions.assertNotNull(checklistResponse);
+    }
+
     private static class FakeChecklistService implements ChecklistService {
         private final ChecklistMapper mapper;
 
@@ -78,6 +90,11 @@ class ChecklistServiceTest {
             Long memberId = Long.valueOf(dto.getMemberId());
             Checklist checklist = mapper.selectChecklistByMemberId(memberId);
             return checklist != null;
+        }
+
+        @Override
+        public ChecklistResponse findChecklist(ChecklistDto dto) {
+            return new ChecklistResponse();
         }
     }
 

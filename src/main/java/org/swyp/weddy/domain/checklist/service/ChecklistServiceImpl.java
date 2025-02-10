@@ -7,6 +7,7 @@ import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 @Service
 public class ChecklistServiceImpl implements ChecklistService {
@@ -36,5 +37,10 @@ public class ChecklistServiceImpl implements ChecklistService {
         Checklist checklist = mapper.selectChecklistByMemberId(memberId);
 
         return checklist != null;
+    }
+
+    @Override
+    public ChecklistResponse findChecklist(ChecklistDto dto) {
+        return null;
     }
 }
