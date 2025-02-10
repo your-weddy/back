@@ -29,7 +29,7 @@ public class ChecklistController {
     }
 
     @GetMapping
-    public ResponseEntity<Void> getChecklist(@RequestParam(name = "memberId") String memberId) {
+    public ResponseEntity<Void> hasChecklist(@RequestParam(name = "memberId") String memberId) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         boolean hasChecklist = checklistService.hasChecklist(dto);
         log.warn("---------------------");
