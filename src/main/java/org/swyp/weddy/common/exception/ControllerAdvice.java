@@ -10,7 +10,12 @@ import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 public class ControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
-    protected ErrorResponse handleBusinessException(final WikiNotFoundException exception) {
+    protected ErrorResponse handleBusinessException(final RuntimeException exception) {
+        return new ErrorResponse(ErrorCode.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(WikiNotFoundException.class)
+    protected ErrorResponse handleWikiNotFoundException(final WikiNotFoundException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
 
