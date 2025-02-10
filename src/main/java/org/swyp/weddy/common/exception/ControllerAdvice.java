@@ -13,7 +13,7 @@ public class ControllerAdvice {
     }
 
     private static class ErrorResponse {
-        private final Integer code;
+        private final String code;
         private final String reason;
 
         private ErrorResponse(ErrorCode errorCode) {
@@ -21,7 +21,7 @@ public class ControllerAdvice {
             this.reason = errorCode.getReason();
         }
 
-        public Integer getCode() {
+        public String getCode() {
             return this.code;
         }
         public String getReason() {
