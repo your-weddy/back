@@ -2,6 +2,7 @@ package org.swyp.weddy.common.exception;
 
 public enum ErrorCode {
 
+    BAD_REQUEST("400", "잘못된 요청"),
     DUPLICATE_CHECKLIST("400", "사용자에게 할당된 체크리스트가 이미 존재합니다"),
     UNAUTHORIZED("401", "인증되지 않은 사용자"),
     NOT_EXISTS("404", "리소스가 존재하지 않음"),
