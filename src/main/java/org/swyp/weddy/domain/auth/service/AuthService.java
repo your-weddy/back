@@ -46,13 +46,14 @@ public class AuthService {
     }
 
     private Member createMemberFromKakaoUserInfo(KakaoUserInfo kakaoUserInfo) {
-        Member member = new Member();
-        member.setEmail(kakaoUserInfo.getEmail());
-        member.setOAuthId(String.valueOf(kakaoUserInfo.getOAuthId()));
-        member.setName(kakaoUserInfo.getNickname());
-        member.setProfileImageUrl(kakaoUserInfo.getImgUrl());
-        return member;
+        return Member.builder()
+                .email(kakaoUserInfo.getEmail())
+                .oAuthId(String.valueOf(kakaoUserInfo.getOAuthId()))
+                .name(kakaoUserInfo.getNickname())
+                .profileImageUrl(kakaoUserInfo.getImgUrl())
+                .build();
     }
+
 
     private void saveDatabase(Member member) {
         Member existingUser = memberMapper.findByEmail(member.getEmail());
