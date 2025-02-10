@@ -50,10 +50,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private boolean isSkipUri(String uri) {
-        return (uri.startsWith("/h2") |uri.startsWith("/auth/regenerate-token") | uri.startsWith("/auth/login") | uri.startsWith("/index.html") | uri.equals("/"));
-    }
-
     private boolean isAuthenticateFail(Map<String, String> token, HttpServletResponse response) throws IOException {
         try {
             if (jwtService.validateToken(token.get("accessToken"))) {
