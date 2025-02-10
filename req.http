@@ -3,3 +3,25 @@ GET http://localhost:8080/wiki?title=위키 제목
 
 ###
 GET http://localhost:8080/wiki?title=없는 위키 제목
+
+###
+POST http://localhost:8080/checklist
+Content-Type: application/json
+
+{
+  "memberId": "1"
+}
+
+###
+POST http://localhost:8080/checklist
+Content-Type: application/json
+
+{
+  "memberId": "2"
+}
+
+###
+GET http://localhost:8080/checklist?memberId=1
+
+###
+GET http://localhost:8080/checklist?memberId=3

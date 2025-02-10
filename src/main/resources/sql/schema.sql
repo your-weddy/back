@@ -77,4 +77,8 @@ ALTER TABLE `small_category_item`
     ADD FOREIGN KEY (`status_id`) REFERENCES `small_category_item_status` (`id`);
 
 ALTER TABLE `small_category_item`
+<<<<<<< HEAD
     ADD FOREIGN KEY (`assignee_id`) REFERENCES `small_category_item_assignee` (`id`);
+=======
+    ADD FOREIGN KEY (`assignee_id`) REFERENCES `small_category_item_assignee` (`id`);
+>>>>>>> main
