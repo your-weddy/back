@@ -2,14 +2,12 @@ package org.swyp.weddy.domain.checklist.web.response;
 
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 
-import java.util.Date;
-
 public class ChecklistResponse {
-    private final Integer id;
+    private final Long id;
     private final String memberId;
-    private final Date dDay;
+    private final Integer dDay;
 
-    public ChecklistResponse(Integer id, String memberId, Date dDay) {
+    public ChecklistResponse(Long id, String memberId, Integer dDay) {
         this.id = id;
         this.memberId = memberId;
         this.dDay = dDay;
@@ -18,7 +16,7 @@ public class ChecklistResponse {
     public static ChecklistResponse from(Checklist checklist) {
         return new ChecklistResponse(
                 checklist.getId(),
-                checklist.getMemberId(),
+                String.valueOf(checklist.getMemberId()),
                 checklist.getdDay()
         );
     }

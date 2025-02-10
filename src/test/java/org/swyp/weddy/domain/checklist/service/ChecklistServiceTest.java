@@ -92,12 +92,12 @@ class ChecklistServiceTest {
         }
 
         @Override
-        public int assignChecklist(ChecklistDto dto) {
+        public Long assignChecklist(ChecklistDto dto) {
             if (hasChecklist(dto)) {
                 throw new ChecklistAlreadyAssignedException(ErrorCode.BAD_REQUEST);
             }
 
-            return mapper.insertChecklist(null);
+            return Long.valueOf(mapper.insertChecklist(null));
         }
 
         @Override

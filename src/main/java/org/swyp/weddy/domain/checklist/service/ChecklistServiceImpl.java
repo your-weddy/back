@@ -21,7 +21,7 @@ public class ChecklistServiceImpl implements ChecklistService {
 
     @Transactional
     @Override
-    public int assignChecklist(ChecklistDto dto) {
+    public Long assignChecklist(ChecklistDto dto) {
         if (hasChecklist(dto)) {
             throw new ChecklistAlreadyAssignedException(ErrorCode.DUPLICATE_CHECKLIST);
         }

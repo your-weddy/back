@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 import java.util.Map;
 
@@ -21,7 +22,7 @@ public class ChecklistController {
 
     @PostMapping
     public ResponseEntity<Void> createChecklist(@RequestBody Map<String, String> memberIdMap) {
-        int insertId = checklistService.assignChecklist(ChecklistDto.from(memberIdMap.get("memberId")));
+        Long insertId = checklistService.assignChecklist(ChecklistDto.from(memberIdMap.get("memberId")));
         log.warn("---------------------");
         log.warn("insertId: " + insertId);
 
@@ -29,6 +30,14 @@ public class ChecklistController {
     }
 
     @GetMapping
+    public ResponseEntity<ChecklistResponse> getChecklist(@RequestParam(name = "memberId") String memberId) {
+        ChecklistDto dto = ChecklistDto.from(memberId);
+        ChecklistResponse checklist = checklistService.findChecklist(dto);
+
+        return ResponseEntity.ok().body(checklist);
+    }
+
+    @GetMapping("/assigned")
     public ResponseEntity<Void> hasChecklist(@RequestParam(name = "memberId") String memberId) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         boolean hasChecklist = checklistService.hasChecklist(dto);

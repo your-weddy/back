@@ -7,6 +7,6 @@ insert into `member` (`email`, `name`, `profile_image_url`, `created_at`, `updat
 values ('y@a.com', 'tester2', 'url', current_timestamp, null, 0);
 
 insert into `checklist` (`member_id`, `d_day`, `created_at`, `updated_at`, `is_deleted`)
-values (1, null, current_timestamp, null, 0);
+values (1, 100, current_timestamp, null, 0);
 insert into `checklist` (`member_id`, `d_day`, `created_at`, `updated_at`, `is_deleted`)
 values (2, null, current_timestamp, null, 0);
