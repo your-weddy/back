@@ -20,4 +20,16 @@ public class ChecklistResponse {
                 checklist.getdDay()
         );
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public Integer getdDay() {
+        return dDay;
+    }
 }
