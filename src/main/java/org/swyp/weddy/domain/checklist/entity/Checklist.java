@@ -46,4 +46,12 @@ public class Checklist {
     public Integer getId() {
         return id;
     }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public Date getdDay() {
+        return dDay;
+    }
 }
