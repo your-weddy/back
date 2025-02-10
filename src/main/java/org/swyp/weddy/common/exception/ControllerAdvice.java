@@ -15,7 +15,7 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(ChecklistAlreadyAssignedException.class)
-    protected ErrorResponse ChecklistAlreadyAssignedException(final ChecklistAlreadyAssignedException exception) {
+    protected ErrorResponse handleChecklistAlreadyAssignedException(final ChecklistAlreadyAssignedException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
 
