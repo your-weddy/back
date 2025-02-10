@@ -23,10 +23,14 @@ mybatis:
 jwt:
   secret: 743AD29677E53D1E11DABE832D9DF13F288CCE9F1F414E32961E28AF4A11C8EAF525869BCF59FF66A35457A
 
+app:
+  login-page-url: ${LOGIN_PAGE_URL:http://localhost:8080}
+  home-page-url: ${HOME_PAGE_URL:http://localhost:8080/home.html}
+
 kakao:
   auth:
-    client: 9f29e33b8a15254447b4b72f3f550b13
-    redirect: http://localhost:8080/auth/login/kakao
+    client: ${KAKAO_CLIENT_ID:9f29e33b8a15254447b4b72f3f550b13}
+    redirect: ${KAKAO_REDIRECT_URL:http://localhost:8080/auth/login/kakao}
     tokenUrl: https://kauth.kakao.com/oauth/token
     userInfoUrl: https://kapi.kakao.com/v2/user/me
 

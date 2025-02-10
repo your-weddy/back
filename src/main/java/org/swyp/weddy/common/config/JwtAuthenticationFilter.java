@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,7 +25,9 @@ import java.util.Map;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final String REDIRECT_URL_TO_LOGIN = "http://localhost:8080";
+
+    @Value("${app.login-page-url}")
+    private String LOGIN_PAGE_URL;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -62,7 +65,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return true; // 인증 실패
         } catch (JwtUnauthorizedException e) {
             log.error("JWT UnAuthorized", e);
-            response.sendRedirect(REDIRECT_URL_TO_LOGIN);
+            response.sendRedirect(LOGIN_PAGE_URL);
             return true; // 인증 실패
         }
     }
