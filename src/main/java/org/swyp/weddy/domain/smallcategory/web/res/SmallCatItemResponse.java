@@ -5,6 +5,8 @@ import java.util.Date;
 
 @AllArgsConstructor
 public class SmallCatItemResponse {
+    private Long checkListId;
+    private Long largeCatItemId;
     private Long id;
     private String title;
     private Date dueDate;
