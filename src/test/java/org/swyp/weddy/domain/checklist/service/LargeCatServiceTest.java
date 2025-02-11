@@ -35,7 +35,12 @@ class LargeCatServiceTest {
     private static class FakeLargeCatMapper implements LargeCatMapper {
         @Override
         public LargeCatItem selectItem(Long checkListId, Long id) {
-            return new LargeCatItem();
+            return new LargeCatItem(1L,
+                    1L,
+                    "test",
+                    null,
+                    null,
+                    Boolean.FALSE);
         }
     }
 }
