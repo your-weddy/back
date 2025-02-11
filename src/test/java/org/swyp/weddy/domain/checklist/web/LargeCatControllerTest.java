@@ -9,6 +9,7 @@ import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
@@ -50,6 +51,11 @@ class LargeCatControllerTest {
                 return null;
             }
             return new LargeCatItemResponse(1L, 1L, "test");
+        }
+
+        @Override
+        public Long addItem(LargeCatItemAssignDto dto) {
+            return 1L;
         }
     }
 

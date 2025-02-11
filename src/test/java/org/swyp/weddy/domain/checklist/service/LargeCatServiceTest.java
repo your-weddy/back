@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,6 +32,18 @@ class LargeCatServiceTest {
             Assertions.assertThrows(LargeCatItemNotExistsException.class, () ->
                     largeCatService.findItem(-1L, 1L)
             );
+        }
+    }
+
+    @DisplayName("assignItem()")
+    @Nested
+    class assignItemTest {
+        @DisplayName("대분류 항목 하나를 추가할 수 있다")
+        @Test
+        public void assign_one_large_cat_item() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper());
+            Long id = largeCatService.addItem(new LargeCatItemAssignDto(1L, "test"));
+            assertThat(id).isNotNull();
         }
     }
 
