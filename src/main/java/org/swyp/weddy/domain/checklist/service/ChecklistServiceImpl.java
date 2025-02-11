@@ -6,7 +6,9 @@ import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
+import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 @Service
 public class ChecklistServiceImpl implements ChecklistService {
@@ -19,7 +21,7 @@ public class ChecklistServiceImpl implements ChecklistService {
 
     @Transactional
     @Override
-    public int assignChecklist(ChecklistDto dto) {
+    public Long assignChecklist(ChecklistDto dto) {
         if (hasChecklist(dto)) {
             throw new ChecklistAlreadyAssignedException(ErrorCode.DUPLICATE_CHECKLIST);
         }
@@ -36,5 +38,15 @@ public class ChecklistServiceImpl implements ChecklistService {
         Checklist checklist = mapper.selectChecklistByMemberId(memberId);
 
         return checklist != null;
+    }
+
+    @Override
+    public ChecklistResponse findChecklist(ChecklistDto dto) {
+        Long memberId = Long.valueOf(dto.getMemberId());
+        Checklist checklist = mapper.selectChecklistByMemberId(memberId);
+        if (checklist == null) {
+            throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
+        }
+        return ChecklistResponse.from(checklist);
     }
 }

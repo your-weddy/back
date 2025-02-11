@@ -3,12 +3,11 @@ package org.swyp.weddy.domain.checklist.entity;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Checklist {
-    private Integer id;
-    private String memberId;
-    private Date dDay;
+    private Long id;
+    private Long memberId;
+    private Integer dDay;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean isDeleted;
@@ -16,7 +15,7 @@ public class Checklist {
     public Checklist() {
     }
 
-    public Checklist(Integer id, String memberId, Date dDay, Timestamp createdAt, Timestamp updatedAt, Boolean isDeleted) {
+    public Checklist(Long id, Long memberId, Integer dDay, Timestamp createdAt, Timestamp updatedAt, Boolean isDeleted) {
         this.id = id;
         this.memberId = memberId;
         this.dDay = dDay;
@@ -25,7 +24,7 @@ public class Checklist {
         this.isDeleted = isDeleted;
     }
 
-    public Checklist(String memberId, Date dDay, Timestamp createdAt, Timestamp updatedAt, Boolean isDeleted) {
+    public Checklist(Long memberId, Integer dDay, Timestamp createdAt, Timestamp updatedAt, Boolean isDeleted) {
         this.memberId = memberId;
         this.dDay = dDay;
         this.createdAt = createdAt;
@@ -35,7 +34,7 @@ public class Checklist {
 
     public static Checklist from(ChecklistDto dto) {
         return new Checklist(
-                dto.getMemberId(),
+                Long.valueOf(dto.getMemberId()),
                 null,
                 new Timestamp(System.currentTimeMillis()),
                 null,
@@ -43,7 +42,15 @@ public class Checklist {
         );
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
+    }
+
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public Integer getdDay() {
+        return dDay;
     }
 }

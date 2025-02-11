@@ -19,6 +19,9 @@ spring:
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    map-underscore-to-camel-case: true
 
 jwt:
   secret: 743AD29677E53D1E11DABE832D9DF13F288CCE9F1F414E32961E28AF4A11C8EAF525869BCF59FF66A35457A

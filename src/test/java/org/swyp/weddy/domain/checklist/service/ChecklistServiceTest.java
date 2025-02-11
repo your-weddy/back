@@ -7,7 +7,9 @@ import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
+import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -57,6 +59,31 @@ class ChecklistServiceTest {
         assertThrows(NumberFormatException.class, () -> Long.valueOf(sLong2));
     }
 
+    @DisplayName("회원 아이디에 할당된 체크리스트를 가져올 수 있다")
+    @Test
+    public void find_checklist_by_id() {
+        String memberId = "1";
+        ChecklistDto dto = ChecklistDto.from(memberId);
+        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+        service.assignChecklist(dto);
+
+        ChecklistResponse checklistResponse = service.findChecklist(dto);
+        Assertions.assertNotNull(checklistResponse);
+    }
+
+    @DisplayName("회원에게 할당된 체크리스트가 없을 경우, 예외를 던진다")
+    @Test
+    public void fail_to_find_checklist_by_id() {
+        String memberId = "-1";
+        ChecklistDto dto = ChecklistDto.from(memberId);
+        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+
+        assertThrows(
+                ChecklistNotExistsException.class,
+                () -> service.findChecklist(dto)
+        );
+    }
+
     private static class FakeChecklistService implements ChecklistService {
         private final ChecklistMapper mapper;
 
@@ -65,12 +92,12 @@ class ChecklistServiceTest {
         }
 
         @Override
-        public int assignChecklist(ChecklistDto dto) {
+        public Long assignChecklist(ChecklistDto dto) {
             if (hasChecklist(dto)) {
                 throw new ChecklistAlreadyAssignedException(ErrorCode.BAD_REQUEST);
             }
 
-            return mapper.insertChecklist(null);
+            return Long.valueOf(mapper.insertChecklist(null));
         }
 
         @Override
@@ -78,6 +105,18 @@ class ChecklistServiceTest {
             Long memberId = Long.valueOf(dto.getMemberId());
             Checklist checklist = mapper.selectChecklistByMemberId(memberId);
             return checklist != null;
+        }
+
+        @Override
+        public ChecklistResponse findChecklist(ChecklistDto dto) {
+            Long memberId = Long.valueOf(dto.getMemberId());
+            Checklist checklist = mapper.selectChecklistByMemberId(memberId);
+
+            if (checklist == null) {
+                throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
+            }
+
+            return ChecklistResponse.from(Checklist.from(dto));
         }
     }
 

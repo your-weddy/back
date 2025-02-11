@@ -3,20 +3,32 @@ package org.swyp.weddy.common.exception;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
+import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
 import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
-    protected ErrorResponse handleBusinessException(final WikiNotFoundException exception) {
+    protected ErrorResponse handleBusinessException(final RuntimeException exception) {
+        return new ErrorResponse(ErrorCode.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(WikiNotFoundException.class)
+    protected ErrorResponse handleWikiNotFoundException(final WikiNotFoundException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
 
     @ExceptionHandler(ChecklistAlreadyAssignedException.class)
-    protected ErrorResponse ChecklistAlreadyAssignedException(final ChecklistAlreadyAssignedException exception) {
+    protected ErrorResponse handleChecklistAlreadyAssignedException(final ChecklistAlreadyAssignedException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
+
+    @ExceptionHandler(ChecklistNotExistsException.class)
+    protected ErrorResponse handleChecklistNotExistsException(final ChecklistNotExistsException exception) {
+        return new ErrorResponse(exception.getErrorCode());
+    }
+
 
     private static class ErrorResponse {
         private final String code;
