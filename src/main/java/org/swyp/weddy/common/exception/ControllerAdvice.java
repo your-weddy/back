@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 
 @RestControllerAdvice
@@ -28,6 +29,12 @@ public class ControllerAdvice {
     protected ErrorResponse handleChecklistNotExistsException(final ChecklistNotExistsException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
+
+    @ExceptionHandler(LargeCatItemNotExistsException.class)
+    protected ErrorResponse handleLargeCatItemNotExistsException(final LargeCatItemNotExistsException exception) {
+        return new ErrorResponse(exception.getErrorCode());
+    }
+
 
 
     private static class ErrorResponse {

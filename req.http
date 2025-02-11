@@ -25,3 +25,6 @@ GET http://localhost:8080/checklist?memberId=1
 
 ###
 GET http://localhost:8080/checklist?memberId=3
+
+###
+GET http://localhost:8080/checklist/large-cat-item?memberId=1&id=1
