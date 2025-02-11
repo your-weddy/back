@@ -47,6 +47,7 @@ CREATE TABLE `small_category_item`
     `assignee_id`            bigint,
     `body`                   text COMMENT 'store rich text in HTML format',
     `status_id`              bigint,
+    `amount`                 bigint,
     `created_at`             timestamp,
     `updated_at`             timestamp,
     `is_deleted`             bool

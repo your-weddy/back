@@ -2,6 +2,7 @@ package org.swyp.weddy.domain.smallcategory.web.res;
 
 import lombok.AllArgsConstructor;
 import java.util.Date;
+
 @AllArgsConstructor
 public class SmallCatItemResponse {
     private Long id;
@@ -10,4 +11,5 @@ public class SmallCatItemResponse {
     private String assigneeName;
     private String body;
     private String statusName;
+    private Long amount;
 }
