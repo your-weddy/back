@@ -20,4 +20,16 @@ public class LargeCatItemResponse {
                 item.getTitle()
         );
     }
+
+    public Long getId() {
+        return id;
+    }
+
+    public Long getChecklistId() {
+        return checklistId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }

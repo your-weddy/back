@@ -9,8 +9,8 @@
                title,
                created_at,
                updated_at,
-               is_deleted,
-        FROM large_cat_item
+               is_deleted
+        FROM large_category_item
         WHERE id = #{id}
           AND checklist_id = #{checklistId}
     </select>
