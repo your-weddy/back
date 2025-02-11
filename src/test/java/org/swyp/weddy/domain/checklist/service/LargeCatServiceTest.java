@@ -26,8 +26,8 @@ class LargeCatServiceTest {
         }
 
         @Override
-        public LargeCatItemResponse findItem(Long memberId, Long id) {
-            LargeCatItem largeCatItem = mapper.selectItem(memberId, id);
+        public LargeCatItemResponse findItem(Long checklistId, Long id) {
+            LargeCatItem largeCatItem = mapper.selectItem(checklistId, id);
             return LargeCatItemResponse.from(largeCatItem);
         }
     }
