@@ -11,5 +11,5 @@ values (1, 100, current_timestamp, null, 0);
 insert into `checklist` (`member_id`, `d_day`, `created_at`, `updated_at`, `is_deleted`)
 values (2, null, current_timestamp, null, 0);
 
-insert into `large_category_item` (`id`, `checklist_id`, `title`, `created_at`, `updated_at`, `is_deleted`)
-values (1, 1, 'test', current_timestamp, null, 0);
+insert into `large_category_item` (`checklist_id`, `title`, `created_at`, `updated_at`, `is_deleted`)
+values (1, 'test', current_timestamp, null, 0);
