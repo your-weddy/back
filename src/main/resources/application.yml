@@ -26,7 +26,7 @@ jwt:
 authorize:
   uris: "${AUTHORIZE_URIS:/,/home.html,/index.html,/h2-console/**,/css/**,/js/**,/images/**,/swagger-ui/*,/v3/api-docs/**,/auth/**}"
 skip:
-  uris: "${SKIP_URIS:/h2,/auth/regenerate-token,/auth/login,/index.html,/swagger-ui/*,/v3/api-docs/**,/}"
+  uris: "${SKIP_URIS:/,/index.html,/h2,/swagger-ui/*,/v3/api-docs/**,/auth/**}"
 
 app:
   login-page-url: ${LOGIN_PAGE_URL:http://localhost:8080}
