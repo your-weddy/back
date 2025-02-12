@@ -23,9 +23,9 @@ public class SmallCatItemController {
     }
 
     @GetMapping("/item-previews")
-    public ResponseEntity<List<SmallCatItemPreviewResponse>> getSmallCatItemList(@RequestParam(name = "checkListId") String checkListId,
-                                                                    @RequestParam(name = "largeCatItemId") String largeCatItemId) {
-        List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(Long.valueOf(checkListId), Long.valueOf(largeCatItemId));
+    public ResponseEntity<List<SmallCatItemPreviewResponse>> getSmallCatItemList(@RequestParam(name = "checkListId") Long checkListId,
+                                                                    @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
+        List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(checkListId, largeCatItemId);
         return ResponseEntity.ok().body(itemPreviews);
     }
 
