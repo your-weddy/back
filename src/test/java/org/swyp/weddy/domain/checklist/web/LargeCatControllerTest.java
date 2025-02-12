@@ -86,7 +86,10 @@ class LargeCatControllerTest {
 
         @Override
         public LargeCatItemResponse findItemWithSmallItems(Long checklistId, Long id) {
-            return null;
+            if (checklistId == -1L) {
+                return null;
+            }
+            return new LargeCatItemResponse(1L, 1L, "test");
         }
 
         @Override
