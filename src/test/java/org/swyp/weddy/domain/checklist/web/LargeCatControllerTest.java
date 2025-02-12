@@ -61,6 +61,18 @@ class LargeCatControllerTest {
 
             controller.postItem(request);
         }
+
+        @DisplayName("대분류 항목 추가 결과를 반환할 수 있다")
+        @Test
+        public void returns_post_large_item() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            LargeCatItemPostRequest request = new LargeCatItemPostRequest("1L", "test");
+
+            assertThat(controller.postItem(request)).isEqualTo(ResponseEntity.ok().build());
+        }
     }
 
     private static class FakeLargeCatService implements LargeCatService {
