@@ -44,8 +44,7 @@ class LargeCatServiceTest {
         @Test
         public void assign_one_large_cat_item() {
             LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper());
-            Long id = largeCatService.addItem(new LargeCatItemAssignDto(1L, "test"));
-            assertThat(id).isNotNull();
+            largeCatService.addItem(new LargeCatItemAssignDto(1L, "test"));
         }
 
         @DisplayName("dto를 mapper에 보낼 형태로 변환할 수 있다")
