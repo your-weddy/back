@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
 import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.smallcategory.web.request.SmallCatItemPatchRequest;
 import org.swyp.weddy.domain.smallcategory.web.request.SmallCatItemPostRequest;
 import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
@@ -38,10 +39,20 @@ public class SmallCatItemController {
     }
 
     @PostMapping("/add-item")
-    public ResponseEntity<Long> postItem(@RequestBody SmallCatItemPostRequest smallCatItemPostRequest) {
-        SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(smallCatItemPostRequest);
+    public ResponseEntity<Long> postItem(@RequestBody SmallCatItemPostRequest request) {
+        SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(request);
         Long itemId = smallCatService.addItem(smallCatItemDto);
         return ResponseEntity.ok().body(itemId);
+    }
+
+    @PatchMapping("/update-item")
+    public ResponseEntity<Boolean> patchItem(@RequestBody SmallCatItemPatchRequest request) {
+        //1. 소분류 항목이 존재하는지 체크
+
+        //2. 업데이트
+        SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(request);
+        boolean result = smallCatService.editItem(smallCatItemDto);
+        return ResponseEntity.ok().body(result);
     }
 
 
