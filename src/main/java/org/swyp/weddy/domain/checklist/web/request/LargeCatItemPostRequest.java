@@ -8,4 +8,12 @@ public class LargeCatItemPostRequest {
         this.memberId = memberId;
         this.title = title;
     }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }
