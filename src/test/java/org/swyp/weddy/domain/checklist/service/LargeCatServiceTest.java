@@ -10,6 +10,8 @@ import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
+import java.sql.Timestamp;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LargeCatServiceTest {
@@ -44,6 +46,22 @@ class LargeCatServiceTest {
             LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper());
             Long id = largeCatService.addItem(new LargeCatItemAssignDto(1L, "test"));
             assertThat(id).isNotNull();
+        }
+
+        @DisplayName("dto를 mapper에 보낼 형태로 변환할 수 있다")
+        @Test
+        public void convert_dto_to_entity() {
+            LargeCatItemAssignDto dto = new LargeCatItemAssignDto(1L, "test");
+            LargeCatItem item = LargeCatItem.from(dto);
+            LargeCatItem expected = new LargeCatItem(
+                    1L,
+                    "test",
+                    new Timestamp(System.currentTimeMillis()),
+                    null,
+                    Boolean.FALSE
+            );
+            assertThat(item.getChecklistId()).isEqualTo(expected.getChecklistId());
+            assertThat(item.getTitle()).isEqualTo(expected.getTitle());
         }
     }
 
