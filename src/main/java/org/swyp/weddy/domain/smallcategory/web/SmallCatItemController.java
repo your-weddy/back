@@ -25,11 +25,7 @@ public class SmallCatItemController {
     @GetMapping("/items")
     public ResponseEntity<List<SmallCatItemResponse>> getSmallCatItemList(@RequestParam(name = "checkListId") String checkListId,
                                                                     @RequestParam(name = "largeCatItemId") String largeCatItemId) {
-        log.debug("==========getList 1======== checkListId: "+checkListId+ ", largeCatItemId " + largeCatItemId  );
         List<SmallCatItemResponse> items = smallCatService.findItems(Long.valueOf(checkListId), Long.valueOf(largeCatItemId));
-        for (SmallCatItemResponse item : items) {
-            log.debug("==========getList 3======== SmallCatItemResponse:" + item );
-        }
         return ResponseEntity.ok().body(items);
     }
 

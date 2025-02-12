@@ -22,7 +22,6 @@ public class SmallCatServiceImpl implements SmallCatService {
 
     @Override
     public List<SmallCatItemResponse> findItems(Long checkListId, Long largeCatItemId) {
-        log.debug("==========getList 2======== checkListId: "+checkListId+ ", largeCatItemId " + largeCatItemId  );
         List<SmallCatItem> smallCatItems = mapper.selectAllItems(checkListId, largeCatItemId);
         List<SmallCatItemResponse> smallCatItemResponses = SmallCatItemResponse.from(smallCatItems);
         return smallCatItemResponses;
