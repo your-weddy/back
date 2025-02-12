@@ -9,7 +9,7 @@ import java.util.List;
 public interface SmallCatService {
 
     List<SmallCatItemPreviewResponse> findItemPreviews(Long checkListId, Long largeCatItemId); //Long checklistId, Long largeCatId);
-    SmallCatItemResponse findItem(Long checkListId, Long largeCatItemId); //Long checklistId, Long largeCatId);
+    SmallCatItemResponse findItem(Long checkListId, Long largeCatItemId, Long smallCatItemId); //Long checklistId, Long largeCatId);
 
     Long assignItem(SmallCatItemDto dto);//Long checklistId, Long largeCatId
     boolean edit(SmallCatItemDto dto); //Long checklistId, Long largeCatId, Long smallCatId);

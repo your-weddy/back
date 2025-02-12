@@ -11,7 +11,7 @@ import java.util.List;
 public interface SmallCatItemMapper {
 
     List<SmallCatItemPreview> selectItemPreviews(@Param("checkListId")Long checkListId, @Param("largeCatItemId")Long largeCatItemId);
-    SmallCatItem selectItem(@Param("checkListId")Long checkListId, @Param("largeCatItemId")Long largeCatItemId);
+    SmallCatItem selectItem(@Param("checkListId")Long checkListId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
     Long insertItem(SmallCatItem smallCatItem);
 
     int updateItem(SmallCatItem smallCatItem);

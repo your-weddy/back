@@ -29,10 +29,10 @@ public class SmallCatServiceImpl implements SmallCatService {
         return smallCatItemPreviewResponsesResponses;
     }
     @Override
-    public SmallCatItemResponse findItem(Long checkListId, Long largeCatItemId) {
-        SmallCatItem smallCatItems = mapper.selectItem(checkListId, largeCatItemId);
-        SmallCatItemResponse smallCatItemResponses = SmallCatItemResponse.from(smallCatItems);
-        return smallCatItemResponses;
+    public SmallCatItemResponse findItem(Long checkListId, Long largeCatItemId, Long smallCatItemId) {
+        SmallCatItem smallCatItems = mapper.selectItem(checkListId, largeCatItemId, smallCatItemId);
+        SmallCatItemResponse smallCatItemResponse = SmallCatItemResponse.from(smallCatItems);
+        return smallCatItemResponse;
     }
 
     @Override
