@@ -25,6 +25,9 @@ public class UriFilter {
     public boolean isSkipUri(String uri) {
         return skipUriList.stream()
                 .anyMatch(skipUri -> {
+                    if (skipUri.equals("/**")) {
+                        return true;  // 모든 URI에 대해 true 반환
+                    }
                     // 루트 경로(/) 특별 처리
                     if (skipUri.trim().equals("/")) {
                         return uri.equals("/");
