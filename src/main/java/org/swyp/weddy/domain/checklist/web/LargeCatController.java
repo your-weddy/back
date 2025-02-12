@@ -38,7 +38,7 @@ public class LargeCatController {
         }
 
         Long checklistId = checklist.getId();
-        LargeCatItemResponse item = largeCatService.findItem(checklistId, Long.valueOf(id));
+        LargeCatItemResponse item = largeCatService.findItemWithSmallItems(checklistId, Long.valueOf(id));
         if (item == null) {
             throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
