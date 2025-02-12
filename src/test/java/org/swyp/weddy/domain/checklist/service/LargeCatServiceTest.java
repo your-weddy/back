@@ -9,6 +9,7 @@ import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
+import org.swyp.weddy.domain.smallcategory.service.FakeSmallCatService;
 
 import java.sql.Timestamp;
 
@@ -22,7 +23,7 @@ class LargeCatServiceTest {
         @DisplayName("대분류 항목 하나를 가져올 수 있다")
         @Test
         public void find_one_large_cat_item() {
-            LargeCatService largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper());
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             LargeCatItemResponse item = largeCatService.findItem(1L, 1L);
             assertThat(item).isNotNull();
         }
@@ -30,10 +31,30 @@ class LargeCatServiceTest {
         @DisplayName("주어진 대분류 아이디에 등록된 항목이 없을 경우를 처리할 수 있다")
         @Test
         public void no_large_cat_item_for_given_id() {
-            LargeCatService largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper());
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             Assertions.assertThrows(LargeCatItemNotExistsException.class, () ->
                     largeCatService.findItem(-1L, 1L)
             );
+        }
+    }
+
+    @DisplayName("findItemWithSmallItems()")
+    @Nested
+    class findItemWithSmallItemsTest {
+        @DisplayName("대분류 항목에 연결된 소분류 항목(들)을 같이 가져온다")
+        @Test
+        public void return_value_has_small_cat_items() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            LargeCatItemResponse item = largeCatService.findItemWithSmallItems(1L, 1L);
+            assertThat(item.getSmallCatItems()).isNotNull();
+        }
+
+        @DisplayName("대분류 항목에 연결된 소분류 항목이 없는 경우를 처리할 수 있다")
+        @Test
+        public void return_value_has_no_small_cat_items() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            LargeCatItemResponse item = largeCatService.findItemWithSmallItems(1L, 2L);
+            assertThat(item.getSmallCatItems()).isEmpty();
         }
     }
 
@@ -43,7 +64,7 @@ class LargeCatServiceTest {
         @DisplayName("대분류 항목 하나를 추가할 수 있다")
         @Test
         public void assign_one_large_cat_item() {
-            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper());
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             largeCatService.addItem(new LargeCatItemAssignDto(1L, "test"));
         }
 
@@ -69,6 +90,15 @@ class LargeCatServiceTest {
         public LargeCatItem selectItem(Long checkListId, Long id) {
             if (checkListId == -1L) {
                 return null;
+            }
+
+            if (id == 2L) {
+                return new LargeCatItem(2L,
+                        1L,
+                        "test",
+                        null,
+                        null,
+                        Boolean.FALSE);
             }
 
             return new LargeCatItem(1L,
