@@ -28,3 +28,12 @@ GET http://localhost:8080/checklist?memberId=3
 
 ###
 GET http://localhost:8080/checklist/large-cat-item?memberId=1&id=1
+
+###
+POST http://localhost:8080/checklist/large-cat-item
+Content-Type: application/json
+
+{
+  "memberId": "1",
+  "title": "test2"
+}
