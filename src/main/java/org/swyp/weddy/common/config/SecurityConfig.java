@@ -30,7 +30,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/home.html", "/h2-console/**", "/index.html","/auth/**", "/css/**", "/js/**", "/images/**", "/swagger-ui/index.html").permitAll()
+                        .requestMatchers("/", "/home.html", "/h2-console/**", "/index.html","/auth/**", "/css/**", "/js/**", "/images/**", "/swagger-ui/*", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 // H2 콘솔 iframe 접근 허용
