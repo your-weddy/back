@@ -2,6 +2,7 @@ package org.swyp.weddy.domain.smallcategory.service.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.swyp.weddy.domain.smallcategory.web.request.SmallCatItemPostRequest;
 
 import java.util.Date;
 
@@ -9,8 +10,8 @@ import java.util.Date;
 @Getter
 public class SmallCatItemDto {
     private Long checkListId;
-    private Long largeCatItemId;
     private Long id;
+    private Long largeCatItemId;
     private String title;
     private Date dueDate;
     private String assigneeName;
@@ -18,5 +19,17 @@ public class SmallCatItemDto {
     private String statusName;
     private Long amount;
 
-//    public static from();
+    public static SmallCatItemDto from(SmallCatItemPostRequest request) {
+        return new SmallCatItemDto(
+                request.getCheckListId(),
+                null,
+                request.getLargeCatItemId(),
+                request.getTitle(),
+                request.getDueDate(),
+                request.getAssigneeName(),
+                request.getBody(),
+                request.getStatusName(),
+                request.getAmount()
+        );
+    }
 }

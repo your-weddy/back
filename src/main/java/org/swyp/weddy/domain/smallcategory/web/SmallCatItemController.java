@@ -2,11 +2,10 @@ package org.swyp.weddy.domain.smallcategory.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
+import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.smallcategory.web.request.SmallCatItemPostRequest;
 import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
 
@@ -38,6 +37,12 @@ public class SmallCatItemController {
         return ResponseEntity.ok().body(item);
     }
 
+    @PostMapping("/add-item")
+    public ResponseEntity<Long> postItem(@RequestBody SmallCatItemPostRequest smallCatItemPostRequest) {
+        SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(smallCatItemPostRequest);
+        Long itemId = smallCatService.addItem(smallCatItemDto);
+        return ResponseEntity.ok().body(itemId);
+    }
 
 
 }

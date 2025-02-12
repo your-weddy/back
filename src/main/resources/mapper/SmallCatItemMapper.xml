@@ -28,9 +28,23 @@
 
     <!-- 항목 추가 -->
     <insert id="insertItem" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO small_category_item (large_category_item_id, title, due_date, assignee_id, body, status_id, amount, created_at, updated_at, is_deleted)
-             VALUES (#{largeCatItemId}, #{title}, #{dueDate}, #{assigneeName}, #{body}, #{statusName}, #{amount}, NOW(), NOW(), false);
+        INSERT INTO small_category_item
+        (large_category_item_id, title, due_date, assignee_id, body, status_id, amount, created_at, updated_at, is_deleted)
+        VALUES
+        (
+        #{largeCatItemId},
+        #{title},
+        #{dueDate},
+        (SELECT id FROM small_category_item_assignee WHERE name = #{assigneeName}),
+        #{body},
+        (SELECT id FROM small_category_item_status WHERE name = #{statusName}),
+        #{amount},
+        NOW(),
+        NOW(),
+        false
+        );
     </insert>
+
 
     <!-- 항목 수정 -->
     <update id="updateItem">
