@@ -12,6 +12,7 @@ import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
@@ -45,5 +46,10 @@ public class LargeCatController {
         }
 
         return ResponseEntity.ok().body(item);
+    }
+
+
+    public void postItem(LargeCatItemPostRequest request) {
+
     }
 }
