@@ -7,4 +7,6 @@ import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 @Mapper
 public interface LargeCatMapper {
     LargeCatItem selectItem(@Param("checklistId") Long checkListId, @Param("id") Long id);
+
+    Long insertItem(LargeCatItem item);
 }

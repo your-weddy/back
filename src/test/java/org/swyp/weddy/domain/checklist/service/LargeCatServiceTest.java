@@ -61,5 +61,10 @@ class LargeCatServiceTest {
                     null,
                     Boolean.FALSE);
         }
+
+        @Override
+        public Long insertItem(LargeCatItem item) {
+            return 1L;
+        }
     }
 }

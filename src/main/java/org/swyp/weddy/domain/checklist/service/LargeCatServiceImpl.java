@@ -1,6 +1,7 @@
 package org.swyp.weddy.domain.checklist.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
@@ -28,8 +29,12 @@ public class LargeCatServiceImpl implements LargeCatService {
         return LargeCatItemResponse.from(largeCatItem);
     }
 
+    @Transactional
     @Override
     public Long addItem(LargeCatItemAssignDto dto) {
-        return 1L;
+        LargeCatItem largeCatItem = LargeCatItem.from(dto);
+        mapper.insertItem(largeCatItem);
+
+        return largeCatItem.getId();
     }
 }

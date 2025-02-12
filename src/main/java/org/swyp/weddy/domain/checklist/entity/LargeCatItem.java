@@ -1,5 +1,7 @@
 package org.swyp.weddy.domain.checklist.entity;
 
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
+
 import java.sql.Timestamp;
 
 public class LargeCatItem {
@@ -21,6 +23,10 @@ public class LargeCatItem {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.isDeleted = isDeleted;
+    }
+
+    public static LargeCatItem from(LargeCatItemAssignDto dto) {
+        return null;
     }
 
     public Long getId() {
