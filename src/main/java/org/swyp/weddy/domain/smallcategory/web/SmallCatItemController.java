@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
-import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemResponse;
+import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
 
 import java.util.List;
 

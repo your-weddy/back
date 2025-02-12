@@ -7,8 +7,8 @@ import org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper;
 import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
 import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
 import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemResponse;
+import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
 
 import java.util.List;
 

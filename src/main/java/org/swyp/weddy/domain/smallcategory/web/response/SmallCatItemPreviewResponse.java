@@ -1,4 +1,4 @@
-package org.swyp.weddy.domain.smallcategory.web.res;
+package org.swyp.weddy.domain.smallcategory.web.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,8 +1,8 @@
 package org.swyp.weddy.domain.smallcategory.service;
 
 import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemResponse;
+import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
 
 import java.util.List;
 
