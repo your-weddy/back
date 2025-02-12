@@ -25,8 +25,22 @@ public class LargeCatItem {
         this.isDeleted = isDeleted;
     }
 
+    public LargeCatItem(Long checklistId, String title, Timestamp createdAt, Timestamp updatedAt, Boolean isDeleted) {
+        this.checklistId = checklistId;
+        this.title = title;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.isDeleted = isDeleted;
+    }
+
     public static LargeCatItem from(LargeCatItemAssignDto dto) {
-        return null;
+        return new LargeCatItem(
+                dto.getChecklistId(),
+                dto.getTitle(),
+                new Timestamp(System.currentTimeMillis()),
+                null,
+                Boolean.FALSE
+        );
     }
 
     public Long getId() {

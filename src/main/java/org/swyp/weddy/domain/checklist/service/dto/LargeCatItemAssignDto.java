@@ -8,4 +8,12 @@ public class LargeCatItemAssignDto {
         this.checklistId = checklistId;
         this.title = title;
     }
+
+    public Long getChecklistId() {
+        return checklistId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
 }

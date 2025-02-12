@@ -14,4 +14,18 @@
         WHERE id = #{id}
           AND checklist_id = #{checklistId}
     </select>
+
+    <insert id="insertItem" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        INSERT INTO large_category_item (checklist_id,
+                                         title,
+                                         created_at,
+                                         updated_at,
+                                         is_deleted)
+        VALUES (#{checklistId},
+                #{title},
+                #{createdAt},
+                #{updatedAt},
+                #{isDeleted})
+    </insert>
 </mapper>
