@@ -1,11 +1,20 @@
 package org.swyp.weddy.domain.smallcategory.web.res;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
 
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class SmallCatItemResponse {
-    private Long checkListId;
-    private Long largeCatItemId;
     private Long id;
+    private Long largeCatItemId;
     private String title;
     private Date dueDate;
     private String assigneeName;
@@ -13,18 +22,47 @@ public class SmallCatItemResponse {
     private String statusName;
     private Long amount;
 
-    public SmallCatItemResponse(Long checkListId, Long largeCatItemId, Long id, String title, Date dueDate, String assigneeName, String body, String statusName, Long amount) {
-        this.checkListId = checkListId;
-        this.largeCatItemId = largeCatItemId;
-        this.id = id;
-        this.title = title;
-        this.dueDate = dueDate;
-        this.assigneeName = assigneeName;
-        this.body = body;
-        this.statusName = statusName;
-        this.amount = amount;
+    public static List<SmallCatItemResponse> from(List<SmallCatItem> smallCatItems) {
+        return smallCatItems.stream()
+                .map(item -> new SmallCatItemResponse(
+                        item.getId(),
+                        item.getLargeCatItemId(),
+                        item.getTitle(),
+                        item.getDueDate(),
+                        item.getAssigneeName(),
+                        item.getBody(),
+                        item.getStatusName(),
+                        item.getAmount()
+                ))
+                .collect(Collectors.toList());
     }
 
+    public static SmallCatItemResponse from(SmallCatItem item) {
+        return new SmallCatItemResponse(
+                        item.getId(),
+                        item.getLargeCatItemId(),
+                        item.getTitle(),
+                        item.getDueDate(),
+                        item.getAssigneeName(),
+                        item.getBody(),
+                        item.getStatusName(),
+                        item.getAmount()
+                );
+    }
+
+    @Override
+    public String toString() {
+        return "SmallCatItemResponse{" +
+                "id=" + id +
+                ", largeCatItemId=" + largeCatItemId +
+                ", title='" + title + '\'' +
+                ", dueDate=" + dueDate +
+                ", assigneeName='" + assigneeName + '\'' +
+                ", body='" + body + '\'' +
+                ", statusName='" + statusName + '\'' +
+                ", amount=" + amount +
+                '}';
+    }
 }
 
 
