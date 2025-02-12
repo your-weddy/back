@@ -10,6 +10,7 @@ import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
+import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
@@ -41,6 +42,24 @@ class LargeCatControllerTest {
             Assertions.assertThrows(LargeCatItemNotExistsException.class, () -> {
                 controller.getItem("-1", "-1");
             });
+        }
+    }
+
+    @DisplayName("postItem()")
+    @Nested
+    class postItemTest {
+        @DisplayName("대분류 항목 추가 요청을 받을 수 있다")
+        @Test
+        public void post_large_item() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            String memberId = "1L";
+            String title = "test";
+            LargeCatItemPostRequest request = new LargeCatItemPostRequest(memberId, title);
+
+            controller.postItem(request);
         }
     }
 
