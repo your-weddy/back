@@ -43,7 +43,7 @@ public class SmallCatServiceImpl implements SmallCatService {
 
     @Transactional
     @Override
-    public Long assignItem(SmallCatItemDto dto) {
+    public Long addItem(SmallCatItemDto dto) {
         SmallCatItem smallCatItem = SmallCatItem.from(dto);
         Long smallCatItemId = mapper.insertItem(smallCatItem);
         return smallCatItemId;
@@ -51,14 +51,14 @@ public class SmallCatServiceImpl implements SmallCatService {
 
     @Transactional
     @Override
-    public boolean edit(SmallCatItemDto dto) {
+    public boolean editItem(SmallCatItemDto dto) {
         SmallCatItem smallCatItem = SmallCatItem.from(dto);
         int updatedRows = mapper.updateItem(smallCatItem);
         return updatedRows > 0;
     }
 
     @Override
-    public boolean delete(SmallCatItemDto dto) {
+    public boolean deleteItem(SmallCatItemDto dto) {
         Long smallCatItemId = dto.getId();
         int deletedRows = mapper.deleteItem(smallCatItemId);
         return deletedRows > 0;
