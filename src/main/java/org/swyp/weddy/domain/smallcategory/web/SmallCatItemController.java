@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
-import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemResponse;
+import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemPreviewResponse;
 
 import java.util.List;
 
@@ -22,11 +22,11 @@ public class SmallCatItemController {
         this.smallCatService = smallCatService;
     }
 
-    @GetMapping("/items")
-    public ResponseEntity<List<SmallCatItemResponse>> getSmallCatItemList(@RequestParam(name = "checkListId") String checkListId,
+    @GetMapping("/item-previews")
+    public ResponseEntity<List<SmallCatItemPreviewResponse>> getSmallCatItemList(@RequestParam(name = "checkListId") String checkListId,
                                                                     @RequestParam(name = "largeCatItemId") String largeCatItemId) {
-        List<SmallCatItemResponse> items = smallCatService.findItems(Long.valueOf(checkListId), Long.valueOf(largeCatItemId));
-        return ResponseEntity.ok().body(items);
+        List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(Long.valueOf(checkListId), Long.valueOf(largeCatItemId));
+        return ResponseEntity.ok().body(itemPreviews);
     }
 
 }

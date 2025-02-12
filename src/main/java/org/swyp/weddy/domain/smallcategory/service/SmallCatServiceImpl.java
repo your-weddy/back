@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper;
 import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
+import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
 import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.smallcategory.web.res.SmallCatItemResponse;
 
 import java.util.List;
@@ -21,9 +23,15 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     @Override
-    public List<SmallCatItemResponse> findItems(Long checkListId, Long largeCatItemId) {
-        List<SmallCatItem> smallCatItems = mapper.selectAllItems(checkListId, largeCatItemId);
-        List<SmallCatItemResponse> smallCatItemResponses = SmallCatItemResponse.from(smallCatItems);
+    public List<SmallCatItemPreviewResponse> findItemPreviews(Long checkListId, Long largeCatItemId) {
+        List<SmallCatItemPreview> smallCatItems = mapper.selectItemPreviews(checkListId, largeCatItemId);
+        List<SmallCatItemPreviewResponse> smallCatItemPreviewResponsesResponses = SmallCatItemPreviewResponse.from(smallCatItems);
+        return smallCatItemPreviewResponsesResponses;
+    }
+    @Override
+    public SmallCatItemResponse findItem(Long checkListId, Long largeCatItemId) {
+        SmallCatItem smallCatItems = mapper.selectItem(checkListId, largeCatItemId);
+        SmallCatItemResponse smallCatItemResponses = SmallCatItemResponse.from(smallCatItems);
         return smallCatItemResponses;
     }
 
@@ -39,14 +47,6 @@ public class SmallCatServiceImpl implements SmallCatService {
         SmallCatItem smallCatItem = SmallCatItem.from(dto);
         Long smallCatItemId = mapper.insertItem(smallCatItem);
         return smallCatItemId;
-    }
-
-    @Override
-    public SmallCatItemResponse findDetails(SmallCatItemDto dto) {
-        Long largeCatItemId = dto.getLargeCatItemId();
-        Long smallCatItemId = dto.getId();
-        SmallCatItem smallCatItem = mapper.selectItem(largeCatItemId, smallCatItemId);
-        return SmallCatItemResponse.from(smallCatItem);
     }
 
     @Transactional

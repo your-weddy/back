@@ -4,8 +4,8 @@
 <mapper namespace="org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper">
 
     <!-- 전체 항목 조회 -->
-    <select id="selectAllItems" resultType="org.swyp.weddy.domain.smallcategory.entity.SmallCatItem">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.body, small.status_id, small.amount, small.created_at, small.updated_at, small.is_deleted
+    <select id="selectItemPreviews" resultType="org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview">
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.status_id
         FROM small_category_item small
         JOIN large_category_item large ON small.large_category_item_id = large.id
         JOIN checklist ON large.checklist_id = checklist.id
@@ -16,7 +16,7 @@
 
     <!-- 특정 항목 조회 -->
     <select id="selectItem" resultType="org.swyp.weddy.domain.smallcategory.entity.SmallCatItem">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.body, small.status_id, small.amount, small.created_at, small.updated_at, small.is_deleted
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.body, small.status_id, small.amount
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist check ON large.checklist_id = check.id
