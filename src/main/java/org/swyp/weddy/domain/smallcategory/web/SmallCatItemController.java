@@ -55,5 +55,28 @@ public class SmallCatItemController {
         return ResponseEntity.ok().body(result);
     }
 
+    @PatchMapping("/delete-item")
+    public ResponseEntity<Boolean> deleteItem(@RequestParam(name = "checkListId") Long checkListId,
+                                              @RequestParam(name = "largeCatItemId") Long largeCatItemId,
+                                              @RequestParam(name = "smallCatItemId") Long smallCatItemId) {
+        //1. 소분류 항목이 존재하는지 체크
+
+        //2. 삭제
+        boolean result = smallCatService.deleteItem(largeCatItemId,smallCatItemId);
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PatchMapping("/delete-all-items")
+    public ResponseEntity<Boolean> deleteAllItems(@RequestParam(name = "checkListId") Long checkListId,
+                                              @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
+        //1. 소분류 항목이 존재하는지 체크
+
+        //2. 삭제
+        boolean result = smallCatService.deleteAll(checkListId, largeCatItemId);
+        return ResponseEntity.ok().body(result);
+    }
+
+
+
 
 }

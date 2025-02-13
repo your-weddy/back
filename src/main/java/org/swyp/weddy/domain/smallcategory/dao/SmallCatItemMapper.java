@@ -16,8 +16,8 @@ public interface SmallCatItemMapper {
 
     int updateItem(SmallCatItem smallCatItem);
 
-    int deleteAllItems(@Param("largeCatItemId")Long largeCatItemId);
-    int deleteItem(@Param("smallCatItemId")Long smallCatItemId);
+    int deleteItem(@Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
+    int deleteAllItems(@Param("checkListId")Long checkListId, @Param("largeCatItemId")Long largeCatItemId);
 
 
 

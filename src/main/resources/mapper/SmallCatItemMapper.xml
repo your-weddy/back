@@ -3,7 +3,7 @@
 
 <mapper namespace="org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper">
 
-    <!-- 전체 항목 조회 -->
+    <!-- 프리뷰 컬럼 조회 -->
     <select id="selectItemPreviews" resultType="org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview">
         SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.status_id
           FROM small_category_item small
@@ -14,7 +14,7 @@
            AND small.is_deleted = false;
     </select>
 
-    <!-- 특정 항목 조회 -->
+    <!-- 모든 컬럼 조회 -->
     <select id="selectItem" resultType="org.swyp.weddy.domain.smallcategory.entity.SmallCatItem">
         SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.body, small.status_id, small.amount
           FROM small_category_item small
@@ -50,18 +50,20 @@
            AND is_deleted = false;
     </update>
 
-    <!-- 항목 모두 삭제 (소프트 삭제) -->
-    <update id="deleteAllItems">
-        UPDATE small_category_item
-           SET is_deleted = true, updated_at = NOW()
-         WHERE large_category_item_id = #{largeCatItemId};
-    </update>
-
     <!-- 항목 한 개 삭제 (소프트 삭제) -->
     <update id="deleteItem">
         UPDATE small_category_item
-           SET is_deleted = true, updated_at = NOW()
-         WHERE id = #{smallCatItemId};
+           SET is_deleted = true,
+               updated_at = NOW()
+         WHERE id = #{smallCatItemId}
+           AND large_category_item_id =  #{largeCatItemId};
     </update>
 
+    <!-- 항목 모두 삭제 (소프트 삭제) -->
+    <update id="deleteAllItems">
+        UPDATE small_category_item
+           SET is_deleted = true,
+               updated_at = NOW()
+         WHERE large_category_item_id = #{largeCatItemId};
+    </update>
 </mapper>

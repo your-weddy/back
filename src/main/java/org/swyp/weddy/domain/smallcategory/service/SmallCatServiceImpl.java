@@ -37,7 +37,7 @@ public class SmallCatServiceImpl implements SmallCatService {
 
     @Override
     public boolean deleteAll(Long checkListId, Long largeCatItemId) {
-        int deletedRows = mapper.deleteAllItems(largeCatItemId);
+        int deletedRows = mapper.deleteAllItems(checkListId, largeCatItemId);
         return deletedRows < 0;
     }
 
@@ -58,9 +58,8 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     @Override
-    public boolean deleteItem(SmallCatItemDto dto) {
-        Long smallCatItemId = dto.getId();
-        int deletedRows = mapper.deleteItem(smallCatItemId);
+    public boolean deleteItem(Long largeCatItemId, Long smallCatItemId) {
+        int deletedRows = mapper.deleteItem(largeCatItemId, smallCatItemId);
         return deletedRows > 0;
     }
 }
