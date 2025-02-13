@@ -1,6 +1,7 @@
 package org.swyp.weddy.domain.checklist.service;
 
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
@@ -12,4 +13,6 @@ public interface LargeCatService {
     Long addItem(LargeCatItemAssignDto dto);
 
     Long editItem(LargeCatItemEditDto dto);
+
+    Long deleteItem(LargeCatItemDeleteDto dto);
 }

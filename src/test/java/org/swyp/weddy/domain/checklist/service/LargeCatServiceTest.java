@@ -8,6 +8,7 @@ import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.smallcategory.service.FakeSmallCatService;
@@ -95,6 +96,17 @@ class LargeCatServiceTest {
             LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             Long editItemId = largeCatService.editItem(new LargeCatItemEditDto(1L, 1L, "revised_test"));
             assertThat(editItemId).isNotNull();
+        }
+    }
+
+    @DisplayName("deleteItem()")
+    @Nested
+    class deleteItemTest {
+        @DisplayName("대분류 항목 하나를 삭제할 수 있다")
+        @Test
+        public void delete_one_large_cat_item() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            largeCatService.deleteItem(new LargeCatItemDeleteDto(1L, 1L));
         }
     }
 
