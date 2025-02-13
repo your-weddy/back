@@ -88,7 +88,7 @@ public class LargeCatController {
         ChecklistResponse checklist = checklistService.findChecklist(dto);
 
         LargeCatItemDeleteDto deleteDto = LargeCatItemDeleteDto.of(checklist.getId(), request);
-        largeCatService.deleteItem(deleteDto);
+        largeCatService.deleteItemWithSmallItems(deleteDto);
 
         return ResponseEntity.ok().build();
     }
