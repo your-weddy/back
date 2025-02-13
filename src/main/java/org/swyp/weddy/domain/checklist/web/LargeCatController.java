@@ -54,7 +54,7 @@ public class LargeCatController {
     }
 
     @PatchMapping
-    public ResponseEntity<Void> patchItem(LargeCatItemEditRequest request) {
+    public ResponseEntity<Void> patchItem(@RequestBody LargeCatItemEditRequest request) {
         String memberId = request.getMemberId();
         ChecklistDto dto = ChecklistDto.from(memberId);
 
