@@ -102,8 +102,13 @@ class LargeCatServiceTest {
     @DisplayName("deleteItem()")
     @Nested
     class deleteItemTest {
-        @DisplayName("대분류 항목 하나를 삭제할 수 있다")
+        @DisplayName("대분류 항목 삭제 요청을 받을 수 있다")
         @Test
+        public void receive_delete_one_large_cat_item_message() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            largeCatService.deleteItem(new LargeCatItemDeleteDto(1L, 1L));
+        }
+
         public void delete_one_large_cat_item() {
             LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             largeCatService.deleteItem(new LargeCatItemDeleteDto(1L, 1L));
