@@ -1,6 +1,7 @@
 package org.swyp.weddy.domain.checklist.entity;
 
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
 
 import java.sql.Timestamp;
@@ -55,6 +56,17 @@ public class LargeCatItem {
         );
     }
 
+    public static LargeCatItem ofDelete(LargeCatItem itemBeforeDelete, LargeCatItemDeleteDto dto) {
+        return new LargeCatItem(
+                dto.getId(),
+                dto.getChecklistId(),
+                itemBeforeDelete.getTitle(),
+                itemBeforeDelete.getCreatedAt(),
+                itemBeforeDelete.getUpdatedAt(),
+                Boolean.TRUE
+        );
+    }
+
     public Long getId() {
         return id;
     }
@@ -69,6 +81,10 @@ public class LargeCatItem {
 
     public Timestamp getCreatedAt() {
         return createdAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
     public Boolean getIsDeleted() {

@@ -8,4 +8,12 @@ public class LargeCatItemDeleteDto {
         this.checklistId = checklistId;
         this.id = id;
     }
+
+    public Long getChecklistId() {
+        return checklistId;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }

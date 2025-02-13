@@ -38,4 +38,12 @@
         WHERE checklist_id = #{checklistId}
           AND id = #{id}
     </update>
+
+    <update id="deleteItem" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        UPDATE large_category_item
+        SET is_deleted = #{isDeleted}
+        WHERE checklist_id = #{checklistId}
+          AND id = #{id}
+    </update>
 </mapper>
