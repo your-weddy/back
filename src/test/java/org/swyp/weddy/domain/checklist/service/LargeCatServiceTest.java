@@ -163,6 +163,14 @@ class LargeCatServiceTest {
         }
 
         @Override
+        public List<LargeCatItem> selectAllItems(Long checklistId) {
+            return List.of(
+                    new LargeCatItem(1L, 1L, "test", null, null, Boolean.FALSE),
+                    new LargeCatItem(2L, 1L, "test2", null, null, Boolean.FALSE)
+            );
+        }
+
+        @Override
         public Long insertItem(LargeCatItem item) {
             return 1L;
         }

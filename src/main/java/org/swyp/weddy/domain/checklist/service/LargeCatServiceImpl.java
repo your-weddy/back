@@ -13,6 +13,7 @@ import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
 import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -91,6 +92,22 @@ public class LargeCatServiceImpl implements LargeCatService {
 
     @Override
     public List<LargeCatItemResponse> findAllItems(Long checklistId) {
-        return null;
+        List<LargeCatItem> allItems = mapper.selectAllItems(checklistId);
+
+        if (allItems == null) {
+            throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
+        }
+
+        List<LargeCatItemResponse> result = new ArrayList<>();
+        for (LargeCatItem item : allItems) {
+            List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(
+                    checklistId, item.getId()
+            );
+
+            LargeCatItemResponse itemWithSmallItems = LargeCatItemResponse.from(item).withSmallCatItems(itemPreviews);
+            result.add(itemWithSmallItems);
+        }
+
+        return result;
     }
 }
