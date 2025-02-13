@@ -7,4 +7,5 @@ import java.util.List;
 public interface SmallCatService {
 
     List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId); //Long checklistId, Long largeCatId);
+    void deleteAll(Long checklistId, Long largeCatItemId);
 }

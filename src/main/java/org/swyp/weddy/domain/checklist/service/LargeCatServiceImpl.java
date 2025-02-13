@@ -91,9 +91,21 @@ public class LargeCatServiceImpl implements LargeCatService {
         return largeCatItem.getId();
     }
 
+    @Transactional
     @Override
     public Long deleteItemWithSmallItems(LargeCatItemDeleteDto dto) {
-        return 0L;
+        LargeCatItem itemBeforeDelete = mapper.selectItem(dto.getChecklistId(), dto.getId());
+
+        if (itemBeforeDelete == null) {
+            throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
+        }
+
+        smallCatService.deleteAll(dto.getChecklistId(), dto.getId());
+
+        LargeCatItem largeCatItem = LargeCatItem.ofDelete(itemBeforeDelete, dto);
+        mapper.deleteItem(largeCatItem);
+
+        return largeCatItem.getId();
     }
 
     @Override

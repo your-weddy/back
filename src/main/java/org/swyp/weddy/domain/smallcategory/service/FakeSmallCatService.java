@@ -20,4 +20,9 @@ public class FakeSmallCatService implements SmallCatService {
                 new SmallCatItemPreviewResponse(3L, 1L, "t3", new Date(), "세준", "진행중")
         );
     }
+
+    @Override
+    public void deleteAll(Long checklistId, Long largeCatItemId) {
+
+    }
 }
