@@ -49,6 +49,18 @@ class LargeCatControllerTest {
             );
             controller.getAllItems("1");
         }
+
+        @DisplayName("모든 대분류 항목 가져오기 결과를 반환할 수 있다")
+        @Test
+        public void returns_all_large_items() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            ResponseEntity<List<LargeCatItemResponse>> response = controller.getAllItems("1");
+
+            assertThat(response).isNotNull();
+        }
     }
 
     @DisplayName("postItem()")
@@ -185,7 +197,10 @@ class LargeCatControllerTest {
 
         @Override
         public List<LargeCatItemResponse> findAllItems(Long checklistId) {
-            return null;
+            return List.of(
+                    new LargeCatItemResponse(1L, 1L, "test"),
+                    new LargeCatItemResponse(1L, 1L, "test")
+            );
         }
     }
 
