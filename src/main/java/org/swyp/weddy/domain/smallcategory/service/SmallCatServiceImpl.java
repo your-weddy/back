@@ -99,6 +99,7 @@ public class SmallCatServiceImpl implements SmallCatService {
         }
     }
 
+    @Transactional
     @Override
     public boolean deleteItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
 
@@ -124,6 +125,7 @@ public class SmallCatServiceImpl implements SmallCatService {
         }
     }
 
+    @Transactional
     @Override
     public boolean deleteAll(Long checklistId, Long largeCatItemId) {
 
