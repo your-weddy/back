@@ -40,11 +40,12 @@ public class LargeCatServiceImpl implements LargeCatService {
     @Override
     public LargeCatItemResponse findItemWithSmallItems(Long checklistId, Long id) {
         LargeCatItem largeCatItem = mapper.selectItem(checklistId, id);
-        List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(checklistId, id);
 
         if (largeCatItem == null) {
             throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
+
+        List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(checklistId, id);
 
         return LargeCatItemResponse.from(largeCatItem)
                 .withSmallCatItems(itemPreviews);
