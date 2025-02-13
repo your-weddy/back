@@ -9,6 +9,7 @@ import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.web.request.LargeCatItemEditRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
@@ -59,6 +60,25 @@ class LargeCatControllerTest {
             LargeCatItemPostRequest request = new LargeCatItemPostRequest("1L", "test");
 
             assertThat(controller.postItem(request)).isEqualTo(ResponseEntity.ok().build());
+        }
+    }
+
+    @DisplayName("patchItem()")
+    @Nested
+    class patchItemTest {
+        @DisplayName("대분류 항목 수정 요청을 받을 수 있다")
+        @Test
+        public void patch_large_item() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            String memberId = "1L";
+            String editedTitle = "test_revised";
+
+            LargeCatItemEditRequest request = new LargeCatItemEditRequest(memberId, editedTitle);
+
+            controller.patchItem(request);
         }
     }
 
