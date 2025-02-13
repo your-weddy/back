@@ -47,3 +47,12 @@ Content-Type: application/json
   "id": "1",
   "editedTitle": "test_revised"
 }
+
+###
+PATCH http://localhost:8080/checklist/large-cat-item/delete
+Content-Type: application/json
+
+{
+  "memberId": "1",
+  "id": "1"
+}

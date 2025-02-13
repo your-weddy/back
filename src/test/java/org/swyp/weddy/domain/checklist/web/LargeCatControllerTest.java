@@ -118,6 +118,21 @@ class LargeCatControllerTest {
 
             controller.deleteItem(request);
         }
+
+        @DisplayName("대분류 항목 삭제 결과를 반환할 수 있다")
+        @Test
+        public void returns_delete_large_item() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            String memberId = "1";
+            String itemId = "1";
+
+            LargeCatItemDeleteRequest request = new LargeCatItemDeleteRequest(memberId, itemId);
+
+            assertThat(controller.deleteItem(request)).isEqualTo(ResponseEntity.ok().build());
+        }
     }
 
     private static class FakeLargeCatService implements LargeCatService {
