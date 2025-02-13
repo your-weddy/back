@@ -13,6 +13,7 @@
         FROM large_category_item
         WHERE id = #{id}
           AND checklist_id = #{checklistId}
+          AND is_deleted = false
     </select>
 
     <insert id="insertItem" useGeneratedKeys="true" keyProperty="id"
