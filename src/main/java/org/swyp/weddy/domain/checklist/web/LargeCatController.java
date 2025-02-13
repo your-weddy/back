@@ -15,6 +15,8 @@ import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/checklist/large-cat-item")
@@ -41,6 +43,9 @@ public class LargeCatController {
         return ResponseEntity.ok().body(item);
     }
 
+    public ResponseEntity<List<LargeCatItemResponse>> getAllItems(@RequestParam(name = "memberId") String memberId) {
+        return null;
+    }
 
     @PostMapping
     public ResponseEntity<Void> postItem(@RequestBody LargeCatItemPostRequest request) {

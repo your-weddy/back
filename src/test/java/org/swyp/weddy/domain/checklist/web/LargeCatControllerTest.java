@@ -37,6 +37,20 @@ class LargeCatControllerTest {
         }
     }
 
+    @DisplayName("getAllItems()")
+    @Nested
+    class GetAllItemsTest {
+        @DisplayName("모든 대분류 항목 가져오기 요청을 받을 수 있다")
+        @Test
+        public void receive_get_all_large_items_message() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            controller.getAllItems("1");
+        }
+    }
+
     @DisplayName("postItem()")
     @Nested
     class PostItemTest {
