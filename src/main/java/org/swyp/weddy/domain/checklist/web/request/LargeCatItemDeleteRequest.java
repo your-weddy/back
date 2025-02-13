@@ -4,6 +4,9 @@ public class LargeCatItemDeleteRequest {
     private String memberId;
     private String id;
 
+    public LargeCatItemDeleteRequest() {
+    }
+
     public LargeCatItemDeleteRequest(String memberId, String id) {
         this.memberId = memberId;
         this.id = id;

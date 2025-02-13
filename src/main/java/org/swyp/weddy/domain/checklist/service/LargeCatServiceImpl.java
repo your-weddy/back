@@ -83,7 +83,7 @@ public class LargeCatServiceImpl implements LargeCatService {
         }
 
         LargeCatItem largeCatItem = LargeCatItem.ofDelete(itemBeforeDelete, dto);
-        mapper.updateItem(largeCatItem);
+        mapper.deleteItem(largeCatItem);
 
         return largeCatItem.getId();
     }

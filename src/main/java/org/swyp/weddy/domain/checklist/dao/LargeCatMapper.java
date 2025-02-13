@@ -11,4 +11,6 @@ public interface LargeCatMapper {
     Long insertItem(LargeCatItem item);
 
     Long updateItem(LargeCatItem item);
+
+    Long deleteItem(LargeCatItem item);
 }

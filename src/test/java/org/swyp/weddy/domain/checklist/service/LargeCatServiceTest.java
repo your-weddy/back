@@ -151,5 +151,10 @@ class LargeCatServiceTest {
         public Long updateItem(LargeCatItem item) {
             return 1L;
         }
+
+        @Override
+        public Long deleteItem(LargeCatItem item) {
+            return 0L;
+        }
     }
 }
