@@ -3,9 +3,6 @@ package org.swyp.weddy.domain.checklist.web;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.swyp.weddy.common.exception.ErrorCode;
-import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
-import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
@@ -33,15 +30,9 @@ public class LargeCatController {
     ) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistResponse checklist = checklistService.findChecklist(dto);
-        if (checklist == null) {
-            throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
-        }
 
         Long checklistId = checklist.getId();
         LargeCatItemResponse item = largeCatService.findItemWithSmallItems(checklistId, Long.valueOf(id));
-        if (item == null) {
-            throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
-        }
 
         return ResponseEntity.ok().body(item);
     }
@@ -53,9 +44,6 @@ public class LargeCatController {
         ChecklistDto dto = ChecklistDto.from(memberId);
 
         ChecklistResponse checklist = checklistService.findChecklist(dto);
-        if (checklist == null) {
-            throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
-        }
 
         LargeCatItemAssignDto assignDto = new LargeCatItemAssignDto(checklist.getId(), request.getTitle());
         largeCatService.addItem(assignDto);
