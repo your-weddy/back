@@ -17,4 +17,12 @@ public class LargeCatItemEditRequest {
     public String getMemberId() {
         return memberId;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEditedTitle() {
+        return editedTitle;
+    }
 }
