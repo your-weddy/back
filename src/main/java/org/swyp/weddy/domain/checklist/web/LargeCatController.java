@@ -29,10 +29,10 @@ public class LargeCatController {
         this.checklistService = checklistService;
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<LargeCatItemResponse> getItem(
-            @RequestParam(name = "memberId") String memberId,
-            @RequestParam(name = "id") String id
+            @PathVariable(name = "id") String id,
+            @RequestParam(name = "memberId") String memberId
     ) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistResponse checklist = checklistService.findChecklist(dto);
