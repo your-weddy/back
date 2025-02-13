@@ -60,6 +60,15 @@ public class LargeCatServiceImpl implements LargeCatService {
 
     @Override
     public Long editItem(LargeCatItemEditDto dto) {
-        return 1L;
+        LargeCatItem itemBeforeEdit = mapper.selectItem(dto.getChecklistId(), dto.getId());
+
+        if (itemBeforeEdit == null) {
+            throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
+        }
+
+        LargeCatItem largeCatItem = LargeCatItem.of(itemBeforeEdit, dto);
+        mapper.updateItem(largeCatItem);
+
+        return largeCatItem.getId();
     }
 }

@@ -28,4 +28,13 @@
                 #{updatedAt},
                 #{isDeleted})
     </insert>
+
+    <update id="updateItem" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        UPDATE large_category_item
+        SET title      = #{title},
+            updated_at = #{updatedAt}
+        WHERE checklist_id = #{checklistId}
+          AND id = #{id}
+    </update>
 </mapper>

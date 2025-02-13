@@ -126,5 +126,10 @@ class LargeCatServiceTest {
         public Long insertItem(LargeCatItem item) {
             return 1L;
         }
+
+        @Override
+        public Long updateItem(LargeCatItem item) {
+            return 1L;
+        }
     }
 }

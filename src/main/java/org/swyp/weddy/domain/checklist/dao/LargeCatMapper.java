@@ -9,4 +9,6 @@ public interface LargeCatMapper {
     LargeCatItem selectItem(@Param("checklistId") Long checkListId, @Param("id") Long id);
 
     Long insertItem(LargeCatItem item);
+
+    Long updateItem(LargeCatItem item);
 }
