@@ -109,9 +109,12 @@ class LargeCatServiceTest {
             largeCatService.deleteItem(new LargeCatItemDeleteDto(1L, 1L));
         }
 
+        @DisplayName("대분류 항목을 삭제할 수 있다")
+        @Test
         public void delete_one_large_cat_item() {
             LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
-            largeCatService.deleteItem(new LargeCatItemDeleteDto(1L, 1L));
+            Long deletedItemId = largeCatService.deleteItem(new LargeCatItemDeleteDto(1L, 1L));
+            assertThat(deletedItemId).isNotNull();
         }
     }
 
