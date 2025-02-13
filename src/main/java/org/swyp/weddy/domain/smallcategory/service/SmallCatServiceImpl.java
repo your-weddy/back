@@ -38,6 +38,7 @@ public class SmallCatServiceImpl implements SmallCatService {
         List<SmallCatItemPreviewResponse> smallCatItemPreviewResponsesResponses = SmallCatItemPreviewResponse.from(smallCatItems);
         return smallCatItemPreviewResponsesResponses;
     }
+
     @Override
     public SmallCatItemResponse findItem(Long checkListId, Long largeCatItemId, Long smallCatItemId) {
 
@@ -55,10 +56,17 @@ public class SmallCatServiceImpl implements SmallCatService {
     public Long addItem(SmallCatItemDto dto) {
 
         SmallCatItem smallCatItem = SmallCatItem.from(dto);
+        Long smallCatItemId = insertItemOrThrow(smallCatItem);
+        if (smallCatItemId == 0) {
+            throw new SmallCategoryItemAddException(ErrorCode.ADD_FAILED);
+        }
 
+        return smallCatItemId;
+    }
+
+    private Long insertItemOrThrow(SmallCatItem smallCatItem) { // 예외 발생을 명확히 표현
         try {
-            Long smallCatItemId = mapper.insertItem(smallCatItem);
-            return smallCatItemId;
+            return mapper.insertItem(smallCatItem);
         } catch (Exception e) {
             throw new SmallCategoryItemAddException(ErrorCode.ADD_FAILED);
         }
@@ -73,13 +81,21 @@ public class SmallCatServiceImpl implements SmallCatService {
             throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
+        SmallCatItem smallCatItem = SmallCatItem.from(dto);
+        int updatedRows = updateItemOrThrow(smallCatItem);
+        if (updatedRows == 0) {
+            throw new SmallCategoryItemUpdateException(ErrorCode.UPDATE_FAILED);
+        }
+
+        return updatedRows > 0;
+
+    }
+
+    private int updateItemOrThrow(SmallCatItem smallCatItem) { // 예외 발생을 명확히 표현
         try {
-            SmallCatItem smallCatItem = SmallCatItem.from(dto);
-            int updatedRows = mapper.updateItem(smallCatItem);
-            return updatedRows > 0;
+            return mapper.updateItem(smallCatItem);
         } catch (Exception e) {
             throw new SmallCategoryItemUpdateException(ErrorCode.UPDATE_FAILED);
-
         }
     }
 
@@ -91,11 +107,19 @@ public class SmallCatServiceImpl implements SmallCatService {
             throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
-        try {
-            int deletedRows = mapper.deleteItem(largeCatItemId, smallCatItemId);
-            return deletedRows > 0;
+        int deletedRows = deleteItemOrThrow(largeCatItemId, smallCatItemId);
+        if (deletedRows == 0) {
+            throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
         }
-        catch (Exception e){
+
+        return deletedRows > 0;
+
+    }
+
+    private int deleteItemOrThrow(Long largeCatItemId, Long smallCatItemId) { // 예외 발생을 명확히 표현
+        try {
+            return mapper.deleteItem(largeCatItemId, smallCatItemId);
+        } catch (Exception e) {
             throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
         }
     }
@@ -108,11 +132,19 @@ public class SmallCatServiceImpl implements SmallCatService {
             throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
-        try {
-            int deletedRows = mapper.deleteAllItems(checkListId, largeCatItemId);
-            return deletedRows > 0;
+        int deletedRows = mapper.deleteAllItems(checkListId, largeCatItemId);
+        if (deletedRows == 0) {
+            throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
         }
-        catch (Exception e){
+
+        return deletedRows > 0;
+
+    }
+
+    private int deleteAllItemsOrThrow(Long checkListId, Long largeCatItemId) { // 예외 발생을 명확히 표현
+        try {
+            return mapper.deleteAllItems(checkListId, largeCatItemId);
+        } catch (Exception e) {
             throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
         }
     }
