@@ -76,6 +76,7 @@ public class LargeCatServiceImpl implements LargeCatService {
         return largeCatItem.getId();
     }
 
+    @Transactional
     @Override
     public Long deleteItem(LargeCatItemDeleteDto dto) {
         LargeCatItem itemBeforeDelete = mapper.selectItem(dto.getChecklistId(), dto.getId());
