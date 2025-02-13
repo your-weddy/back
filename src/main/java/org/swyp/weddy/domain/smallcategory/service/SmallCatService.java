@@ -13,7 +13,7 @@ public interface SmallCatService {
 
     Long addItem(SmallCatItemDto dto);//Long checklistId, Long largeCatId
     boolean editItem(SmallCatItemDto dto); //Long checklistId, Long largeCatId, Long smallCatId);
-    boolean deleteItem(Long largeCatItemId, Long smallCatItemId); //Long checklistId, Long largeCatId, Long smallCatId);
+    boolean deleteItem(Long checkListId, Long largeCatItemId, Long smallCatItemId); //Long checklistId, Long largeCatId, Long smallCatId);
     boolean deleteAll(Long checkListId, Long largeCatItemId);  //Long checklistId, Long largeCatId,
 
 }

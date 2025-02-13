@@ -27,6 +27,7 @@ public class SmallCatItemController {
     public ResponseEntity<List<SmallCatItemPreviewResponse>> getSmallCatItemList(@RequestParam(name = "checkListId") Long checkListId,
                                                                     @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
         List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(checkListId, largeCatItemId);
+
         return ResponseEntity.ok().body(itemPreviews);
     }
 
@@ -34,24 +35,27 @@ public class SmallCatItemController {
     public ResponseEntity<SmallCatItemResponse> getSmallCatItem(@RequestParam(name = "checkListId") Long checkListId,
                                                                 @RequestParam(name = "largeCatItemId") Long largeCatItemId,
                                                                 @RequestParam(name = "smallCatItemId") Long smallCatItemId) {
+
         SmallCatItemResponse item = smallCatService.findItem(checkListId, largeCatItemId, smallCatItemId);
+
         return ResponseEntity.ok().body(item);
     }
 
     @PostMapping("/add-item")
     public ResponseEntity<Long> postItem(@RequestBody SmallCatItemPostRequest request) {
+
         SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(request);
         Long itemId = smallCatService.addItem(smallCatItemDto);
+
         return ResponseEntity.ok().body(itemId);
     }
 
     @PatchMapping("/update-item")
     public ResponseEntity<Boolean> patchItem(@RequestBody SmallCatItemPatchRequest request) {
-        //1. 소분류 항목이 존재하는지 체크
 
-        //2. 업데이트
         SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(request);
         boolean result = smallCatService.editItem(smallCatItemDto);
+
         return ResponseEntity.ok().body(result);
     }
 
@@ -59,20 +63,18 @@ public class SmallCatItemController {
     public ResponseEntity<Boolean> deleteItem(@RequestParam(name = "checkListId") Long checkListId,
                                               @RequestParam(name = "largeCatItemId") Long largeCatItemId,
                                               @RequestParam(name = "smallCatItemId") Long smallCatItemId) {
-        //1. 소분류 항목이 존재하는지 체크
 
-        //2. 삭제
-        boolean result = smallCatService.deleteItem(largeCatItemId,smallCatItemId);
+        boolean result = smallCatService.deleteItem(checkListId, largeCatItemId, smallCatItemId);
+
         return ResponseEntity.ok().body(result);
     }
 
     @PatchMapping("/delete-all-items")
     public ResponseEntity<Boolean> deleteAllItems(@RequestParam(name = "checkListId") Long checkListId,
-                                              @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
-        //1. 소분류 항목이 존재하는지 체크
+                                                  @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
 
-        //2. 삭제
         boolean result = smallCatService.deleteAll(checkListId, largeCatItemId);
+
         return ResponseEntity.ok().body(result);
     }
 
