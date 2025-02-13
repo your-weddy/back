@@ -43,8 +43,15 @@ public class LargeCatController {
         return ResponseEntity.ok().body(item);
     }
 
+    @GetMapping
     public ResponseEntity<List<LargeCatItemResponse>> getAllItems(@RequestParam(name = "memberId") String memberId) {
-        return null;
+        ChecklistDto dto = ChecklistDto.from(memberId);
+        ChecklistResponse checklist = checklistService.findChecklist(dto);
+
+        Long checklistId = checklist.getId();
+        List<LargeCatItemResponse> allItems = largeCatService.findAllItems(checklistId);
+
+        return ResponseEntity.ok().body(allItems);
     }
 
     @PostMapping
