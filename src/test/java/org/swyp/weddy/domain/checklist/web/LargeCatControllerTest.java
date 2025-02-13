@@ -21,7 +21,7 @@ class LargeCatControllerTest {
 
     @DisplayName("getItem()")
     @Nested
-    class getItemTest {
+    class GetItemTest {
         @DisplayName("대분류 항목 하나를 가져올 수 있다")
         @Test
         public void get_large_item() {
@@ -36,7 +36,7 @@ class LargeCatControllerTest {
 
     @DisplayName("postItem()")
     @Nested
-    class postItemTest {
+    class PostItemTest {
         @DisplayName("대분류 항목 추가 요청을 받을 수 있다")
         @Test
         public void post_large_item() {
@@ -66,7 +66,7 @@ class LargeCatControllerTest {
 
     @DisplayName("patchItem()")
     @Nested
-    class patchItemTest {
+    class PatchItemTest {
         @DisplayName("대분류 항목 수정 요청을 받을 수 있다")
         @Test
         public void patch_large_item() {

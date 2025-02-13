@@ -21,7 +21,7 @@ class LargeCatServiceTest {
 
     @DisplayName("findItem()")
     @Nested
-    class findItemTest {
+    class FindItemTest {
         @DisplayName("대분류 항목 하나를 가져올 수 있다")
         @Test
         public void find_one_large_cat_item() {
@@ -42,7 +42,7 @@ class LargeCatServiceTest {
 
     @DisplayName("findItemWithSmallItems()")
     @Nested
-    class findItemWithSmallItemsTest {
+    class FindItemWithSmallItemsTest {
         @DisplayName("대분류 항목에 연결된 소분류 항목(들)을 같이 가져온다")
         @Test
         public void return_value_has_small_cat_items() {
@@ -62,7 +62,7 @@ class LargeCatServiceTest {
 
     @DisplayName("assignItem()")
     @Nested
-    class assignItemTest {
+    class AssignItemTest {
         @DisplayName("대분류 항목 하나를 추가할 수 있다")
         @Test
         public void assign_one_large_cat_item() {
@@ -89,7 +89,7 @@ class LargeCatServiceTest {
 
     @DisplayName("editItem()")
     @Nested
-    class editItemTest {
+    class EditItemTest {
         @DisplayName("대분류 항목 하나를 수정할 수 있다")
         @Test
         public void edit_one_large_cat_item() {
@@ -101,7 +101,7 @@ class LargeCatServiceTest {
 
     @DisplayName("deleteItem()")
     @Nested
-    class deleteItemTest {
+    class DeleteItemTest {
         @DisplayName("대분류 항목 삭제 요청을 받을 수 있다")
         @Test
         public void receive_delete_one_large_cat_item_message() {
