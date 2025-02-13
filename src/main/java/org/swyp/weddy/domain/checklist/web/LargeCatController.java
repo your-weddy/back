@@ -68,7 +68,8 @@ public class LargeCatController {
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Void> deleteItem(LargeCatItemDeleteRequest request) {
+    @PatchMapping("/delete")
+    public ResponseEntity<Void> deleteItem(@RequestBody LargeCatItemDeleteRequest request) {
         String memberId = request.getMemberId();
         ChecklistDto dto = ChecklistDto.from(memberId);
 
