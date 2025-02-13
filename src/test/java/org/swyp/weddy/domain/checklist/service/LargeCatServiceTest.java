@@ -112,8 +112,8 @@ class LargeCatServiceTest {
 
     private static class FakeLargeCatMapper implements LargeCatMapper {
         @Override
-        public LargeCatItem selectItem(Long checkListId, Long id) {
-            if (checkListId == -1L) {
+        public LargeCatItem selectItem(Long checklistId, Long id) {
+            if (checklistId == -1L) {
                 return null;
             }
 

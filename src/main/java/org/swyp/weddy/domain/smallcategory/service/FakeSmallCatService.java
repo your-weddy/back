@@ -9,7 +9,7 @@ import java.util.List;
 @Service
 public class FakeSmallCatService implements SmallCatService {
     @Override
-    public List<SmallCatItemPreviewResponse> findItemPreviews(Long checkListId, Long largeCatItemId) {
+    public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
         if (largeCatItemId != 1L) {
             return null;
         }
