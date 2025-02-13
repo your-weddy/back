@@ -138,6 +138,18 @@ class LargeCatServiceTest {
         }
     }
 
+    @DisplayName("deleteItemWithSmallItems()")
+    @Nested
+    class DeleteItemWithSmallItemsTest {
+        @DisplayName("대분류 항목에 연결된 소분류 항목(들)을 같이 삭제한다")
+        @Test
+        public void return_value_has_small_cat_items() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            Long deletedItemId = largeCatService.deleteItemWithSmallItems(new LargeCatItemDeleteDto(1L, 1L));
+            assertThat(deletedItemId).isNotNull();
+        }
+    }
+
     private static class FakeLargeCatMapper implements LargeCatMapper {
         @Override
         public LargeCatItem selectItem(Long checklistId, Long id) {

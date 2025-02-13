@@ -18,5 +18,7 @@ public interface LargeCatService {
 
     Long deleteItem(LargeCatItemDeleteDto dto);
 
+    Long deleteItemWithSmallItems(LargeCatItemDeleteDto dto);
+
     List<LargeCatItemResponse> findAllItems(Long checklistId);
 }

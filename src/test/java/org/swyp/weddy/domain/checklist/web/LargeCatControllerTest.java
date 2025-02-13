@@ -196,6 +196,11 @@ class LargeCatControllerTest {
         }
 
         @Override
+        public Long deleteItemWithSmallItems(LargeCatItemDeleteDto dto) {
+            return 0L;
+        }
+
+        @Override
         public List<LargeCatItemResponse> findAllItems(Long checklistId) {
             return List.of(
                     new LargeCatItemResponse(1L, 1L, "test"),

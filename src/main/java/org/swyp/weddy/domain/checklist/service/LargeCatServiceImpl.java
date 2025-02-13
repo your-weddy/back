@@ -91,6 +91,11 @@ public class LargeCatServiceImpl implements LargeCatService {
     }
 
     @Override
+    public Long deleteItemWithSmallItems(LargeCatItemDeleteDto dto) {
+        return 0L;
+    }
+
+    @Override
     public List<LargeCatItemResponse> findAllItems(Long checklistId) {
         List<LargeCatItem> allItems = mapper.selectAllItems(checklistId);
 
