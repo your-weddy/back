@@ -60,6 +60,17 @@ class LargeCatServiceTest {
         }
     }
 
+    @DisplayName("findAllItems()")
+    @Nested
+    class FindAllItemsTest {
+        @DisplayName("모든 대분류 항목 읽어오기 요청을 받을 수 있다")
+        @Test
+        public void receive_all_items_message() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            largeCatService.findAllItems(1L);
+        }
+    }
+
     @DisplayName("assignItem()")
     @Nested
     class AssignItemTest {

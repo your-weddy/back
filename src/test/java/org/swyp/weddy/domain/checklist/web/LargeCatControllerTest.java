@@ -16,6 +16,8 @@ import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LargeCatControllerTest {
@@ -165,6 +167,11 @@ class LargeCatControllerTest {
         @Override
         public Long deleteItem(LargeCatItemDeleteDto dto) {
             return 0L;
+        }
+
+        @Override
+        public List<LargeCatItemResponse> findAllItems(Long checklistId) {
+            return null;
         }
     }
 

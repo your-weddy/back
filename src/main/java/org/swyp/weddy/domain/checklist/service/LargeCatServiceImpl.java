@@ -87,4 +87,9 @@ public class LargeCatServiceImpl implements LargeCatService {
 
         return largeCatItem.getId();
     }
+
+    @Override
+    public List<LargeCatItemResponse> findAllItems(Long checklistId) {
+        return null;
+    }
 }
