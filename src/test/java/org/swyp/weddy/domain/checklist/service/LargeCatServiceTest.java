@@ -14,6 +14,7 @@ import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.smallcategory.service.FakeSmallCatService;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -68,6 +69,14 @@ class LargeCatServiceTest {
         public void receive_all_items_message() {
             LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             largeCatService.findAllItems(1L);
+        }
+
+        @DisplayName("모든 대분류 항목을 읽어올 수 있다")
+        @Test
+        public void find_all_items() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            List<LargeCatItemResponse> allItems = largeCatService.findAllItems(1L);
+            assertThat(allItems).isNotNull();
         }
     }
 
