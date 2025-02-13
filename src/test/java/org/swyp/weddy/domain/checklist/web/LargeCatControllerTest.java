@@ -73,13 +73,29 @@ class LargeCatControllerTest {
                     new FakeLargeCatService(),
                     new FakeChecklistService()
             );
-            String memberId = "1L";
-            String itemId = "1L";
+            String memberId = "1";
+            String itemId = "1";
             String editedTitle = "test_revised";
 
             LargeCatItemEditRequest request = new LargeCatItemEditRequest(memberId, itemId, editedTitle);
 
             controller.patchItem(request);
+        }
+
+        @DisplayName("대분류 항목 수정 결과를 반환할 수 있다")
+        @Test
+        public void returns_patch_large_item() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            String memberId = "1";
+            String itemId = "1";
+            String editedTitle = "test_revised";
+
+            LargeCatItemEditRequest request = new LargeCatItemEditRequest(memberId, itemId, editedTitle);
+
+            assertThat(controller.patchItem(request)).isEqualTo(ResponseEntity.ok().build());
         }
     }
 
