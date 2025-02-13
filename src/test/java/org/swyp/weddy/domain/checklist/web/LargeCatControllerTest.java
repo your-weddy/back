@@ -74,9 +74,10 @@ class LargeCatControllerTest {
                     new FakeChecklistService()
             );
             String memberId = "1L";
+            String itemId = "1L";
             String editedTitle = "test_revised";
 
-            LargeCatItemEditRequest request = new LargeCatItemEditRequest(memberId, editedTitle);
+            LargeCatItemEditRequest request = new LargeCatItemEditRequest(memberId, itemId, editedTitle);
 
             controller.patchItem(request);
         }
