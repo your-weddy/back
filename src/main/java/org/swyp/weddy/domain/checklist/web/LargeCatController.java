@@ -8,6 +8,7 @@ import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.web.request.LargeCatItemDeleteRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemEditRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
@@ -64,5 +65,9 @@ public class LargeCatController {
         largeCatService.editItem(editDto);
 
         return ResponseEntity.ok().build();
+    }
+
+    public ResponseEntity<Void> deleteItem(LargeCatItemDeleteRequest request) {
+        return null;
     }
 }

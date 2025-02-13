@@ -10,6 +10,7 @@ import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.web.request.LargeCatItemDeleteRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemEditRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
@@ -97,6 +98,25 @@ class LargeCatControllerTest {
             LargeCatItemEditRequest request = new LargeCatItemEditRequest(memberId, itemId, editedTitle);
 
             assertThat(controller.patchItem(request)).isEqualTo(ResponseEntity.ok().build());
+        }
+    }
+
+    @DisplayName("deleteItem()")
+    @Nested
+    class DeleteItemTest {
+        @DisplayName("대분류 항목 삭제 요청을 받을 수 있다")
+        @Test
+        public void receive_delete_large_item_message() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            String memberId = "1";
+            String itemId = "1";
+
+            LargeCatItemDeleteRequest request = new LargeCatItemDeleteRequest(memberId, itemId);
+
+            controller.deleteItem(request);
         }
     }
 
