@@ -9,7 +9,7 @@
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
-         WHERE checklist.id = #{checkListId}
+         WHERE checklist.id = #{checklistId}
            AND large.id = #{largeCatItemId}
            AND small.is_deleted = false;
     </select>
@@ -20,7 +20,7 @@
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
-         WHERE checklist.id = #{checkListId}
+         WHERE checklist.id = #{checklistId}
            AND large.id = #{largeCatItemId}
            AND small.id = #{smallCatItemId}
            AND small.is_deleted = false;

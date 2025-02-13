@@ -10,7 +10,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Getter
 public class SmallCatItemDto {
-    private Long checkListId;
+    private Long checklistId;
     private Long id;
     private Long largeCatItemId;
     private String title;
@@ -22,7 +22,7 @@ public class SmallCatItemDto {
 
     public static SmallCatItemDto from(SmallCatItemPostRequest request) {
         return new SmallCatItemDto(
-                request.getCheckListId(),
+                request.getChecklistId(),
                 null,
                 request.getLargeCatItemId(),
                 request.getTitle(),
@@ -35,7 +35,7 @@ public class SmallCatItemDto {
     }
     public static SmallCatItemDto from(SmallCatItemPatchRequest request) {
         return new SmallCatItemDto(
-                request.getCheckListId(),
+                request.getChecklistId(),
                 request.getId(),
                 request.getLargeCatItemId(),
                 request.getTitle(),

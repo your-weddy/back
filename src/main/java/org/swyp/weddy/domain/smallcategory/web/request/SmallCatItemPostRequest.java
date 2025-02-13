@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SmallCatItemPostRequest {
-    private Long checkListId;
+    private Long checklistId;
     private Long largeCatItemId;
     private String title;
     private Date dueDate;

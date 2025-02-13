@@ -10,15 +10,15 @@ import java.util.List;
 @Mapper
 public interface SmallCatItemMapper {
 
-    List<SmallCatItemPreview> selectItemPreviews(@Param("checkListId")Long checkListId, @Param("largeCatItemId")Long largeCatItemId);
-    SmallCatItem selectItem(@Param("checkListId")Long checkListId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
+    List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
+    SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
 
     Long insertItem(SmallCatItem smallCatItem);
 
     int updateItem(SmallCatItem smallCatItem);
 
     int deleteItem(@Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
-    int deleteAllItems(@Param("checkListId")Long checkListId, @Param("largeCatItemId")Long largeCatItemId);
+    int deleteAllItems(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
 
 
 

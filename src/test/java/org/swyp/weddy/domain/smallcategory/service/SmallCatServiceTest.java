@@ -48,7 +48,7 @@ class SmallCatServiceTest {
     void editItem_Exception_Test() {
         smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper(){
             @Override
-            public SmallCatItem selectItem(Long checkListId, Long largeCatItemId, Long smallCatItemId) {
+            public SmallCatItem selectItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
                 return new SmallCatItem(null,null,null,null,null,null,null,null);
             }
         });
@@ -62,7 +62,7 @@ class SmallCatServiceTest {
     void deleteItem_Exception_Test() {
         smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper(){
             @Override
-            public SmallCatItem selectItem(Long checkListId, Long largeCatItemId, Long smallCatItemId) {
+            public SmallCatItem selectItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
                 return new SmallCatItem(null,null,null,null,null,null,null,null);
             }
         });
@@ -76,7 +76,7 @@ class SmallCatServiceTest {
     void deleteAll_Exception_Test() {
         smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper(){
             @Override
-            public List<SmallCatItemPreview> selectItemPreviews(Long checkListId, Long largeCatItemId) {
+            public List<SmallCatItemPreview> selectItemPreviews(Long checklistId, Long largeCatItemId) {
                 return List.of(new SmallCatItemPreview(null,null,null,null,null,null));
             }
         });
@@ -87,12 +87,12 @@ class SmallCatServiceTest {
 
     static class FakeMapper implements SmallCatItemMapper {
         @Override
-        public List<SmallCatItemPreview> selectItemPreviews(Long checkListId, Long largeCatItemId) {
+        public List<SmallCatItemPreview> selectItemPreviews(Long checklistId, Long largeCatItemId) {
             return List.of();
         }
 
         @Override
-        public SmallCatItem selectItem(Long checkListId, Long largeCatItemId, Long smallCatItemId) {
+        public SmallCatItem selectItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
             return null;
         }
 
@@ -112,7 +112,7 @@ class SmallCatServiceTest {
         }
 
         @Override
-        public int deleteAllItems(Long checkListId, Long largeCatItemId) {
+        public int deleteAllItems(Long checklistId, Long largeCatItemId) {
             return 0;
         }
     }
