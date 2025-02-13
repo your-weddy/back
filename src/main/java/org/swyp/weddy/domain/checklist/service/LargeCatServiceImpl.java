@@ -7,6 +7,7 @@ import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
 import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
@@ -55,5 +56,10 @@ public class LargeCatServiceImpl implements LargeCatService {
         mapper.insertItem(largeCatItem);
 
         return largeCatItem.getId();
+    }
+
+    @Override
+    public Long editItem(LargeCatItemEditDto dto) {
+        return 1L;
     }
 }
