@@ -45,7 +45,7 @@ public class LargeCatItem {
         );
     }
 
-    public static LargeCatItem of(LargeCatItem itemBeforeEdit, LargeCatItemEditDto dto) {
+    public static LargeCatItem ofEdit(LargeCatItem itemBeforeEdit, LargeCatItemEditDto dto) {
         return new LargeCatItem(
                 dto.getId(),
                 dto.getChecklistId(),

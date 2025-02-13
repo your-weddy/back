@@ -68,7 +68,7 @@ public class LargeCatServiceImpl implements LargeCatService {
             throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
-        LargeCatItem largeCatItem = LargeCatItem.of(itemBeforeEdit, dto);
+        LargeCatItem largeCatItem = LargeCatItem.ofEdit(itemBeforeEdit, dto);
         mapper.updateItem(largeCatItem);
 
         return largeCatItem.getId();
