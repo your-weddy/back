@@ -14,7 +14,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("checklist/large-cat-item/small-cat-Item")
+@RequestMapping("/checklist/small-category")
 public class SmallCatItemController {
 
     private final SmallCatService smallCatService;
@@ -23,7 +23,7 @@ public class SmallCatItemController {
         this.smallCatService = smallCatService;
     }
 
-    @GetMapping("/item-previews")
+    @GetMapping("/previews")
     public ResponseEntity<List<SmallCatItemPreviewResponse>> getSmallCatItemList(@RequestParam(name = "checklistId") Long checklistId,
                                                                     @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
         List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(checklistId, largeCatItemId);
@@ -31,7 +31,7 @@ public class SmallCatItemController {
         return ResponseEntity.ok().body(itemPreviews);
     }
 
-    @GetMapping("/item")
+    @GetMapping
     public ResponseEntity<SmallCatItemResponse> getSmallCatItem(@RequestParam(name = "checklistId") Long checklistId,
                                                                 @RequestParam(name = "largeCatItemId") Long largeCatItemId,
                                                                 @RequestParam(name = "smallCatItemId") Long smallCatItemId) {
@@ -41,7 +41,7 @@ public class SmallCatItemController {
         return ResponseEntity.ok().body(item);
     }
 
-    @PostMapping("/add-item")
+    @PostMapping
     public ResponseEntity<Long> postItem(@RequestBody SmallCatItemPostRequest request) {
 
         SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(request);
@@ -50,7 +50,7 @@ public class SmallCatItemController {
         return ResponseEntity.ok().body(itemId);
     }
 
-    @PatchMapping("/update-item")
+    @PatchMapping
     public ResponseEntity<Boolean> patchItem(@RequestBody SmallCatItemPatchRequest request) {
 
         SmallCatItemDto smallCatItemDto = SmallCatItemDto.from(request);
@@ -59,7 +59,7 @@ public class SmallCatItemController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PatchMapping("/delete-item")
+    @DeleteMapping
     public ResponseEntity<Boolean> deleteItem(@RequestParam(name = "checklistId") Long checklistId,
                                               @RequestParam(name = "largeCatItemId") Long largeCatItemId,
                                               @RequestParam(name = "smallCatItemId") Long smallCatItemId) {
@@ -69,7 +69,7 @@ public class SmallCatItemController {
         return ResponseEntity.ok().body(result);
     }
 
-    @PatchMapping("/delete-all-items")
+    @DeleteMapping("/all")
     public ResponseEntity<Boolean> deleteAllItems(@RequestParam(name = "checklistId") Long checklistId,
                                                   @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
 
@@ -77,8 +77,5 @@ public class SmallCatItemController {
 
         return ResponseEntity.ok().body(result);
     }
-
-
-
 
 }
