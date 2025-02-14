@@ -1,12 +1,12 @@
 package org.swyp.weddy.domain.smallcategory.service;
 
-import org.springframework.stereotype.Service;
+import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
 import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
 
 import java.util.Date;
 import java.util.List;
 
-@Service
 public class FakeSmallCatService implements SmallCatService {
     @Override
     public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
@@ -22,7 +22,27 @@ public class FakeSmallCatService implements SmallCatService {
     }
 
     @Override
-    public void deleteAll(Long checklistId, Long largeCatItemId) {
+    public SmallCatItemResponse findItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
+        return null;
+    }
 
+    @Override
+    public Long addItem(SmallCatItemDto dto) {
+        return 0L;
+    }
+
+    @Override
+    public boolean editItem(SmallCatItemDto dto) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteAll(Long checklistId, Long largeCatItemId) {
+        return false;
     }
 }
