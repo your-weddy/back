@@ -13,6 +13,8 @@ values (2, null, current_timestamp, null, 0);
 
 insert into `large_category_item` (`checklist_id`, `title`, `created_at`, `updated_at`, `is_deleted`)
 values (1, 'test', current_timestamp, null, 0);
+insert into `large_category_item` (`checklist_id`, `title`, `created_at`, `updated_at`, `is_deleted`)
+values (1, 'test2', current_timestamp, null, 0);
 
 INSERT INTO `small_category_item_assignee` (`name`)
 VALUES ('나');
