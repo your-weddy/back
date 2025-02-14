@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.swyp.weddy.domain.checklist.dao.LargeCatMapper">
+    <select id="selectItem" resultType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        SELECT id,
+               checklist_id,
+               title,
+               created_at,
+               updated_at,
+               is_deleted
+        FROM large_category_item
+        WHERE id = #{id}
+          AND checklist_id = #{checklistId}
+          AND is_deleted = false
+    </select>
+
+    <select id="selectAllItems" parameterType="Long" resultType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        SELECT id,
+               checklist_id,
+               title,
+               created_at,
+               updated_at,
+               is_deleted
+        FROM large_category_item
+        WHERE checklist_id = #{checklistId}
+          AND is_deleted = false
+    </select>
+
+    <insert id="insertItem" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        INSERT INTO large_category_item (checklist_id,
+                                         title,
+                                         created_at,
+                                         updated_at,
+                                         is_deleted)
+        VALUES (#{checklistId},
+                #{title},
+                #{createdAt},
+                #{updatedAt},
+                #{isDeleted})
+    </insert>
+
+    <update id="updateItem" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        UPDATE large_category_item
+        SET title      = #{title},
+            updated_at = #{updatedAt}
+        WHERE checklist_id = #{checklistId}
+          AND id = #{id}
+    </update>
+
+    <update id="deleteItem" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.swyp.weddy.domain.checklist.entity.LargeCatItem">
+        UPDATE large_category_item
+        SET is_deleted = #{isDeleted},
+            updated_at = #{updatedAt}
+        WHERE id = #{id}
+          AND checklist_id = #{checklistId}
+    </update>
+</mapper>

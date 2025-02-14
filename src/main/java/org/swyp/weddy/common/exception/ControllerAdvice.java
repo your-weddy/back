@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemAddException;
 import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemDeleteException;
 import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemNotExistsException;
@@ -33,6 +34,11 @@ public class ControllerAdvice {
         return new ErrorResponse(exception.getErrorCode());
     }
 
+    @ExceptionHandler(LargeCatItemNotExistsException.class)
+    protected ErrorResponse handleLargeCatItemNotExistsException(final LargeCatItemNotExistsException exception) {
+        return new ErrorResponse(exception.getErrorCode());
+    }
+
     @ExceptionHandler(SmallCategoryItemNotExistsException.class)
     protected ErrorResponse handleSmallCategoryItemNotExistsException(final SmallCategoryItemNotExistsException exception) {
         return new ErrorResponse(exception.getErrorCode());
@@ -47,12 +53,11 @@ public class ControllerAdvice {
     protected ErrorResponse SmallCategoryItemUpdateException(final SmallCategoryItemUpdateException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
+
     @ExceptionHandler(SmallCategoryItemDeleteException.class)
     protected ErrorResponse SmallCategoryItemDeleteException(final SmallCategoryItemDeleteException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
-
-
 
     private static class ErrorResponse {
         private final String code;
@@ -66,6 +71,7 @@ public class ControllerAdvice {
         public String getCode() {
             return this.code;
         }
+
         public String getReason() {
             return this.reason;
         }

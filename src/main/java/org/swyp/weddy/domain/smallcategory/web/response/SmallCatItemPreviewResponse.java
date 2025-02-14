@@ -3,9 +3,11 @@ package org.swyp.weddy.domain.smallcategory.web.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
 
 import java.util.Date;
+
+import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,5 +35,3 @@ public class SmallCatItemPreviewResponse {
                 .collect(Collectors.toList());
     }
 }
-
-
