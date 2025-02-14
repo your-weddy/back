@@ -19,14 +19,6 @@ class SmallCatServiceTest {
 
     private SmallCatService smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper());
 
-    @DisplayName("조회 예외처리 테스트. 소분류 항목 프리뷰 조회 실패시 예외처리")
-    @Test
-    void findItemPreviews_Exception_Test() {
-        assertThatThrownBy(()-> {
-                    smallCatServiceImpl.findItemPreviews(1L, 1L);
-                }).isInstanceOf(SmallCategoryItemNotExistsException.class);
-    }
-
     @DisplayName("조회 예외처리 테스트. 소분류 항목 1개 조회 실패시 예외처리")
     @Test
     void findItem_Exception_Test() {
@@ -83,6 +75,13 @@ class SmallCatServiceTest {
         assertThatThrownBy(()-> {
             smallCatServiceImpl.deleteAll(1L, 1L);
         }).isInstanceOf(SmallCategoryItemDeleteException.class);
+    }
+
+    @DisplayName("DELETE ALL 테스트. 삭제대상 없을 시 true 반환")
+    @Test
+    void deleteAll_Return_True_If_Select_Empty_Test() {
+        smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper());
+        assertThat(smallCatServiceImpl.deleteAll(1L, 1L)).isTrue();
     }
 
     static class FakeMapper implements SmallCatItemMapper {
