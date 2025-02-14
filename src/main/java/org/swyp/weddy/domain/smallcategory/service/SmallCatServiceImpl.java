@@ -61,6 +61,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private Long insertItemOrThrow(SmallCatItem smallCatItem) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.insertItem(smallCatItem);
         } catch (Exception e) {
@@ -89,6 +90,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private int updateItemOrThrow(SmallCatItem smallCatItem) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.updateItem(smallCatItem);
         } catch (Exception e) {
@@ -116,6 +118,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private int deleteItemOrThrow(Long largeCatItemId, Long smallCatItemId) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.deleteItem(largeCatItemId, smallCatItemId);
         } catch (Exception e) {
@@ -129,10 +132,10 @@ public class SmallCatServiceImpl implements SmallCatService {
         List<SmallCatItemPreview> smallCatItems = mapper.selectItemPreviews(checklistId, largeCatItemId);
 
         if (smallCatItems.isEmpty()) {
-            throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
+            return true;
         }
 
-        int deletedRows = mapper.deleteAllItems(checklistId, largeCatItemId);
+        int deletedRows = deleteAllItemsOrThrow(checklistId, largeCatItemId);
 
         if (deletedRows == 0) {
             throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
@@ -143,6 +146,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private int deleteAllItemsOrThrow(Long checklistId, Long largeCatItemId) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.deleteAllItems(checklistId, largeCatItemId);
         } catch (Exception e) {
