@@ -1,0 +1,47 @@
+spring:
+  application:
+    name: weddy
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: jdbc:mysql://${MYSQL_URL}:${MYSQL_PORT}/${MYSQL_DBNAME}?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+    map-underscore-to-camel-case: true
+
+jwt:
+  secret: ${JWT_SECRET}
+
+authorize:
+  uris: "${AUTHORIZE_URIS}"
+skip:
+  uris: "${SKIP_URIS}"
+
+app:
+  login-page-url: ${LOGIN_PAGE_URL}
+  home-page-url: ${HOME_PAGE_URL}
+
+
+kakao:
+  auth:
+    client: ${KAKAO_CLIENT_ID}
+    redirect: ${KAKAO_REDIRECT_URL}
+    tokenUrl: https://kauth.kakao.com/oauth/token
+    userInfoUrl: https://kapi.kakao.com/v2/user/me
+
+logging:
+  level:
+    root: INFO
+    org.swyp.weddy: DEBUG      # 프로젝트 패키지는 DEBUG 레벨로 설정
+    org.springframework: DEBUG
+    org.mybatis: DEBUG         # MyBatis SQL 로그 확인용
+    org.h2.server: DEBUG       # H2 데이터베이스 로그
+  pattern:
+    console: "%clr(%d{yyyy-MM-dd HH:mm:ss}){faint} %clr(%-5level) %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %msg%n"
