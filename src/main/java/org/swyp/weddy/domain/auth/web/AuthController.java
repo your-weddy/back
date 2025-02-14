@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
 import org.swyp.weddy.domain.auth.service.AuthService;
@@ -30,7 +27,7 @@ public class AuthController {
     private final AuthService authService;
     private final CookieService cookieService;
 
-    @GetMapping("/login/kakao")
+    @GetMapping("/kakao/callback")
     public void kakaoCallback(@RequestParam("code") String code, HttpServletResponse response) throws IOException {
         TokenInfo tokenInfo = authService.processKakaoLogin(code);
 
@@ -40,7 +37,7 @@ public class AuthController {
     }
 
     //access토큰 만료 시 재발급
-    @GetMapping("/regenerate-token")
+    @PostMapping("/token/refresh")
     public ResponseEntity<Void> refreshToken(HttpServletRequest request, HttpServletResponse response) {
         try {
             Map<String, String> token = authService.resolveToken(request);
