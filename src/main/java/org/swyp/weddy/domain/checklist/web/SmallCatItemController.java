@@ -1,14 +1,14 @@
-package org.swyp.weddy.domain.smallcategory.web;
+package org.swyp.weddy.domain.checklist.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.smallcategory.web.request.SmallCatItemPatchRequest;
-import org.swyp.weddy.domain.smallcategory.web.request.SmallCatItemPostRequest;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
+import org.swyp.weddy.domain.checklist.service.SmallCatService;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.web.request.SmallCatItemPatchRequest;
+import org.swyp.weddy.domain.checklist.web.request.SmallCatItemPostRequest;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.util.List;
 

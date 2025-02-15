@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemAddException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemDeleteException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemNotExistsException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemUpdateException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 
 @RestControllerAdvice

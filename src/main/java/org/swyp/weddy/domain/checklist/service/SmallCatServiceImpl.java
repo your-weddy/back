@@ -1,19 +1,19 @@
-package org.swyp.weddy.domain.smallcategory.service;
+package org.swyp.weddy.domain.checklist.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.swyp.weddy.common.exception.ErrorCode;
-import org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemAddException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemDeleteException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemNotExistsException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemUpdateException;
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
+import org.swyp.weddy.domain.checklist.dao.SmallCatItemMapper;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.util.List;
 

@@ -1,15 +1,15 @@
-package org.swyp.weddy.domain.smallcategory.service;
+package org.swyp.weddy.domain.checklist.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemAddException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemDeleteException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemNotExistsException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemUpdateException;
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.dao.SmallCatItemMapper;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
 
 import java.util.List;
 

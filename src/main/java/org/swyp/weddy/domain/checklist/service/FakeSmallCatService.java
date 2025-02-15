@@ -1,8 +1,8 @@
-package org.swyp.weddy.domain.smallcategory.service;
+package org.swyp.weddy.domain.checklist.service;
 
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.util.Date;
 import java.util.List;

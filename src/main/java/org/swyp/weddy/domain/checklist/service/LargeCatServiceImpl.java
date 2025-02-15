@@ -10,8 +10,7 @@ import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
-import org.swyp.weddy.domain.smallcategory.service.SmallCatService;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
 import java.util.ArrayList;
 import java.util.List;

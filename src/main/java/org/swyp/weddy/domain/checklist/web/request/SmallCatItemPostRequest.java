@@ -1,4 +1,4 @@
-package org.swyp.weddy.domain.smallcategory.web.request;
+package org.swyp.weddy.domain.checklist.web.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
