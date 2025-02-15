@@ -8,7 +8,7 @@ import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
 import java.util.List;
 
 @Mapper
-public interface SmallCatItemMapper {
+public interface SmallCatMapper {
 
     List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
     SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);

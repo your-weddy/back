@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.swyp.weddy.common.exception.ErrorCode;
-import org.swyp.weddy.domain.checklist.dao.SmallCatItemMapper;
+import org.swyp.weddy.domain.checklist.dao.SmallCatMapper;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
@@ -21,9 +21,9 @@ import java.util.List;
 @Service
 public class SmallCatServiceImpl implements SmallCatService {
 
-    private final SmallCatItemMapper mapper;
+    private final SmallCatMapper mapper;
 
-    public SmallCatServiceImpl(SmallCatItemMapper mapper) {
+    public SmallCatServiceImpl(SmallCatMapper mapper) {
         this.mapper = mapper;
     }
 

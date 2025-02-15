@@ -2,7 +2,7 @@ package org.swyp.weddy.domain.checklist.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.swyp.weddy.domain.checklist.dao.SmallCatItemMapper;
+import org.swyp.weddy.domain.checklist.dao.SmallCatMapper;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
@@ -84,7 +84,7 @@ class SmallCatServiceTest {
         assertThat(smallCatServiceImpl.deleteAll(1L, 1L)).isTrue();
     }
 
-    static class FakeMapper implements SmallCatItemMapper {
+    static class FakeMapper implements SmallCatMapper {
         @Override
         public List<SmallCatItemPreview> selectItemPreviews(Long checklistId, Long largeCatItemId) {
             return List.of();

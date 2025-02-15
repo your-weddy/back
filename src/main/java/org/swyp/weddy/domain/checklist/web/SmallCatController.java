@@ -15,11 +15,11 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/checklist/small-category")
-public class SmallCatItemController {
+public class SmallCatController {
 
     private final SmallCatService smallCatService;
 
-    public SmallCatItemController(SmallCatService smallCatService) {
+    public SmallCatController(SmallCatService smallCatService) {
         this.smallCatService = smallCatService;
     }
 
