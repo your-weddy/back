@@ -58,22 +58,4 @@ public class ControllerAdvice {
     protected ErrorResponse SmallCategoryItemDeleteException(final SmallCategoryItemDeleteException exception) {
         return new ErrorResponse(exception.getErrorCode());
     }
-
-    private static class ErrorResponse {
-        private final String code;
-        private final String reason;
-
-        private ErrorResponse(ErrorCode errorCode) {
-            this.code = errorCode.getCode();
-            this.reason = errorCode.getReason();
-        }
-
-        public String getCode() {
-            return this.code;
-        }
-
-        public String getReason() {
-            return this.reason;
-        }
-    }
 }
