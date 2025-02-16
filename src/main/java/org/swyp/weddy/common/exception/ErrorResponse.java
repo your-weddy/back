@@ -25,7 +25,8 @@ class ErrorResponse {
         return HttpStatusCode.valueOf(code);
     }
 
-    public ResponseEntity<ErrorResponse> makeResponseEntity(HttpStatusCode httpStatusCode) {
+    public ResponseEntity<ErrorResponse> makeResponseEntity() {
+        HttpStatusCode httpStatusCode = this.getHttpStatusCode();
         return ResponseEntity.status(httpStatusCode).body(this);
     }
 }

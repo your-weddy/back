@@ -31,8 +31,7 @@ class ErrorResponseTest {
         @Test
         public void make_response_entity_with_error_response_as_its_body() {
             ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
-            HttpStatusCode httpStatusCode  = errorResponse.getHttpStatusCode();
-            ResponseEntity<ErrorResponse> responseEntity = errorResponse.makeResponseEntity(httpStatusCode);
+            ResponseEntity<ErrorResponse> responseEntity = errorResponse.makeResponseEntity();
             assertThat(responseEntity.getStatusCode().is4xxClientError()).isTrue();
             assertThat(responseEntity.getBody()).isNotNull();
         }
