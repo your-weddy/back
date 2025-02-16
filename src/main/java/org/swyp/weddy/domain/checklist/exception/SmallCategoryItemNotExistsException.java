@@ -1,12 +1,12 @@
-package org.swyp.weddy.domain.smallcategory.exception;
+package org.swyp.weddy.domain.checklist.exception;
 
 import org.swyp.weddy.common.exception.ErrorCode;
 
-public class SmallCategoryItemDeleteException extends RuntimeException{
+public class SmallCategoryItemNotExistsException extends RuntimeException{
 
     private final ErrorCode errorCode;
 
-    public SmallCategoryItemDeleteException(ErrorCode errorCode) {
+    public SmallCategoryItemNotExistsException(ErrorCode errorCode) {
         super(errorCode.getReason());
         this.errorCode = errorCode;
     }
