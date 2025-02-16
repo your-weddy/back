@@ -1,4 +1,4 @@
-package org.swyp.weddy.domain.smallcategory.exception;
+package org.swyp.weddy.domain.checklist.exception;
 
 import org.swyp.weddy.common.exception.ErrorCode;
 

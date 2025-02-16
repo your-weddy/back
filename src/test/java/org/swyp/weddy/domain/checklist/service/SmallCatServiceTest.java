@@ -1,15 +1,15 @@
-package org.swyp.weddy.domain.smallcategory.service;
+package org.swyp.weddy.domain.checklist.service;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemAddException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemDeleteException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemNotExistsException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemUpdateException;
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.dao.SmallCatMapper;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
 
 import java.util.List;
 
@@ -18,14 +18,6 @@ import static org.assertj.core.api.Assertions.*;
 class SmallCatServiceTest {
 
     private SmallCatService smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper());
-
-    @DisplayName("조회 예외처리 테스트. 소분류 항목 프리뷰 조회 실패시 예외처리")
-    @Test
-    void findItemPreviews_Exception_Test() {
-        assertThatThrownBy(()-> {
-                    smallCatServiceImpl.findItemPreviews(1L, 1L);
-                }).isInstanceOf(SmallCategoryItemNotExistsException.class);
-    }
 
     @DisplayName("조회 예외처리 테스트. 소분류 항목 1개 조회 실패시 예외처리")
     @Test
@@ -85,7 +77,14 @@ class SmallCatServiceTest {
         }).isInstanceOf(SmallCategoryItemDeleteException.class);
     }
 
-    static class FakeMapper implements SmallCatItemMapper {
+    @DisplayName("DELETE ALL 테스트. 삭제대상 없을 시 true 반환")
+    @Test
+    void deleteAll_Return_True_If_Select_Empty_Test() {
+        smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper());
+        assertThat(smallCatServiceImpl.deleteAll(1L, 1L)).isTrue();
+    }
+
+    static class FakeMapper implements SmallCatMapper {
         @Override
         public List<SmallCatItemPreview> selectItemPreviews(Long checklistId, Long largeCatItemId) {
             return List.of();

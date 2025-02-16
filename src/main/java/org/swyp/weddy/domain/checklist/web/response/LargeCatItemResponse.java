@@ -1,7 +1,6 @@
 package org.swyp.weddy.domain.checklist.web.response;
 
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
 
 import java.util.Collections;
 import java.util.List;

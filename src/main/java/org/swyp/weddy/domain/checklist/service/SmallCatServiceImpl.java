@@ -1,19 +1,19 @@
-package org.swyp.weddy.domain.smallcategory.service;
+package org.swyp.weddy.domain.checklist.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.swyp.weddy.common.exception.ErrorCode;
-import org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemAddException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemDeleteException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemNotExistsException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemUpdateException;
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
+import org.swyp.weddy.domain.checklist.dao.SmallCatMapper;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.util.List;
 
@@ -21,19 +21,15 @@ import java.util.List;
 @Service
 public class SmallCatServiceImpl implements SmallCatService {
 
-    private final SmallCatItemMapper mapper;
+    private final SmallCatMapper mapper;
 
-    public SmallCatServiceImpl(SmallCatItemMapper mapper) {
+    public SmallCatServiceImpl(SmallCatMapper mapper) {
         this.mapper = mapper;
     }
 
     @Override
     public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
-
         List<SmallCatItemPreview> smallCatItems = mapper.selectItemPreviews(checklistId, largeCatItemId);
-        if (smallCatItems.isEmpty()) {
-            throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
-        }
 
         List<SmallCatItemPreviewResponse> smallCatItemPreviewResponsesResponses = SmallCatItemPreviewResponse.from(smallCatItems);
         return smallCatItemPreviewResponsesResponses;
@@ -41,8 +37,8 @@ public class SmallCatServiceImpl implements SmallCatService {
 
     @Override
     public SmallCatItemResponse findItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
-
         SmallCatItem smallCatItems = mapper.selectItem(checklistId, largeCatItemId, smallCatItemId);
+
         if (smallCatItems == null) {
             throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
@@ -54,9 +50,9 @@ public class SmallCatServiceImpl implements SmallCatService {
     @Transactional
     @Override
     public Long addItem(SmallCatItemDto dto) {
-
         SmallCatItem smallCatItem = SmallCatItem.from(dto);
         Long smallCatItemId = insertItemOrThrow(smallCatItem);
+
         if (smallCatItemId == 0) {
             throw new SmallCategoryItemAddException(ErrorCode.ADD_FAILED);
         }
@@ -65,6 +61,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private Long insertItemOrThrow(SmallCatItem smallCatItem) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.insertItem(smallCatItem);
         } catch (Exception e) {
@@ -75,14 +72,15 @@ public class SmallCatServiceImpl implements SmallCatService {
     @Transactional
     @Override
     public boolean editItem(SmallCatItemDto dto) {
-
         SmallCatItem smallCatItems = mapper.selectItem(dto.getChecklistId(), dto.getLargeCatItemId(), dto.getId());
+
         if (smallCatItems == null) {
             throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
         SmallCatItem smallCatItem = SmallCatItem.from(dto);
         int updatedRows = updateItemOrThrow(smallCatItem);
+
         if (updatedRows == 0) {
             throw new SmallCategoryItemUpdateException(ErrorCode.UPDATE_FAILED);
         }
@@ -92,6 +90,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private int updateItemOrThrow(SmallCatItem smallCatItem) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.updateItem(smallCatItem);
         } catch (Exception e) {
@@ -102,13 +101,14 @@ public class SmallCatServiceImpl implements SmallCatService {
     @Transactional
     @Override
     public boolean deleteItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
-
         SmallCatItem smallCatItems = mapper.selectItem(checklistId, largeCatItemId, smallCatItemId);
+
         if (smallCatItems == null) {
             throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
         int deletedRows = deleteItemOrThrow(largeCatItemId, smallCatItemId);
+
         if (deletedRows == 0) {
             throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
         }
@@ -118,6 +118,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private int deleteItemOrThrow(Long largeCatItemId, Long smallCatItemId) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.deleteItem(largeCatItemId, smallCatItemId);
         } catch (Exception e) {
@@ -128,13 +129,14 @@ public class SmallCatServiceImpl implements SmallCatService {
     @Transactional
     @Override
     public boolean deleteAll(Long checklistId, Long largeCatItemId) {
-
         List<SmallCatItemPreview> smallCatItems = mapper.selectItemPreviews(checklistId, largeCatItemId);
+
         if (smallCatItems.isEmpty()) {
-            throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
+            return true;
         }
 
-        int deletedRows = mapper.deleteAllItems(checklistId, largeCatItemId);
+        int deletedRows = deleteAllItemsOrThrow(checklistId, largeCatItemId);
+
         if (deletedRows == 0) {
             throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
         }
@@ -144,6 +146,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     private int deleteAllItemsOrThrow(Long checklistId, Long largeCatItemId) { // 예외 발생을 명확히 표현
+
         try {
             return mapper.deleteAllItems(checklistId, largeCatItemId);
         } catch (Exception e) {

@@ -1,4 +1,4 @@
-package org.swyp.weddy.domain.smallcategory.entity;
+package org.swyp.weddy.domain.checklist.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

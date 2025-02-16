@@ -1,14 +1,14 @@
-package org.swyp.weddy.domain.smallcategory.dao;
+package org.swyp.weddy.domain.checklist.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
 
 import java.util.List;
 
 @Mapper
-public interface SmallCatItemMapper {
+public interface SmallCatMapper {
 
     List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
     SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
