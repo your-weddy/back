@@ -23,9 +23,7 @@ class ErrorResponseTest {
         @Test
         public void convert_code_to_http_status() {
             ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
-            String code = errorResponse.getCode();
-            Integer iCode = Integer.valueOf(code);
-            HttpStatusCode httpStatusCode = HttpStatusCode.valueOf(iCode);
+            HttpStatusCode httpStatusCode  = errorResponse.getHttpStatusCode();
             assertThat(httpStatusCode.is4xxClientError()).isTrue();
         }
 
@@ -33,10 +31,8 @@ class ErrorResponseTest {
         @Test
         public void make_response_entity_with_error_response_as_its_body() {
             ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
-            String code = errorResponse.getCode();
-            Integer iCode = Integer.valueOf(code);
-            HttpStatusCode httpStatusCode = HttpStatusCode.valueOf(iCode);
-            ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.status(httpStatusCode).body(errorResponse);
+            HttpStatusCode httpStatusCode  = errorResponse.getHttpStatusCode();
+            ResponseEntity<ErrorResponse> responseEntity = errorResponse.makeResponseEntity(httpStatusCode);
             assertThat(responseEntity.getStatusCode().is4xxClientError()).isTrue();
             assertThat(responseEntity.getBody()).isNotNull();
         }
