@@ -1,5 +1,6 @@
 package org.swyp.weddy.common.exception;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,5 +36,14 @@ class ErrorResponseTest {
             assertThat(responseEntity.getStatusCode().is4xxClientError()).isTrue();
             assertThat(responseEntity.getBody()).isNotNull();
         }
+    }
+
+    @DisplayName("code 값이 HttpStatusCode 범위 밖일 때 예외 처리할 수 있다")
+    @Test
+    public void handle_code_not_in_range() {
+        ErrorResponse invalidErrorResponse = new ErrorResponse(ErrorCode.TOKEN_EXPIRED);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            invalidErrorResponse.getHttpStatusCode();
+        });
     }
 }
