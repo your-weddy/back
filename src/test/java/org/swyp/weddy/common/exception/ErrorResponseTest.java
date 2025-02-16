@@ -1,18 +1,19 @@
 package org.swyp.weddy.common.exception;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class ErrorResponseTest {
     @DisplayName("ControllerAdvice 바깥에서 ErrorResponse 객체를 생성할 수 있다")
     @Test
     public void make_error_response_object() {
         ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
-        Assertions.assertThat(errorResponse).isNotNull();
+        assertThat(errorResponse).isNotNull();
     }
 
     @DisplayName("ErrorResponse 내 정보를 가지고 ResponseEntity를 만들 수 있다")
@@ -25,7 +26,7 @@ class ErrorResponseTest {
             String code = errorResponse.getCode();
             Integer iCode = Integer.valueOf(code);
             HttpStatusCode httpStatusCode = HttpStatusCode.valueOf(iCode);
-            Assertions.assertThat(httpStatusCode.is4xxClientError()).isTrue();
+            assertThat(httpStatusCode.is4xxClientError()).isTrue();
         }
 
         @DisplayName("body를 ErrorResponse로 하는 ResponseEntity를 만들 수 있다")
@@ -36,8 +37,8 @@ class ErrorResponseTest {
             Integer iCode = Integer.valueOf(code);
             HttpStatusCode httpStatusCode = HttpStatusCode.valueOf(iCode);
             ResponseEntity<ErrorResponse> responseEntity = ResponseEntity.status(httpStatusCode).body(errorResponse);
-            Assertions.assertThat(responseEntity.getStatusCode().is4xxClientError()).isTrue();
-            Assertions.assertThat(responseEntity.getBody()).isNotNull();
+            assertThat(responseEntity.getStatusCode().is4xxClientError()).isTrue();
+            assertThat(responseEntity.getBody()).isNotNull();
         }
     }
 }
