@@ -31,6 +31,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
         List<SmallCatItemPreview> smallCatItems = mapper.selectItemPreviews(checklistId, largeCatItemId);
 
+
         List<SmallCatItemPreviewResponse> smallCatItemPreviewResponses = SmallCatItemPreviewResponse.from(smallCatItems);
         return smallCatItemPreviewResponses;
     }
