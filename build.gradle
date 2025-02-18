@@ -44,8 +44,19 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+
+	environment "JWT_SECRET", makeDummyJwtToken()
+	environment "KAKAO_CLIENT_ID", "dummy"
+	environment "KAKAO_REDIRECT_URL", "dummy"
 }
 
 jar {
 	enabled = false // plain JAR 생성을 방지
+}
+
+def makeDummyJwtToken() {
+	def header = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+	def payload = "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ"
+	def signature = "SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+	return header + "." + payload + "." + signature
 }
