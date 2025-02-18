@@ -29,10 +29,10 @@ public class SmallCatServiceImpl implements SmallCatService {
 
     @Override
     public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
-        List<SmallCatItemPreview> smallCatItems = mapper.selectItemPreviews(checklistId, largeCatItemId);
+        List<SmallCatItemPreview> smallCatItemPreviews = mapper.selectItemPreviews(checklistId, largeCatItemId);
 
 
-        List<SmallCatItemPreviewResponse> smallCatItemPreviewResponses = SmallCatItemPreviewResponse.from(smallCatItems);
+        List<SmallCatItemPreviewResponse> smallCatItemPreviewResponses = SmallCatItemPreviewResponse.from(smallCatItemPreviews);
         return smallCatItemPreviewResponses;
     }
 
