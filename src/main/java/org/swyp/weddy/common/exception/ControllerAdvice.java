@@ -1,5 +1,6 @@
 package org.swyp.weddy.common.exception;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
@@ -15,65 +16,56 @@ import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 public class ControllerAdvice {
 
     @ExceptionHandler(RuntimeException.class)
-    protected ErrorResponse handleBusinessException(final RuntimeException exception) {
-        return new ErrorResponse(ErrorCode.BAD_REQUEST);
+    protected ResponseEntity<ErrorResponse> handleBusinessException(final RuntimeException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(WikiNotFoundException.class)
-    protected ErrorResponse handleWikiNotFoundException(final WikiNotFoundException exception) {
-        return new ErrorResponse(exception.getErrorCode());
+    protected ResponseEntity<ErrorResponse> handleWikiNotFoundException(final WikiNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(ChecklistAlreadyAssignedException.class)
-    protected ErrorResponse handleChecklistAlreadyAssignedException(final ChecklistAlreadyAssignedException exception) {
-        return new ErrorResponse(exception.getErrorCode());
+    protected ResponseEntity<ErrorResponse> handleChecklistAlreadyAssignedException(final ChecklistAlreadyAssignedException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(ChecklistNotExistsException.class)
-    protected ErrorResponse handleChecklistNotExistsException(final ChecklistNotExistsException exception) {
-        return new ErrorResponse(exception.getErrorCode());
+    protected ResponseEntity<ErrorResponse> handleChecklistNotExistsException(final ChecklistNotExistsException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(LargeCatItemNotExistsException.class)
-    protected ErrorResponse handleLargeCatItemNotExistsException(final LargeCatItemNotExistsException exception) {
-        return new ErrorResponse(exception.getErrorCode());
+    protected ResponseEntity<ErrorResponse> handleLargeCatItemNotExistsException(final LargeCatItemNotExistsException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(SmallCategoryItemNotExistsException.class)
-    protected ErrorResponse handleSmallCategoryItemNotExistsException(final SmallCategoryItemNotExistsException exception) {
-        return new ErrorResponse(exception.getErrorCode());
+    protected ResponseEntity<ErrorResponse> handleSmallCategoryItemNotExistsException(final SmallCategoryItemNotExistsException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(SmallCategoryItemAddException.class)
-    protected ErrorResponse SmallCategoryItemAddException(final SmallCategoryItemAddException exception) {
-        return new ErrorResponse(exception.getErrorCode());
+    protected ResponseEntity<ErrorResponse> SmallCategoryItemAddException(final SmallCategoryItemAddException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(SmallCategoryItemUpdateException.class)
-    protected ErrorResponse SmallCategoryItemUpdateException(final SmallCategoryItemUpdateException exception) {
-        return new ErrorResponse(exception.getErrorCode());
+    protected ResponseEntity<ErrorResponse> SmallCategoryItemUpdateException(final SmallCategoryItemUpdateException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(SmallCategoryItemDeleteException.class)
-    protected ErrorResponse SmallCategoryItemDeleteException(final SmallCategoryItemDeleteException exception) {
-        return new ErrorResponse(exception.getErrorCode());
-    }
-
-    private static class ErrorResponse {
-        private final String code;
-        private final String reason;
-
-        private ErrorResponse(ErrorCode errorCode) {
-            this.code = errorCode.getCode();
-            this.reason = errorCode.getReason();
-        }
-
-        public String getCode() {
-            return this.code;
-        }
-
-        public String getReason() {
-            return this.reason;
-        }
+    protected ResponseEntity<ErrorResponse> SmallCategoryItemDeleteException(final SmallCategoryItemDeleteException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
     }
 }
