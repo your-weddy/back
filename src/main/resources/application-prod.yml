@@ -23,6 +23,8 @@ authorize:
   uris: "${AUTHORIZE_URIS}"
 skip:
   uris: "${SKIP_URIS}"
+cors:
+  uris: "${CORS_URIS:http://localhost:3000,https://weddy-oi983a9q6-lawit.vercel.app}"
 
 app:
   login-page-url: ${LOGIN_PAGE_URL}
