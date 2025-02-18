@@ -1,5 +1,7 @@
 package org.swyp.weddy.common.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -35,6 +37,22 @@ class ErrorResponseTest {
             ResponseEntity<ErrorResponse> responseEntity = errorResponse.makeResponseEntity();
             assertThat(responseEntity.getStatusCode().is4xxClientError()).isTrue();
             assertThat(responseEntity.getBody()).isNotNull();
+        }
+
+        @DisplayName("body에 HttpStatusCode를 포함하지 않는다")
+        @Test
+        public void remove_http_status_code_from_error_response_body() throws JsonProcessingException {
+            ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
+            ResponseEntity<ErrorResponse> responseEntity = errorResponse.makeResponseEntity();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String s = objectMapper.writeValueAsString(responseEntity.getBody());
+            assertThat(s).isEqualTo("{" +
+                    "\"code\":\"400\"," +
+                    "\"reason\":\"잘못된 요청\"," +
+                    "\"httpStatusCode\":\"BAD_REQUEST\"" +
+                    "}");
+            assertThat(s.contains("httpStatusCode")).isTrue();
         }
     }
 
