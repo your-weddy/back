@@ -30,6 +30,8 @@ authorize:
   uris: "${AUTHORIZE_URIS:/,/home.html,/index.html,/h2-console/**,/css/**,/js/**,/images/**,/swagger-ui/*,/v3/api-docs/**,/auth/**}"
 skip:
   uris: "${SKIP_URIS:/,/index.html,/h2,/swagger-ui/*,/v3/api-docs/**,/auth/**}"
+cors:
+  uris: "${CORS_URIS:http://localhost:3000,https://weddy-oi983a9q6-lawit.vercel.app}"
 
 app:
   login-page-url: ${LOGIN_PAGE_URL:http://localhost:8080}
