@@ -72,7 +72,6 @@ class SmallCatControllerTest {
         void testPostItem() {
             Long expectedItemId = 1L;
             SmallCatItemPostRequest request = new SmallCatItemPostRequest();
-            SmallCatItemDto dto = SmallCatItemDto.from(request);
 
             when(smallCatService.addItem(any(SmallCatItemDto.class))).thenReturn(expectedItemId);
 
@@ -101,7 +100,6 @@ class SmallCatControllerTest {
         @Test
         void testPatchItem() {
             SmallCatItemPatchRequest request = new SmallCatItemPatchRequest();
-            SmallCatItemDto dto = SmallCatItemDto.from(request);
 
             when(smallCatService.editItem(any(SmallCatItemDto.class))).thenReturn(true);
 
@@ -147,7 +145,6 @@ class SmallCatControllerTest {
         void testDeleteAllItems() {
             Long checklistId = 1L;
             Long largeCatItemId = 1L;
-            Long smallCatItemId = 1L;
             when(smallCatService.deleteAll(checklistId, largeCatItemId)).thenReturn(true);
 
             var result = smallCatController.deleteAllItems(1L, 1L);
