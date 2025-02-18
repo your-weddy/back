@@ -22,7 +22,7 @@ class ErrorResponse {
         return this.reason;
     }
 
-    public HttpStatusCode getHttpStatusCode() {
+    public HttpStatusCode convertHttpStatusCode() {
         Integer code = Integer.valueOf(this.getCode());
         try {
             return HttpStatusCode.valueOf(code);
@@ -40,7 +40,7 @@ class ErrorResponse {
     }
 
     public ResponseEntity<ErrorResponse> makeResponseEntity() {
-        HttpStatusCode httpStatusCode = this.getHttpStatusCode();
+        HttpStatusCode httpStatusCode = this.convertHttpStatusCode();
         return ResponseEntity.status(httpStatusCode).body(this);
     }
 }

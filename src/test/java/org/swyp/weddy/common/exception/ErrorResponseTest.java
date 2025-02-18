@@ -26,7 +26,7 @@ class ErrorResponseTest {
         @Test
         public void convert_code_to_http_status() {
             ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
-            HttpStatusCode httpStatusCode  = errorResponse.getHttpStatusCode();
+            HttpStatusCode httpStatusCode  = errorResponse.convertHttpStatusCode();
             assertThat(httpStatusCode.is4xxClientError()).isTrue();
         }
 
@@ -61,7 +61,7 @@ class ErrorResponseTest {
     public void handle_code_not_in_range() {
         ErrorResponse invalidErrorResponse = new ErrorResponse(ErrorCode.TOKEN_EXPIRED);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            invalidErrorResponse.getHttpStatusCode();
+            invalidErrorResponse.convertHttpStatusCode();
         });
     }
 }
