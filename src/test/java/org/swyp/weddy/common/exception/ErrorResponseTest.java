@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 
@@ -58,7 +59,11 @@ class ErrorResponseTest {
     @DisplayName("code 값이 HttpStatusCode 범위 밖일 때 예외 처리할 수 있다")
     @Test
     public void handle_code_not_in_range() {
-        ErrorResponse invalidErrorResponse = new ErrorResponse(ErrorCode.TOKEN_EXPIRED);
+        //given
+        ErrorCode mockErrorCode = Mockito.mock(ErrorCode.class);
+        Mockito.when(mockErrorCode.getCode()).thenReturn("1000");
+        ErrorResponse invalidErrorResponse = new ErrorResponse(mockErrorCode);
+
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             invalidErrorResponse.convertHttpStatusCode();
         });
