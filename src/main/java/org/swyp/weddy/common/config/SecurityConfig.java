@@ -1,7 +1,6 @@
 package org.swyp.weddy.common.config;
 
 
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -50,16 +49,7 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable) // 기본 logout 비활성화
                 // JWT 필터 추가
                 .addFilterBefore(jwtAuthenticationFilter,
-                        UsernamePasswordAuthenticationFilter.class)
-                // 예외 처리
-                .exceptionHandling(exception -> exception
-                        .authenticationEntryPoint((request, response, authException) -> {
-                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                        })
-                        .accessDeniedHandler((request, response, accessDeniedException) -> {
-                            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access Denied");
-                        })
-                );
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
