@@ -9,8 +9,8 @@
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
-          JOIN small_category_item_assignee assignee ON small.assignee_id = assignee.id
-          JOIN small_category_item_status status ON small.status_id = status.id
+     LEFT JOIN small_category_item_assignee assignee ON small.assignee_id = assignee.id
+     LEFT JOIN small_category_item_status status ON small.status_id = status.id
          WHERE checklist.id = #{checklistId}
            AND large.id = #{largeCatItemId}
            AND small.is_deleted = false;
@@ -22,8 +22,8 @@
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
-          JOIN small_category_item_assignee assignee ON small.assignee_id = assignee.id
-          JOIN small_category_item_status status ON small.status_id = status.id
+     LEFT JOIN small_category_item_assignee assignee ON small.assignee_id = assignee.id
+     LEFT JOIN small_category_item_status status ON small.status_id = status.id
          WHERE checklist.id = #{checklistId}
            AND large.id = #{largeCatItemId}
            AND small.id = #{smallCatItemId}
