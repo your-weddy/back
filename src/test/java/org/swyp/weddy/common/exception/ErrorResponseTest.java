@@ -1,5 +1,7 @@
 package org.swyp.weddy.common.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -24,7 +26,7 @@ class ErrorResponseTest {
         @Test
         public void convert_code_to_http_status() {
             ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
-            HttpStatusCode httpStatusCode  = errorResponse.getHttpStatusCode();
+            HttpStatusCode httpStatusCode  = errorResponse.convertHttpStatusCode();
             assertThat(httpStatusCode.is4xxClientError()).isTrue();
         }
 
@@ -36,6 +38,21 @@ class ErrorResponseTest {
             assertThat(responseEntity.getStatusCode().is4xxClientError()).isTrue();
             assertThat(responseEntity.getBody()).isNotNull();
         }
+
+        @DisplayName("body에 HttpStatusCode를 포함하지 않는다")
+        @Test
+        public void remove_http_status_code_from_error_response_body() throws JsonProcessingException {
+            ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
+            ResponseEntity<ErrorResponse> responseEntity = errorResponse.makeResponseEntity();
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            String s = objectMapper.writeValueAsString(responseEntity.getBody());
+            assertThat(s).isEqualTo("{" +
+                    "\"code\":\"400\"," +
+                    "\"reason\":\"잘못된 요청\"" +
+                    "}");
+            assertThat(s.contains("httpStatusCode")).isFalse();
+        }
     }
 
     @DisplayName("code 값이 HttpStatusCode 범위 밖일 때 예외 처리할 수 있다")
@@ -43,7 +60,7 @@ class ErrorResponseTest {
     public void handle_code_not_in_range() {
         ErrorResponse invalidErrorResponse = new ErrorResponse(ErrorCode.TOKEN_EXPIRED);
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            invalidErrorResponse.getHttpStatusCode();
+            invalidErrorResponse.convertHttpStatusCode();
         });
     }
 }
