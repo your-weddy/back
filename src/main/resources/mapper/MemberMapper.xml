@@ -5,26 +5,6 @@
 
 <mapper namespace="org.swyp.weddy.domain.auth.dao.MemberMapper">
 
-    <resultMap id="MemberMap" type="org.swyp.weddy.domain.auth.entity.Member">
-        <id property="id" column="id"/>
-        <result property="oAuthId" column="oauth_id"/>
-        <result property="email" column="email"/>
-        <result property="name" column="name"/>
-        <result property="profileImageUrl" column="profile_image_url"/>
-    </resultMap>
-
-    <insert id="saveMember" parameterType="org.swyp.weddy.domain.auth.entity.Member">
-        INSERT INTO member ( email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted)
-        VALUES ( #{email}, #{name}, #{profileImageUrl}, #{oAuthId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{isDeleted})
-    </insert>
-
-    <update id="updateMember" parameterType="org.swyp.weddy.domain.auth.entity.Member">
-        UPDATE member
-           SET oauth_id = #{oAuthId}, email = #{email}, name = #{name}, profile_image_url = #{profileImageUrl},updated_at = CURRENT_TIMESTAMP
-         WHERE id = #{id}
-           AND oauth_id = #{oAuthId}
-    </update>
-
     <select id="selectByMemberId" resultType="org.swyp.weddy.domain.auth.entity.Member">
         SELECT id, email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted
         FROM member
@@ -36,5 +16,17 @@
         FROM member
         WHERE oauth_id = #{oAuthId}
     </select>
+
+    <insert id="saveMember" parameterType="org.swyp.weddy.domain.auth.entity.Member">
+        INSERT INTO member ( email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted)
+        VALUES ( #{email}, #{name}, #{profileImageUrl}, #{oAuthId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{isDeleted})
+    </insert>
+
+    <update id="updateMember" parameterType="org.swyp.weddy.domain.auth.entity.Member">
+        UPDATE member
+           SET email = #{email}, name = #{name}, profile_image_url = #{profileImageUrl},updated_at = CURRENT_TIMESTAMP
+         WHERE id = #{id}
+           AND oauth_id = #{oAuthId}
+    </update>
 
 </mapper>
