@@ -53,18 +53,18 @@ public class AuthController {
         }
     }
 
-    /*@GetMapping("/userinfo")
-    public ResponseEntity<String> getUserInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        if (authentication == null || !authentication.isAuthenticated()) {
-            // 인증되지 않은 사용자일 경우 에러 응답 반환
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
-
-        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
-
-        return ResponseEntity.ok("ok");
-    }*/
+//    @GetMapping("/me")
+//    public ResponseEntity<String> getUserInfo(HttpServletResponse response) {
+//
+//        if(authService.isInvalidUser()){
+//            return ResponseEntity.status(0).body(null);
+//        }
+//
+//        UserResponse
+//
+//        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
+//
+//        return ResponseEntity.ok("ok");
+//    }
 
 }

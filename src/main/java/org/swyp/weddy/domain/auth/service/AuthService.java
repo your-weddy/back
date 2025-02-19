@@ -5,12 +5,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.dao.MemberMapper;
 import org.swyp.weddy.domain.auth.entity.Member;
-import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
+import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
 
 import java.util.Collections;
@@ -95,5 +96,15 @@ public class AuthService {
 
     public Map<String, String> resolveToken(HttpServletRequest request) {
         return jwtService.resolveToken(request);
+    }
+
+    public boolean isInvalidUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return true;
+        }
+
+        return false;
     }
 }
