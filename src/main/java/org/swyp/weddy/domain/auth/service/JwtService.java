@@ -27,13 +27,13 @@ public class JwtService {
 
     @Value("${jwt.secret}")
     private String secretKeyPlain;
-    private SecretKey secretKey;
+    private SecretKey secretKeyForSign;
     private static final long ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS = 1000L * 60 * 60 * 48; // 48시간
     private static final long REFRESH_TOKEN_VALIDITY_IN_MILLISECONDS = 1000L * 60 * 60 * 24 * 365; // 1년
 
     @PostConstruct
     private void setSecretKey() {
-        secretKey = Keys.hmacShaKeyFor(secretKeyPlain.getBytes());
+        secretKeyForSign = Keys.hmacShaKeyFor(secretKeyPlain.getBytes());
     }
 
     public TokenInfo generateToken(Authentication authentication) {
@@ -58,7 +58,7 @@ public class JwtService {
                 .claim("auth", Collections.emptyList())
                 .issuedAt(new Date())
                 .expiration(expiresIn)
-                .signWith(secretKey, Jwts.SIG.HS512)
+                .signWith(secretKeyForSign, Jwts.SIG.HS512)
                 .compact();
     }
 
@@ -76,7 +76,7 @@ public class JwtService {
     public boolean validateToken(String token) {
         try {
             Jwts.parser()
-                    .verifyWith(secretKey)
+                    .verifyWith(secretKeyForSign)
                     .build()
                     .parseSignedClaims(token);
             return true;
@@ -97,7 +97,7 @@ public class JwtService {
     private Claims parseClaims(String accessToken) {
         try {
             return Jwts.parser()
-                    .verifyWith(secretKey)
+                    .verifyWith(secretKeyForSign)
                     .build()
                     .parseSignedClaims(accessToken)
                     .getPayload();

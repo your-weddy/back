@@ -39,7 +39,7 @@ public class AuthService {
         saveDatabase(member);
 
         // 4. 인증 객체 생성
-        Authentication authentication = getAuthentication(member);
+        Authentication authentication = createAuthentication(member);
 
         // 5. JWT 토큰 발급
         TokenInfo tokenInfo = jwtService.generateToken(authentication);
@@ -58,7 +58,7 @@ public class AuthService {
 
 
     private void saveDatabase(Member member) {
-        Member existingUser = memberMapper.findByOAuthId(member.getOAuthId());
+        Member existingUser = memberMapper.selectByOAuthId(member.getOAuthId());
         if (existingUser == null) {
             memberMapper.saveMember(member);
         } else {
@@ -66,10 +66,9 @@ public class AuthService {
         }
     }
 
-    private Authentication getAuthentication(Member member) {
-        Member memberInfo = memberMapper.findByOAuthId(member.getOAuthId());
+    private Authentication createAuthentication(Member member) {
+        Member memberInfo = memberMapper.selectByOAuthId(member.getOAuthId());
 
-        // 5. authentication 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 Map.of(
                         "id", memberInfo.getId(),
@@ -110,12 +109,9 @@ public class AuthService {
     }
 
     public UserResponse getUserInfo() {
-        log.debug("============getUserInfo==========");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        log.debug("============getUserInfo2==========");
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
-        log.debug("============principal==========" + principal);
-        Member member = memberMapper.findByMemberId(Long.valueOf((Integer)principal.get("id")));
+        Member member = memberMapper.selectByMemberId(Long.valueOf((Integer)principal.get("id")));
         return UserResponse.from(member);
     }
 }
