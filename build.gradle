@@ -45,6 +45,10 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+
+	environment "JWT_SECRET", "dummyfor64bytesSecretKeydummyfor"
+	environment "KAKAO_CLIENT_ID", "dummy"
+	environment "KAKAO_REDIRECT_URL", "dummy"
 }
 
 jar {
