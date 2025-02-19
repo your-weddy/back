@@ -13,6 +13,7 @@ import org.swyp.weddy.domain.auth.entity.Member;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
+import org.swyp.weddy.domain.auth.web.response.UserResponse;
 
 import java.util.Collections;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class AuthService {
 
 
     private void saveDatabase(Member member) {
-        Member existingUser = memberMapper.findByEmail(member.getEmail());
+        Member existingUser = memberMapper.findByOAuthId(member.getOAuthId());
         if (existingUser == null) {
             memberMapper.saveMember(member);
         } else {
@@ -66,7 +67,7 @@ public class AuthService {
     }
 
     private Authentication getAuthentication(Member member) {
-        Member memberInfo = memberMapper.findByEmail(member.getEmail());
+        Member memberInfo = memberMapper.findByOAuthId(member.getOAuthId());
 
         // 5. authentication 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -98,13 +99,23 @@ public class AuthService {
         return jwtService.resolveToken(request);
     }
 
-    public boolean isInvalidUser() {
+    public boolean isValidUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
+    }
+
+    public UserResponse getUserInfo() {
+        log.debug("============getUserInfo==========");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.debug("============getUserInfo2==========");
+        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
+        log.debug("============principal==========" + principal);
+        Member member = memberMapper.findByMemberId(Long.valueOf((Integer)principal.get("id")));
+        return UserResponse.from(member);
     }
 }

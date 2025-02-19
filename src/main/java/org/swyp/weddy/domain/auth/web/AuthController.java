@@ -12,6 +12,7 @@ import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
+import org.swyp.weddy.domain.auth.web.response.UserResponse;
 
 import java.io.IOException;
 import java.util.Map;
@@ -53,18 +54,16 @@ public class AuthController {
         }
     }
 
-//    @GetMapping("/me")
-//    public ResponseEntity<String> getUserInfo(HttpServletResponse response) {
-//
-//        if(authService.isInvalidUser()){
-//            return ResponseEntity.status(0).body(null);
-//        }
-//
-//        UserResponse
-//
-//        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
-//
-//        return ResponseEntity.ok("ok");
-//    }
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getUserInfo() {
+
+        if(!authService.isValidUser()){
+            return ResponseEntity.status(999).body(null);
+        }
+
+        UserResponse userResponse = authService.getUserInfo();
+
+        return ResponseEntity.ok(userResponse);
+    }
 
 }

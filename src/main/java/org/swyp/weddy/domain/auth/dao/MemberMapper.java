@@ -8,5 +8,8 @@ import org.swyp.weddy.domain.auth.entity.Member;
 public interface MemberMapper {
     void saveMember(Member memberInfo);
     void updateMember(Member memberInfo);
-    Member findByEmail(String email);
+    Member findByMemberId(Long id);
+
+    Member findByOAuthId(String oAuthId);
+
 }

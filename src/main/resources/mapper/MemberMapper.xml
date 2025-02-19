@@ -20,18 +20,21 @@
 
     <update id="updateMember" parameterType="org.swyp.weddy.domain.auth.entity.Member">
         UPDATE member
-        SET oauth_id = #{oAuthId},
-        email = #{email},
-        name = #{name},
-        profile_image_url = #{profileImageUrl},
-        updated_at = CURRENT_TIMESTAMP
-        WHERE email = #{email}
+           SET oauth_id = #{oAuthId}, email = #{email}, name = #{name}, profile_image_url = #{profileImageUrl},updated_at = CURRENT_TIMESTAMP
+         WHERE id = #{id}
+           AND oauth_id = #{oAuthId}
     </update>
 
-    <select id="findByEmail" parameterType="string" resultMap="MemberMap">
-        SELECT id, email, name, profile_image_url, oauth_id
+    <select id="findByOAuthId" resultType="org.swyp.weddy.domain.auth.entity.Member">
+        SELECT id, email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted
         FROM member
-        WHERE email = #{email}
+        WHERE oauth_id = #{oAuthId}
+    </select>
+
+    <select id="findByMemberId" resultType="org.swyp.weddy.domain.auth.entity.Member">
+        SELECT id, email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted
+        FROM member
+        WHERE id = #{id}
     </select>
 
 </mapper>
