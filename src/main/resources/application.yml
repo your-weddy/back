@@ -41,7 +41,7 @@ app:
 kakao:
   auth:
     client: ${KAKAO_CLIENT_ID}
-    redirect: ${KAKAO_REDIRECT_URL:http://localhost:8080/auth/login/kakao}
+    redirect: ${KAKAO_REDIRECT_URL:http://localhost:8080/auth/kakao/callback}
     tokenUrl: https://kauth.kakao.com/oauth/token
     userInfoUrl: https://kapi.kakao.com/v2/user/me
 
