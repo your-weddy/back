@@ -35,7 +35,7 @@ public class AuthService {
         KakaoUserInfo kakaoUserInfo = oAuth2Service.getUserInfo(accessToken);
 
         // 3. DB 처리
-        Member member = createMemberFromKakaoUserInfo(kakaoUserInfo);
+        Member member = Member.from(kakaoUserInfo);
         saveDatabase(member);
 
         // 4. 인증 객체 생성
@@ -111,7 +111,7 @@ public class AuthService {
     public UserResponse getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
-        Member member = memberMapper.selectByMemberId(Long.valueOf((Integer)principal.get("id")));
+        Member member = memberMapper.selectByMemberId(Long.valueOf((Integer) principal.get("id")));
         return UserResponse.from(member);
     }
 }
