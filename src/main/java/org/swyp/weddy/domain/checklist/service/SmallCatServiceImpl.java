@@ -1,19 +1,19 @@
-package org.swyp.weddy.domain.smallcategory.service;
+package org.swyp.weddy.domain.checklist.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.swyp.weddy.common.exception.ErrorCode;
-import org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemAddException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemDeleteException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemNotExistsException;
-import org.swyp.weddy.domain.smallcategory.exception.SmallCategoryItemUpdateException;
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemPreviewResponse;
-import org.swyp.weddy.domain.smallcategory.web.response.SmallCatItemResponse;
+import org.swyp.weddy.domain.checklist.dao.SmallCatMapper;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
+import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.util.List;
 
@@ -21,18 +21,19 @@ import java.util.List;
 @Service
 public class SmallCatServiceImpl implements SmallCatService {
 
-    private final SmallCatItemMapper mapper;
+    private final SmallCatMapper mapper;
 
-    public SmallCatServiceImpl(SmallCatItemMapper mapper) {
+    public SmallCatServiceImpl(SmallCatMapper mapper) {
         this.mapper = mapper;
     }
 
     @Override
     public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
-        List<SmallCatItemPreview> smallCatItems = mapper.selectItemPreviews(checklistId, largeCatItemId);
+        List<SmallCatItemPreview> smallCatItemPreviews = mapper.selectItemPreviews(checklistId, largeCatItemId);
 
-        List<SmallCatItemPreviewResponse> smallCatItemPreviewResponsesResponses = SmallCatItemPreviewResponse.from(smallCatItems);
-        return smallCatItemPreviewResponsesResponses;
+
+        List<SmallCatItemPreviewResponse> smallCatItemPreviewResponses = SmallCatItemPreviewResponse.from(smallCatItemPreviews);
+        return smallCatItemPreviewResponses;
     }
 
     @Override

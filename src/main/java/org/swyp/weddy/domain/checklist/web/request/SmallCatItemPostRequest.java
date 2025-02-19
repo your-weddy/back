@@ -1,18 +1,21 @@
-package org.swyp.weddy.domain.smallcategory.entity;
+package org.swyp.weddy.domain.checklist.web.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
-public class SmallCatItemPreview {
-
-    private Long id;
+public class SmallCatItemPostRequest {
+    private Long checklistId;
     private Long largeCatItemId;
     private String title;
     private Date dueDate;
     private String assigneeName;
+    private String body;
     private String statusName;
+    private Long amount;
 }

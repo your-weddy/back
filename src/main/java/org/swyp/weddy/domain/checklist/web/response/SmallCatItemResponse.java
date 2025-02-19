@@ -1,9 +1,9 @@
-package org.swyp.weddy.domain.smallcategory.web.response;
+package org.swyp.weddy.domain.checklist.web.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.swyp.weddy.domain.smallcategory.entity.SmallCatItem;
+import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
 
 import java.util.Date;
 import java.util.List;

@@ -11,7 +11,6 @@ import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
-import org.swyp.weddy.domain.smallcategory.service.FakeSmallCatService;
 
 import java.sql.Timestamp;
 import java.util.List;

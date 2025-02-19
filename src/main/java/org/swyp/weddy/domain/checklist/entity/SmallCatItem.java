@@ -1,13 +1,15 @@
-package org.swyp.weddy.domain.smallcategory.entity;
+package org.swyp.weddy.domain.checklist.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
-import org.swyp.weddy.domain.smallcategory.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
 
 import java.util.Date;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class SmallCatItem {
 
     private Long id;

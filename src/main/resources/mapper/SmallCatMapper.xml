@@ -1,25 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.swyp.weddy.domain.smallcategory.dao.SmallCatItemMapper">
+<mapper namespace="org.swyp.weddy.domain.checklist.dao.SmallCatMapper">
 
     <!-- 프리뷰 컬럼 조회 -->
-    <select id="selectItemPreviews" resultType="org.swyp.weddy.domain.smallcategory.entity.SmallCatItemPreview">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.status_id
+    <select id="selectItemPreviews" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, status.name "status_name"
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
+          JOIN small_category_item_assignee assignee ON small.assignee_id = assignee.id
+          JOIN small_category_item_status status ON small.status_id = status.id
          WHERE checklist.id = #{checklistId}
            AND large.id = #{largeCatItemId}
            AND small.is_deleted = false;
     </select>
 
     <!-- 모든 컬럼 조회 -->
-    <select id="selectItem" resultType="org.swyp.weddy.domain.smallcategory.entity.SmallCatItem">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, small.assignee_id, small.body, small.status_id, small.amount
+    <select id="selectItem" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItem">
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, small.body, status.name "status_name", small.amount
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
+          JOIN small_category_item_assignee assignee ON small.assignee_id = assignee.id
+          JOIN small_category_item_status status ON small.status_id = status.id
          WHERE checklist.id = #{checklistId}
            AND large.id = #{largeCatItemId}
            AND small.id = #{smallCatItemId}
