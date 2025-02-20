@@ -1,11 +1,12 @@
 package org.swyp.weddy.domain.checklist.entity;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 
 import java.sql.Timestamp;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class LargeCatItemTest {
 
@@ -22,6 +23,7 @@ class LargeCatItemTest {
         );
         LargeCatItemDeleteDto deleteDto = new LargeCatItemDeleteDto(1L, 1L);
         LargeCatItem afterDelete = LargeCatItem.ofDelete(afterUpdate, deleteDto);
-        Assertions.assertThat(afterDelete.getUpdatedAt()).isNotEqualTo(afterUpdate.getUpdatedAt());
+
+        assertThat(afterDelete.getUpdatedAt()).isNotEqualTo(afterUpdate.getUpdatedAt());
     }
 }
