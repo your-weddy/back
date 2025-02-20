@@ -17,6 +17,7 @@ import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
 import org.swyp.weddy.domain.auth.exception.JwtUnauthorizedException;
 import org.swyp.weddy.domain.auth.service.JwtService;
 
+
 import java.io.IOException;
 import java.util.Map;
 
@@ -53,20 +54,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private boolean isAuthenticateFail(Map<String, String> token, HttpServletResponse response) throws IOException {
         try {
             if (jwtService.validateToken(token.get("accessToken"))) {
-                log.error("=====인증된 사용자======");
+                log.debug("=====인증된 사용자======");
                 Authentication authentication = jwtService.getAuthentication(token.get("accessToken"));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
+                return false;
             }
-            return false;
-        } catch (JwtTokenExpiredException e) {
-            log.error("JWT Token has expired", e);
-            response.setStatus(Integer.parseInt(ErrorCode.TOKEN_EXPIRED.getCode()));
+        } catch (JwtTokenExpiredException e){
+            response.setStatus(Integer.valueOf(ErrorCode.TOKEN_EXPIRED.getCode()));
             response.getWriter().write(ErrorCode.TOKEN_EXPIRED.getReason());
-            return true; // 인증 실패
-        } catch (JwtUnauthorizedException e) {
-            log.error("JWT UnAuthorized", e);
-            response.sendRedirect(LOGIN_PAGE_URL);
-            return true; // 인증 실패
+        } catch (JwtUnauthorizedException e){
+            response.setStatus(Integer.valueOf(ErrorCode.TOKEN_INVALID.getCode()));
+            response.getWriter().write(ErrorCode.TOKEN_INVALID.getReason());
+
         }
+        return true;
     }
 }

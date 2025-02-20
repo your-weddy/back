@@ -25,7 +25,8 @@ bin/
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-src/main/resources/static
+src/main/resources/static/home.html
+src/main/resources/static/index.html
 
 ### NetBeans ###
 /nbproject/private/
