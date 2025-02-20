@@ -11,8 +11,11 @@ import java.util.Arrays;
 
 @Configuration
 public class CorsConfig {
-    @Value("${cors.uris}")
-    private String corsUris;
+    private final String corsUris;
+
+    public CorsConfig(@Value("${cors.uris}") String corsUris) {
+        this.corsUris = corsUris;
+    }
 
     @Bean
     CorsConfigurationSource corsConfigSource() {
