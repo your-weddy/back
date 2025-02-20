@@ -25,11 +25,16 @@ import java.util.Map;
 @Component
 public class JwtService {
 
-    @Value("${jwt.secret}")
-    private String secretKeyPlain;
+    private final String secretKeyPlain;
     private SecretKey secretKeyForSign;
-    private static final long ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS = 1000L * 60 * 60 * 48; // 48시간
-    private static final long REFRESH_TOKEN_VALIDITY_IN_MILLISECONDS = 1000L * 60 * 60 * 24 * 365; // 1년
+    private final long ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS;
+    private final long REFRESH_TOKEN_VALIDITY_IN_MILLISECONDS;
+
+    public JwtService(@Value("${jwt.secret}") String secretKeyPlain, @Value("${jwt.access-token-duration}") long accessTokenDuration, @Value("${jwt.refresh-token-duration}") long refreshTokenDuration) {
+        this.secretKeyPlain = secretKeyPlain;
+        this.ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS = accessTokenDuration;
+        this.REFRESH_TOKEN_VALIDITY_IN_MILLISECONDS = refreshTokenDuration;
+    }
 
     @PostConstruct
     private void setSecretKey() {
@@ -37,7 +42,6 @@ public class JwtService {
     }
 
     public TokenInfo generateToken(Authentication authentication) {
-
         Date now = new Date();
         Date accessTokenExpiresIn = new Date(now.getTime() + ACCESS_TOKEN_VALIDITY_IN_MILLISECONDS);
         Date refreshTokenExpiresIn = new Date(now.getTime() + REFRESH_TOKEN_VALIDITY_IN_MILLISECONDS);
