@@ -62,7 +62,7 @@ public class LargeCatItem {
                 dto.getChecklistId(),
                 itemBeforeDelete.getTitle(),
                 itemBeforeDelete.getCreatedAt(),
-                itemBeforeDelete.getUpdatedAt(),
+                new Timestamp(System.currentTimeMillis()),
                 Boolean.TRUE
         );
     }
