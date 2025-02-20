@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
 import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
 import org.swyp.weddy.domain.auth.exception.JwtUnauthorizedException;
+import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
 import org.swyp.weddy.domain.checklist.exception.*;
 import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 
@@ -25,19 +26,25 @@ public class ControllerAdvice {
     }
 
     @ExceptionHandler(JwtRefreshTokenInvalidException.class)
-    protected ResponseEntity<ErrorResponse> JwtRefreshTokenInvalidException(final JwtRefreshTokenInvalidException exception) {
+    protected ResponseEntity<ErrorResponse> jwtRefreshTokenInvalidException(final JwtRefreshTokenInvalidException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(JwtTokenExpiredException.class)
-    protected ResponseEntity<ErrorResponse> JwtTokenExpiredException(final JwtTokenExpiredException exception) {
+    protected ResponseEntity<ErrorResponse> jwtTokenExpiredException(final JwtTokenExpiredException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }
 
     @ExceptionHandler(JwtUnauthorizedException.class)
-    protected ResponseEntity<ErrorResponse> JwtUnauthorizedException(final JwtUnauthorizedException exception) {
+    protected ResponseEntity<ErrorResponse> jwtUnauthorizedException(final JwtUnauthorizedException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> userNotFoundException(final UserNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }

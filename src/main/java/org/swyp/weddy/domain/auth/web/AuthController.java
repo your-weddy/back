@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
+import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
@@ -61,11 +62,10 @@ public class AuthController {
     public ResponseEntity<UserResponse> getUserInfo() {
 
         if(!authService.isValidUser()){
-            return ResponseEntity.status(999).body(null);
+            throw new UserNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
         UserResponse userResponse = authService.getUserInfo();
-
         return ResponseEntity.ok(userResponse);
     }
 
