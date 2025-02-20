@@ -31,7 +31,7 @@ public class AuthController {
     private final AuthService authService;
     private final CookieService cookieService;
 
-    @GetMapping("/login/kakao")
+    @GetMapping("/kakao/callback")
     public void kakaoCallback(@RequestParam("code") String code, HttpServletResponse response) throws IOException {
         TokenInfo tokenInfo = authService.processKakaoLogin(code);
 
