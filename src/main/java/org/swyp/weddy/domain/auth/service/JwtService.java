@@ -10,9 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import org.swyp.weddy.common.exception.ErrorCode;
-import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
-import org.swyp.weddy.domain.auth.exception.JwtUnauthorizedException;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
 
 import javax.crypto.SecretKey;
@@ -88,12 +85,10 @@ public class JwtService {
             log.info("Invalid JWT signature.");
         } catch (ExpiredJwtException e) {
             log.info("Expired JWT token.");
-            throw new JwtTokenExpiredException(ErrorCode.TOKEN_EXPIRED);
         } catch (UnsupportedJwtException e) {
             log.info("Unsupported JWT token.");
         } catch (IllegalArgumentException e) {
             log.info("JWT token compact of handler are invalid.");
-            throw new JwtUnauthorizedException(ErrorCode.UNAUTHORIZED);
         }
         return false;
     }
