@@ -81,7 +81,7 @@ public class SmallCatController {
     }
 
     @PatchMapping("/move-item")
-    public ResponseEntity<Boolean> moveItem( @RequestBody SmallCatItemMoveRequest request) {
+    public ResponseEntity<Boolean> moveItem(@RequestBody SmallCatItemMoveRequest request) {
 
         SmallCatItemMoveDto dto = SmallCatItemMoveDto.from(request);
         boolean result = smallCatService.moveItem(dto);
