@@ -1,6 +1,7 @@
 package org.swyp.weddy.domain.checklist.service;
 
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
@@ -43,6 +44,11 @@ public class FakeSmallCatService implements SmallCatService {
 
     @Override
     public boolean deleteAll(Long checklistId, Long largeCatItemId) {
+        return false;
+    }
+
+    @Override
+    public boolean moveItem(SmallCatItemMoveDto dto) {
         return false;
     }
 }

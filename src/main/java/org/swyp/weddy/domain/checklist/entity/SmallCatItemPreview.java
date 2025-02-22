@@ -17,4 +17,6 @@ public class SmallCatItemPreview {
     private Date dueDate;
     private String assigneeName;
     private String statusName;
+    private Long sequence;
+
 }
