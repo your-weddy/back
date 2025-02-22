@@ -12,6 +12,7 @@ import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteExceptio
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
 import java.util.List;
@@ -45,7 +46,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 1개 조회 실패시 예외처리")
         @Test
-        void findItem_Exception_Test() {
+        void findItemFailsWhenNotExists() {
             // given
             when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId)).thenReturn(null);
 
@@ -56,7 +57,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 1개를 조회할 수 있다.")
         @Test
-        void getSmallCatItemTest() {
+        void findItemSuccess() {
             // given
             SmallCatItem item = SmallCatItem.builder().id(10L).build();
             when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId)).thenReturn(item);
@@ -71,7 +72,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 Preview 들을 조회할 수 있다.")
         @Test
-        void getItemPreviewsTest() {
+        void findItemPreviewsSuccess() {
             // given
             SmallCatItemPreview preview = SmallCatItemPreview.builder().id(10L).build();
             when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId)).thenReturn(List.of(preview));
@@ -91,7 +92,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 1개 추가 실패시 예외처리")
         @Test
-        void addItem_Exception_Test() {
+        void addItemFailsWhenInsertFails() {
             // given
             when(smallCatMapper.insertItem(any(SmallCatItem.class))).thenReturn(0L);
             SmallCatItemDto dto = SmallCatItemDto.builder().build();
@@ -103,7 +104,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목을 추가할 수 있다.")
         @Test
-        void addItemTest() {
+        void addItemSuccess() {
             // given
             SmallCatItemDto dto = SmallCatItemDto.builder()
                     .checklistId(checklistId)
@@ -127,7 +128,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 1개 수정 실패시 예외처리")
         @Test
-        void editItem_Exception_Test() {
+        void editItemFailsWhenUpdateFails() {
             // given
             when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId))
                     .thenReturn(SmallCatItem.builder().build());
@@ -145,7 +146,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 1개가 존재할 경우, 변경할 수 있다.")
         @Test
-        void editItemTest() {
+        void editItemSuccess() {
             // given
             SmallCatItemDto dto = SmallCatItemDto.builder()
                     .checklistId(checklistId)
@@ -170,7 +171,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 1개 삭제 실패시 예외처리")
         @Test
-        void deleteItem_Exception_Test() {
+        void deleteItemFailsWhenDeleteFails() {
             // given
             when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId))
                     .thenReturn(SmallCatItem.builder().build());
@@ -183,7 +184,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 1개가 존재할 경우, 삭제할 수 있다.")
         @Test
-        void deleteItemTest() {
+        void deleteItemSuccess() {
             // given
             when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId)).thenReturn(mock(SmallCatItem.class));
             when(smallCatMapper.deleteItem(largeCatItemId, smallCatItemId)).thenReturn(1);
@@ -198,7 +199,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목 여러개 삭제 실패시 예외처리")
         @Test
-        void deleteAll_Exception_Test() {
+        void deleteAllFailsWhenDeleteFails() {
             // given
             when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId))
                     .thenReturn(List.of(SmallCatItemPreview.builder().build()));
@@ -211,7 +212,7 @@ class SmallCatServiceTest {
 
         @DisplayName("소분류 항목들이 존재할 경우, 전체 삭제할 수 있다.")
         @Test
-        void deleteAllItemsTest() {
+        void deleteAllSuccess() {
             // given
             SmallCatItemPreview preview = SmallCatItemPreview.builder().id(10L).build();
             when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId)).thenReturn(List.of(preview));
@@ -227,7 +228,7 @@ class SmallCatServiceTest {
 
         @DisplayName("삭제대상 없을 시 true 반환")
         @Test
-        void deleteAll_Return_True_If_Select_Empty_Test() {
+        void deleteAllSuccessWhenEmpty() {
             // given
             when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId)).thenReturn(List.of());
 
@@ -236,6 +237,43 @@ class SmallCatServiceTest {
 
             // then
             assertThat(result).isTrue();
+        }
+    }
+
+    @DisplayName("항목 이동 관련 테스트")
+    @Nested
+    class MoveTests {
+
+        @DisplayName("항목 이동 대상 없을 시 예외처리")
+        @Test
+        void moveItemFailsWhenNoTargets() {
+            // given
+            SmallCatItemMoveDto dto = mock(SmallCatItemMoveDto.class);
+            when(dto.getSmallCatItemIds()).thenReturn(List.of());
+
+            // when & then
+            assertThatThrownBy(() -> smallCatService.moveItem(dto))
+                    .isInstanceOf(SmallCategoryItemNotExistsException.class);
+        }
+
+        @DisplayName("이동 대상이 있을 시 이동 성공")
+        @Test
+        void moveItemSuccess() {
+            // given
+            SmallCatItemMoveDto dto = SmallCatItemMoveDto.builder()
+                    .checklistId(checklistId)
+                    .largeCatItemId(largeCatItemId)
+                    .smallCatItemIds(List.of(smallCatItemId))
+                    .build();
+            when(smallCatMapper.selectItems(checklistId, largeCatItemId)).thenReturn(List.of());
+            when(smallCatMapper.moveItem(any(SmallCatItem.class))).thenReturn(1);
+
+            // when
+            boolean result = smallCatService.moveItem(dto);
+
+            // then
+            assertThat(result).isTrue();
+            verify(smallCatMapper, times(1)).moveItem(any(SmallCatItem.class));
         }
     }
 }
