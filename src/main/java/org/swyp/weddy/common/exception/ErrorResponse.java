@@ -10,7 +10,7 @@ class ErrorResponse {
     private final String reason;
 
     ErrorResponse(ErrorCode errorCode) {
-        this.code = Integer.valueOf(errorCode.getCode());
+        this.code = errorCode.getCode();
         this.reason = errorCode.getReason();
     }
 
