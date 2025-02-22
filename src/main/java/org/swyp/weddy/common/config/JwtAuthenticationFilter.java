@@ -60,7 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return false;
         } catch (JwtTokenExpiredException e) {
             log.error("JWT Token has expired", e);
-            response.setStatus(Integer.parseInt(ErrorCode.TOKEN_EXPIRED.getCode()));
+            response.setStatus(ErrorCode.TOKEN_EXPIRED.getCode());
             response.getWriter().write(ErrorCode.TOKEN_EXPIRED.getReason());
             return true; // 인증 실패
         } catch (JwtUnauthorizedException e) {
