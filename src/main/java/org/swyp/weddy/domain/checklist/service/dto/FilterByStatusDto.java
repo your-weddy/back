@@ -8,4 +8,12 @@ public class FilterByStatusDto {
         this.checklistId = checklistId;
         this.itemStatus = itemStatus;
     }
+
+    public Long getChecklistId() {
+        return checklistId;
+    }
+
+    public String getItemStatus() {
+        return itemStatus;
+    }
 }
