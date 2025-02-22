@@ -12,8 +12,6 @@ public interface SmallCatMapper {
 
     List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
     SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
-
-    List<SmallCatItem> selectItems(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
     Long insertItem(SmallCatItem smallCatItem);
 
     int updateItem(SmallCatItem smallCatItem);

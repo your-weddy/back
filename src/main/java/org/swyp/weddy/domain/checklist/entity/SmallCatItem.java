@@ -41,9 +41,7 @@ public class SmallCatItem {
         );
     }
 
-    public static List<SmallCatItem> ofMove(List<SmallCatItem> itemsBeforeMove, SmallCatItemMoveDto dto) {
-
-        logItems(itemsBeforeMove);
+    public static List<SmallCatItem> ofMove(SmallCatItemMoveDto dto) {
 
         List<Long> sequences = dto.getSmallCatItemIds();
         ArrayList<SmallCatItem> itemsAfterMove = new ArrayList<>(sequences.size());
@@ -60,26 +58,5 @@ public class SmallCatItem {
         }
 
         return itemsAfterMove;
-    }
-
-    private static void logItems(List<SmallCatItem> itemsBeforeMove) {
-        for (SmallCatItem smallCatItem : itemsBeforeMove) {
-            log.info("Items before move: {}", smallCatItem);
-        }
-    }
-
-    @Override
-    public String toString() {
-        return "SmallCatItem{" +
-                "id=" + id +
-                ", largeCatItemId=" + largeCatItemId +
-                ", title='" + title + '\'' +
-                ", dueDate=" + dueDate +
-                ", assigneeName='" + assigneeName + '\'' +
-                ", body='" + body + '\'' +
-                ", statusName='" + statusName + '\'' +
-                ", amount=" + amount +
-                ", sequence=" + sequence +
-                '}';
     }
 }

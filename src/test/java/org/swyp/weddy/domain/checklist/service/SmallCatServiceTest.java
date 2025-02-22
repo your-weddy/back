@@ -265,7 +265,6 @@ class SmallCatServiceTest {
                     .largeCatItemId(largeCatItemId)
                     .smallCatItemIds(List.of(smallCatItemId))
                     .build();
-            when(smallCatMapper.selectItems(checklistId, largeCatItemId)).thenReturn(List.of());
             when(smallCatMapper.moveItem(any(SmallCatItem.class))).thenReturn(1);
 
             // when

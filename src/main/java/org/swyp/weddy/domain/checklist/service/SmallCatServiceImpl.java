@@ -164,10 +164,8 @@ public class SmallCatServiceImpl implements SmallCatService {
             throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
-        List<SmallCatItem> itemsBeforeMove = mapper.selectItems(dto.getChecklistId(), dto.getLargeCatItemId());
-        List<SmallCatItem> itemsAfterMove = SmallCatItem.ofMove(itemsBeforeMove, dto);
-
-        for (SmallCatItem item: itemsAfterMove) {
+        List<SmallCatItem> smallCatItems = SmallCatItem.ofMove(dto);
+        for (SmallCatItem item: smallCatItems) {
             int updatedRows = mapper.moveItem(item);
             if (updatedRows != 1) {
                 throw new SmallCategoryItemUpdateException(ErrorCode.UPDATE_FAILED);
