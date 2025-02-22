@@ -48,7 +48,7 @@ class ErrorResponseTest {
             ObjectMapper objectMapper = new ObjectMapper();
             String s = objectMapper.writeValueAsString(responseEntity.getBody());
             assertThat(s).isEqualTo("{" +
-                    "\"code\":\"400\"," +
+                    "\"code\":400," +
                     "\"reason\":\"잘못된 요청\"" +
                     "}");
             assertThat(s.contains("httpStatusCode")).isFalse();
