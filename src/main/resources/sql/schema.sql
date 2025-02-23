@@ -48,6 +48,7 @@ CREATE TABLE `small_category_item`
     `body`                   text COMMENT 'store rich text in HTML format',
     `status_id`              bigint,
     `amount`                 bigint,
+    `sequence`               bigint,
     `created_at`             timestamp,
     `updated_at`             timestamp,
     `is_deleted`             bool

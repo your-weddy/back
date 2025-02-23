@@ -12,6 +12,7 @@ import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteExceptio
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
@@ -153,6 +154,25 @@ public class SmallCatServiceImpl implements SmallCatService {
         } catch (Exception e) {
             throw new SmallCategoryItemDeleteException(ErrorCode.DELETE_FAILED);
         }
+    }
+
+    @Transactional
+    @Override
+    public boolean moveItem(SmallCatItemMoveDto dto) {
+
+        if (dto.getSmallCatItemIds() == null || dto.getSmallCatItemIds().isEmpty()) {
+            throw new SmallCategoryItemNotExistsException(ErrorCode.NOT_EXISTS);
+        }
+
+        List<SmallCatItem> smallCatItems = SmallCatItem.ofMove(dto);
+        for (SmallCatItem item: smallCatItems) {
+            int updatedRows = mapper.moveItem(item);
+            if (updatedRows != 1) {
+                throw new SmallCategoryItemUpdateException(ErrorCode.UPDATE_FAILED);
+            }
+        }
+
+        return true;
     }
 
 }
