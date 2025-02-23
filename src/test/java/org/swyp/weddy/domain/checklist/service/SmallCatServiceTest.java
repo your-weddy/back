@@ -4,8 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.swyp.weddy.domain.checklist.dao.SmallCatMapper;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
@@ -14,6 +12,7 @@ import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteExceptio
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
@@ -26,273 +25,268 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class SmallCatServiceTest {
+    private SmallCatService smallCatService;
+    private SmallCatMapper smallCatMapper;
+    private Long checklistId;
+    private Long largeCatItemId;
+    private Long smallCatItemId;
 
-    private static final Logger log = LoggerFactory.getLogger(SmallCatServiceTest.class);
+    @BeforeEach
+    void setUp() {
+        checklistId = 1L;
+        largeCatItemId = 1L;
+        smallCatItemId = 1L;
 
-    @DisplayName("예외처리 테스트")
+        smallCatMapper = mock(SmallCatMapper.class);
+        smallCatService = new SmallCatServiceImpl(smallCatMapper);
+    }
+
+    @DisplayName("조회 관련 테스트")
     @Nested
-    class ExceptionTest {
-        private SmallCatService smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper());
+    class SelectTests {
 
         @DisplayName("소분류 항목 1개 조회 실패시 예외처리")
         @Test
-        void findItem_Exception_Test() {
-            assertThatThrownBy(() -> {
-                smallCatServiceImpl.findItem(1L, 1L, 1L);
-            }).isInstanceOf(SmallCategoryItemNotExistsException.class);
+        void findItemFailsWhenNotExists() {
+            // given
+            when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId)).thenReturn(null);
+
+            // when & then
+            assertThatThrownBy(() -> smallCatService.findItem(checklistId, largeCatItemId, smallCatItemId))
+                    .isInstanceOf(SmallCategoryItemNotExistsException.class);
         }
-
-        @DisplayName("소분류 항목 1개 추가 실패시 예외처리")
-        @Test
-        void addItem_Exception_Test() {
-            assertThatThrownBy(() -> {
-                smallCatServiceImpl.addItem(new SmallCatItemDto(null, null, null, null, null, null, null, null, null));
-            }).isInstanceOf(SmallCategoryItemAddException.class);
-        }
-
-        @DisplayName("소분류 항목 1개 추가 실패시 예외처리")
-        @Test
-        void editItem_Exception_Test() {
-            //given
-            smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper() {
-                @Override
-                public SmallCatItem selectItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
-                    return new SmallCatItem(null, null, null, null, null, null, null, null);
-                }
-            });
-
-            //when, then
-            assertThatThrownBy(() -> {
-                smallCatServiceImpl.editItem(new SmallCatItemDto(null, null, null, null, null, null, null, null, null));
-            }).isInstanceOf(SmallCategoryItemUpdateException.class);
-        }
-
-        @DisplayName("소분류 항목 1개 삭제 실패시 예외처리")
-        @Test
-        void deleteItem_Exception_Test() {
-            //given
-            smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper() {
-                @Override
-                public SmallCatItem selectItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
-                    return new SmallCatItem(null, null, null, null, null, null, null, null);
-                }
-            });
-
-            //when, then
-            assertThatThrownBy(() -> {
-                smallCatServiceImpl.deleteItem(1L, 1L, 1L);
-            }).isInstanceOf(SmallCategoryItemDeleteException.class);
-        }
-
-        @DisplayName("소분류 항목 여러개 삭제 실패시 예외처리")
-        @Test
-        void deleteAll_Exception_Test() {
-            //given
-            smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper() {
-                @Override
-                public List<SmallCatItemPreview> selectItemPreviews(Long checklistId, Long largeCatItemId) {
-                    return List.of(new SmallCatItemPreview(null, null, null, null, null, null));
-                }
-            });
-
-            //when, then
-            assertThatThrownBy(() -> {
-                smallCatServiceImpl.deleteAll(1L, 1L);
-            }).isInstanceOf(SmallCategoryItemDeleteException.class);
-        }
-
-        @DisplayName("삭제대상 없을 시 true 반환")
-        @Test
-        void deleteAll_Return_True_If_Select_Empty_Test() {
-            //given
-            smallCatServiceImpl = new SmallCatServiceImpl(new FakeMapper());
-
-            //when, then
-            assertThat(smallCatServiceImpl.deleteAll(1L, 1L)).isTrue();
-        }
-    }
-
-    @DisplayName("서비스 로직 테스트")
-    @Nested
-    class ServiceTest {
-        Long checklistId;
-        Long largeCatItemId;
-        Long smallCatItemId;
-
-        private SmallCatService smallCatService;
-        private SmallCatMapper smallCatMapper;
-
-        @BeforeEach
-        void setUp(){
-            checklistId = 1L;
-            largeCatItemId = 1L;
-            smallCatItemId = 1L;
-
-            smallCatMapper = mock(SmallCatMapper.class);
-            smallCatService = new SmallCatServiceImpl(smallCatMapper);
-        }
-
-        @DisplayName("소분류 항목 Preview 들을 조회할 수 있다.")
-        @Test
-        void getItemPreviewsTest(){
-            //given
-            SmallCatItemPreview preview = SmallCatItemPreview.builder()
-                    .id(10L)
-                    .build();
-            when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId)).thenReturn(List.of(preview));
-
-            //when
-            List<SmallCatItemPreviewResponse> result = smallCatService.findItemPreviews(checklistId, largeCatItemId);
-
-            //then
-            assertThat(result).isNotNull();
-            assertThat(result).hasSize(1);
-            assertThat(result).extracting(SmallCatItemPreviewResponse::getId)
-                    .containsExactly(10L);
-        }
-
 
         @DisplayName("소분류 항목 1개를 조회할 수 있다.")
         @Test
-        void getSmallCatItemTest() {
-            //given
-            SmallCatItem item = SmallCatItem.builder()
-                    .id(10L)
-                    .build();
+        void findItemSuccess() {
+            // given
+            SmallCatItem item = SmallCatItem.builder().id(10L).build();
             when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId)).thenReturn(item);
 
-            //when
+            // when
             var result = smallCatService.findItem(checklistId, largeCatItemId, smallCatItemId);
 
-            //then
+            // then
             assertThat(result).isNotNull();
             assertEquals(result.getId(), item.getId());
         }
 
+        @DisplayName("소분류 항목 Preview 들을 조회할 수 있다.")
+        @Test
+        void findItemPreviewsSuccess() {
+            // given
+            SmallCatItemPreview preview = SmallCatItemPreview.builder().id(10L).build();
+            when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId)).thenReturn(List.of(preview));
+
+            // when
+            List<SmallCatItemPreviewResponse> result = smallCatService.findItemPreviews(checklistId, largeCatItemId);
+
+            // then
+            assertThat(result).isNotNull().hasSize(1);
+            assertThat(result).extracting(SmallCatItemPreviewResponse::getId).containsExactly(10L);
+        }
+    }
+
+    @DisplayName("추가 관련 테스트")
+    @Nested
+    class AddTests {
+
+        @DisplayName("소분류 항목 1개 추가 실패시 예외처리")
+        @Test
+        void addItemFailsWhenInsertFails() {
+            // given
+            when(smallCatMapper.insertItem(any(SmallCatItem.class))).thenReturn(0L);
+            SmallCatItemDto dto = SmallCatItemDto.builder().build();
+
+            // when & then
+            assertThatThrownBy(() -> smallCatService.addItem(dto))
+                    .isInstanceOf(SmallCategoryItemAddException.class);
+        }
+
         @DisplayName("소분류 항목을 추가할 수 있다.")
         @Test
-        void addItemTest() {
-            //given
-            Long expectedResult = 1L;
+        void addItemSuccess() {
+            // given
             SmallCatItemDto dto = SmallCatItemDto.builder()
+                    .checklistId(checklistId)
+                    .largeCatItemId(largeCatItemId)
                     .id(10L)
                     .build();
-            when(smallCatMapper.insertItem(any(SmallCatItem.class))).thenReturn(expectedResult);
+            when(smallCatMapper.insertItem(any(SmallCatItem.class))).thenReturn(1L);
 
-            //when
+            // when
             Long result = smallCatService.addItem(dto);
 
-            //then
-            assertEquals(expectedResult , result);
+            // then
+            assertEquals(1L, result);
             verify(smallCatMapper).insertItem(any(SmallCatItem.class));
+        }
+    }
 
+    @DisplayName("수정 관련 테스트")
+    @Nested
+    class UpdateTests {
+
+        @DisplayName("소분류 항목 1개 수정 실패시 예외처리")
+        @Test
+        void editItemFailsWhenUpdateFails() {
+            // given
+            when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId))
+                    .thenReturn(SmallCatItem.builder().build());
+            when(smallCatMapper.updateItem(any(SmallCatItem.class))).thenReturn(0);
+            SmallCatItemDto dto = SmallCatItemDto.builder()
+                    .checklistId(checklistId)
+                    .largeCatItemId(largeCatItemId)
+                    .id(smallCatItemId)
+                    .build();
+
+            // when & then
+            assertThatThrownBy(() -> smallCatService.editItem(dto))
+                    .isInstanceOf(SmallCategoryItemUpdateException.class);
         }
 
         @DisplayName("소분류 항목 1개가 존재할 경우, 변경할 수 있다.")
         @Test
-        void editItemTest() {
-            //given
+        void editItemSuccess() {
+            // given
             SmallCatItemDto dto = SmallCatItemDto.builder()
-                    .id(checklistId)
-                    .id(largeCatItemId)
+                    .checklistId(checklistId)
+                    .largeCatItemId(largeCatItemId)
                     .id(smallCatItemId)
                     .build();
-            boolean expectedResult = true;
-            when(smallCatMapper.selectItem(dto.getChecklistId(), dto.getLargeCatItemId(), dto.getId())).thenReturn(mock(SmallCatItem.class));
+            when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId)).thenReturn(mock(SmallCatItem.class));
             when(smallCatMapper.updateItem(any(SmallCatItem.class))).thenReturn(1);
 
-            //when
+            // when
             boolean result = smallCatService.editItem(dto);
 
-            //then
-            assertEquals(expectedResult , result);
+            // then
+            assertEquals(true, result);
             verify(smallCatMapper).updateItem(any(SmallCatItem.class));
+        }
+    }
+
+    @DisplayName("삭제 관련 테스트")
+    @Nested
+    class DeleteTests {
+
+        @DisplayName("소분류 항목 1개 삭제 실패시 예외처리")
+        @Test
+        void deleteItemFailsWhenDeleteFails() {
+            // given
+            when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId))
+                    .thenReturn(SmallCatItem.builder().build());
+            when(smallCatMapper.deleteItem(largeCatItemId, smallCatItemId)).thenReturn(0);
+
+            // when & then
+            assertThatThrownBy(() -> smallCatService.deleteItem(checklistId, largeCatItemId, smallCatItemId))
+                    .isInstanceOf(SmallCategoryItemDeleteException.class);
         }
 
         @DisplayName("소분류 항목 1개가 존재할 경우, 삭제할 수 있다.")
         @Test
-        void deleteItemTest() {
-            //given
-            boolean expectedResult = true;
+        void deleteItemSuccess() {
+            // given
             when(smallCatMapper.selectItem(checklistId, largeCatItemId, smallCatItemId)).thenReturn(mock(SmallCatItem.class));
             when(smallCatMapper.deleteItem(largeCatItemId, smallCatItemId)).thenReturn(1);
 
-            //when
+            // when
             boolean result = smallCatService.deleteItem(checklistId, largeCatItemId, smallCatItemId);
 
-            //then
-            assertEquals(expectedResult , result);
+            // then
+            assertEquals(true, result);
             verify(smallCatMapper).deleteItem(largeCatItemId, smallCatItemId);
+        }
 
+        @DisplayName("소분류 항목 여러개 삭제 실패시 예외처리")
+        @Test
+        void deleteAllFailsWhenDeleteFails() {
+            // given
+            when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId))
+                    .thenReturn(List.of(SmallCatItemPreview.builder().build()));
+            when(smallCatMapper.deleteAllItems(checklistId, largeCatItemId)).thenReturn(0);
+
+            // when & then
+            assertThatThrownBy(() -> smallCatService.deleteAll(checklistId, largeCatItemId))
+                    .isInstanceOf(SmallCategoryItemDeleteException.class);
         }
 
         @DisplayName("소분류 항목들이 존재할 경우, 전체 삭제할 수 있다.")
         @Test
-        void deleteAllItemsTest() {
-            //given
-            boolean expectedResult = true;
-            SmallCatItemPreview preview = SmallCatItemPreview.builder()
-                    .id(10L)
-                    .build();
+        void deleteAllSuccess() {
+            // given
+            SmallCatItemPreview preview = SmallCatItemPreview.builder().id(10L).build();
             when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId)).thenReturn(List.of(preview));
             when(smallCatMapper.deleteAllItems(checklistId, largeCatItemId)).thenReturn(1);
 
-            //when
+            // when
             boolean result = smallCatService.deleteAll(checklistId, largeCatItemId);
 
-            //then
-            assertEquals(expectedResult , result);
+            // then
+            assertEquals(true, result);
             verify(smallCatMapper).deleteAllItems(checklistId, largeCatItemId);
-
         }
 
-        @DisplayName("진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
+        @DisplayName("삭제대상 없을 시 true 반환")
         @Test
-        void findItemPreviewsByStatusTest() {
-            Long checklistId = 1L;
-            String itemStatus = "시작전";
-            Long largeCatItemId = 1L;
-            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus);
+        void deleteAllSuccessWhenEmpty() {
+            // given
+            when(smallCatMapper.selectItemPreviews(checklistId, largeCatItemId)).thenReturn(List.of());
 
-            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of());
+            // when
+            boolean result = smallCatService.deleteAll(checklistId, largeCatItemId);
 
-            assertThat(smallCatService.findItemPreviewsByStatus(dto)).isNotNull();
+            // then
+            assertThat(result).isTrue();
         }
     }
-    static class FakeMapper implements SmallCatMapper {
-        @Override
-        public List<SmallCatItemPreview> selectItemPreviews(Long checklistId, Long largeCatItemId) {
-            return List.of();
+
+    @DisplayName("항목 이동 관련 테스트")
+    @Nested
+    class MoveTests {
+
+        @DisplayName("항목 이동 대상 없을 시 예외처리")
+        @Test
+        void moveItemFailsWhenNoTargets() {
+            // given
+            SmallCatItemMoveDto dto = mock(SmallCatItemMoveDto.class);
+            when(dto.getSmallCatItemIds()).thenReturn(List.of());
+
+            // when & then
+            assertThatThrownBy(() -> smallCatService.moveItem(dto))
+                    .isInstanceOf(SmallCategoryItemNotExistsException.class);
         }
 
-        @Override
-        public List<SmallCatItemPreview> selectItemPreviewsByStatus(SmallCatItemSelectDto dto) {
-            return List.of();
-        }
+        @DisplayName("이동 대상이 있을 시 이동 성공")
+        @Test
+        void moveItemSuccess() {
+            // given
+            SmallCatItemMoveDto dto = SmallCatItemMoveDto.builder()
+                    .checklistId(checklistId)
+                    .largeCatItemId(largeCatItemId)
+                    .smallCatItemIds(List.of(smallCatItemId))
+                    .build();
+            when(smallCatMapper.moveItem(any(SmallCatItem.class))).thenReturn(1);
 
-        @Override
-        public SmallCatItem selectItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
-            return null;
-        }
+            // when
+            boolean result = smallCatService.moveItem(dto);
 
-        @Override
-        public Long insertItem(SmallCatItem smallCatItem) {
-            return 0L;
+            // then
+            assertThat(result).isTrue();
+            verify(smallCatMapper, times(1)).moveItem(any(SmallCatItem.class));
         }
+    }
 
-        @Override
-        public int updateItem(SmallCatItem smallCatItem) {
-            return 0;
-        }
+    @DisplayName("진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
+    @Test
+    void findItemPreviewsByStatusTest() {
+        Long checklistId = 1L;
+        String itemStatus = "시작전";
+        Long largeCatItemId = 1L;
+        SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus);
 
-        @Override
-        public int deleteItem(Long largeCatItemId, Long smallCatItemId) {
-            return 0;
-        }
+        when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of());
 
-        @Override
-        public int deleteAllItems(Long checklistId, Long largeCatItemId) {
-            return 0;
-        }
+        assertThat(smallCatService.findItemPreviewsByStatus(dto)).isNotNull();
     }
 }

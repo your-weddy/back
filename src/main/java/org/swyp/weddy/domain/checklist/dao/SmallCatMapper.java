@@ -14,7 +14,6 @@ public interface SmallCatMapper {
     List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
     List<SmallCatItemPreview> selectItemPreviewsByStatus(SmallCatItemSelectDto dto);
     SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
-
     Long insertItem(SmallCatItem smallCatItem);
 
     int updateItem(SmallCatItem smallCatItem);
@@ -22,7 +21,6 @@ public interface SmallCatMapper {
     int deleteItem(@Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
     int deleteAllItems(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
 
-
-
+    int moveItem(SmallCatItem item);
 
 }

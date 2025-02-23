@@ -5,7 +5,7 @@
 
     <!-- 프리뷰 컬럼 조회 -->
     <select id="selectItemPreviews" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, status.name "status_name"
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, status.name "status_name", small.sequence
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
@@ -13,12 +13,13 @@
      LEFT JOIN small_category_item_status status ON small.status_id = status.id
          WHERE checklist.id = #{checklistId}
            AND large.id = #{largeCatItemId}
-           AND small.is_deleted = false;
+           AND small.is_deleted = false
+      ORDER BY small.sequence ASC;
     </select>
 
     <!-- 모든 컬럼 조회 -->
     <select id="selectItem" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItem">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, small.body, status.name "status_name", small.amount
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, small.body, status.name "status_name", small.amount, small.sequence
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
@@ -69,6 +70,15 @@
            SET is_deleted = true,
                updated_at = NOW()
          WHERE large_category_item_id = #{largeCatItemId};
+    </update>
+
+    <!-- 항목 이동 -->
+    <update id="moveItem" parameterType="org.swyp.weddy.domain.checklist.entity.SmallCatItem">
+        UPDATE small_category_item
+           SET sequence = #{sequence},
+               large_category_item_id = #{largeCatItemId},
+               updated_at = NOW()
+         WHERE id = #{id};
     </update>
 
     <select id="findItemPreviewsByStatus" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">

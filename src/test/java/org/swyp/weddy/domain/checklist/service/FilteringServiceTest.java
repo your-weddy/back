@@ -7,6 +7,7 @@ import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.service.dto.FilterByStatusDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
@@ -119,6 +120,11 @@ class FilteringServiceTest {
 
         @Override
         public boolean deleteAll(Long checklistId, Long largeCatItemId) {
+            return false;
+        }
+
+        @Override
+        public boolean moveItem(SmallCatItemMoveDto dto) {
             return false;
         }
 

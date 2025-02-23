@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.swyp.weddy.domain.checklist.service.SmallCatService;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
+import org.swyp.weddy.domain.checklist.web.request.SmallCatItemMoveRequest;
 import org.swyp.weddy.domain.checklist.web.request.SmallCatItemPatchRequest;
 import org.swyp.weddy.domain.checklist.web.request.SmallCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
@@ -175,5 +177,39 @@ class SmallCatControllerTest {
             assertEquals(true, result.getBody());
             verify(smallCatService).deleteAll(checklistId, largeCatItemId);
         }
+    }
+
+    @Nested
+    class MoveItemTest {
+        @DisplayName("소분류 항목 이동 성공 시 true 리턴.")
+        @Test
+        void testMoveItemReturnTrue() {
+            //given
+            SmallCatItemMoveRequest request = new SmallCatItemMoveRequest();
+            when(smallCatService.moveItem(any(SmallCatItemMoveDto.class))).thenReturn(true);
+
+            //when
+            var result = smallCatController.moveItem(request);
+
+            //then
+            assertEquals(200, result.getStatusCodeValue());
+            assertEquals(true, result.getBody());
+        }
+
+        @DisplayName("request 값이 Service객체로 올바르게 전달되는지 검증한다.")
+        @Test
+        void testMoveItemArgument() {
+            //given
+            SmallCatItemMoveRequest request = new SmallCatItemMoveRequest(checklistId, largeCatItemId, List.of(smallCatItemId));
+
+            //when
+            smallCatController.moveItem(request);
+
+            //then
+            ArgumentCaptor<SmallCatItemMoveDto> captor = ArgumentCaptor.forClass(SmallCatItemMoveDto.class);
+            verify(smallCatService).moveItem(captor.capture());
+            assertEquals(request.getSmallCatItemIds(), captor.getValue().getSmallCatItemIds());
+        }
+
     }
 }
