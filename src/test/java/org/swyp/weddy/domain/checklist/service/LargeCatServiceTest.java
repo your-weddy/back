@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
-import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.*;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
@@ -189,6 +186,11 @@ class LargeCatServiceTest {
 
         @Override
         public boolean deleteAll(Long checklistId, Long largeCatItemId) {
+            return false;
+        }
+
+        @Override
+        public boolean moveItem(SmallCatItemMoveDto dto) {
             return false;
         }
     }
