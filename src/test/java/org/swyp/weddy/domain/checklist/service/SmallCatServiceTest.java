@@ -14,6 +14,7 @@ import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteExceptio
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemFindByStatusDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
 import java.util.List;
@@ -245,10 +246,27 @@ class SmallCatServiceTest {
 
         }
 
+        @DisplayName("진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
+        @Test
+        void findItemPreviewsByStatusTest() {
+            Long checklistId = 1L;
+            String itemStatus = "시작전";
+            Long largeCatItemId = 1L;
+            SmallCatItemFindByStatusDto dto = new SmallCatItemFindByStatusDto(checklistId, itemStatus, largeCatItemId);
+
+            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of());
+
+            assertThat(smallCatService.findItemPreviewsByStatus(dto)).isNotNull();
+        }
     }
     static class FakeMapper implements SmallCatMapper {
         @Override
         public List<SmallCatItemPreview> selectItemPreviews(Long checklistId, Long largeCatItemId) {
+            return List.of();
+        }
+
+        @Override
+        public List<SmallCatItemPreview> selectItemPreviewsByStatus(SmallCatItemFindByStatusDto dto) {
             return List.of();
         }
 
