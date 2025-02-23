@@ -12,6 +12,7 @@ import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,6 +38,32 @@ class FilteringServiceTest {
         }
     }
 
+    private static class TestLargeCatItem extends LargeCatItem {
+        static LargeCatItem from(Long id, Long checklistId, String title) {
+            return new LargeCatItem(
+                    id,
+                    checklistId,
+                    title,
+                    new Timestamp(System.currentTimeMillis()),
+                    null,
+                    Boolean.FALSE
+            );
+        }
+    }
+
+    private static class TestSmallCatItemPreviewResponse extends SmallCatItemPreviewResponse {
+        static SmallCatItemPreviewResponse from(Long id, Long largeCatItemId, String statusName) {
+            return new SmallCatItemPreviewResponse(
+                    id,
+                    largeCatItemId,
+                    "",
+                    null,
+                    null,
+                    statusName
+            );
+        }
+    }
+
     private static class FakeLargeCatMapper implements LargeCatMapper {
         @Override
         public LargeCatItem selectItem(Long checklistId, Long id) {
@@ -45,7 +72,7 @@ class FilteringServiceTest {
 
         @Override
         public List<LargeCatItem> selectAllItems(Long checklistId) {
-            return List.of();
+            return List.of(TestLargeCatItem.from(1L, 1L, "신혼집"));
         }
 
         @Override
@@ -97,7 +124,11 @@ class FilteringServiceTest {
 
         @Override
         public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemFindByStatusDto smallDto) {
-            return List.of();
+            return List.of(
+                    TestSmallCatItemPreviewResponse.from(1L, 1L, "시작전"),
+                    TestSmallCatItemPreviewResponse.from(2L, 1L, "시작전"),
+                    TestSmallCatItemPreviewResponse.from(3L, 1L, "시작전")
+            );
         }
     }
 }
