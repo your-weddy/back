@@ -70,4 +70,22 @@
                updated_at = NOW()
          WHERE large_category_item_id = #{largeCatItemId};
     </update>
+
+    <select id="findItemPreviewsByStatus" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
+        SELECT small.id,
+               small.large_category_item_id,
+               small.title,
+               small.due_date,
+               assignee.name,
+               status.name "status_name"
+        FROM small_category_item small
+                 JOIN large_category_item large ON small.large_category_item_id = large.id
+                 JOIN checklist ON large.checklist_id = checklist.id
+                 LEFT JOIN small_category_item_assignee assignee ON small.assignee_id = assignee.id
+                 LEFT JOIN small_category_item_status status ON small.status_id = status.id
+        WHERE checklist.id = #{checklistId}
+          AND large.id = #{largeCatItemId}
+          AND status.name = #{itemStatus}
+          AND small.is_deleted = false;
+    </select>
 </mapper>
