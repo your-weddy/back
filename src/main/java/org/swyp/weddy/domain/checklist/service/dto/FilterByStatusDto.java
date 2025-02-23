@@ -1,10 +1,12 @@
 package org.swyp.weddy.domain.checklist.service.dto;
 
+import java.util.List;
+
 public class FilterByStatusDto {
     private Long checklistId;
-    private String itemStatus;
+    private List<String> itemStatus;
 
-    public FilterByStatusDto(Long checklistId, String itemStatus) {
+    public FilterByStatusDto(Long checklistId, List<String> itemStatus) {
         this.checklistId = checklistId;
         this.itemStatus = itemStatus;
     }
@@ -13,7 +15,7 @@ public class FilterByStatusDto {
         return checklistId;
     }
 
-    public String getItemStatus() {
+    public List<String> getItemStatus() {
         return itemStatus;
     }
 }
