@@ -54,7 +54,7 @@ public class AuthController {
 
             return ResponseEntity.ok().build();
         } catch (JwtRefreshTokenInvalidException e) {
-            return ResponseEntity.status(Integer.parseInt(ErrorCode.TOKEN_INVALID.getCode())).build();
+            return ResponseEntity.status(ErrorCode.TOKEN_INVALID.getCode()).build();
         }
     }
 

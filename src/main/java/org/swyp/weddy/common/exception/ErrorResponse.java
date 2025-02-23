@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 
 @Slf4j
 class ErrorResponse {
-    private final String code;
+    private final Integer code;
     private final String reason;
 
     ErrorResponse(ErrorCode errorCode) {
@@ -14,7 +14,7 @@ class ErrorResponse {
         this.reason = errorCode.getReason();
     }
 
-    public String getCode() {
+    public Integer getCode() {
         return this.code;
     }
 
@@ -23,7 +23,7 @@ class ErrorResponse {
     }
 
     public HttpStatusCode convertHttpStatusCode() {
-        Integer code = Integer.valueOf(this.getCode());
+        Integer code = this.getCode();
         try {
             return HttpStatusCode.valueOf(code);
         } catch (IllegalArgumentException e) {
