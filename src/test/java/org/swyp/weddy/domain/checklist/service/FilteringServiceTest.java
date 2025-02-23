@@ -37,6 +37,14 @@ class FilteringServiceTest {
             List<LargeCatItemResponse> result = filteringService.filterByStatus(new FilterByStatusDto(1L, "시작전"));
             assertThat(result).isNotNull();
         }
+
+        @DisplayName("진행상황 두개를 기준으로 필터링한 결과를 가져올 수 있다")
+        @Test
+        public void return_filtering_result_with_two_status() {
+            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            List<LargeCatItemResponse> result = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전","진행중")));
+            assertThat(result).isNotNull();
+        }
     }
 
     private static class TestLargeCatItem extends LargeCatItem {
