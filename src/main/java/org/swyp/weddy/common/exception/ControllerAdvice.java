@@ -3,13 +3,11 @@ package org.swyp.weddy.common.exception;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
-import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
-import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
-import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemAddException;
-import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteException;
-import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
-import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
+import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
+import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
+import org.swyp.weddy.domain.auth.exception.JwtUnauthorizedException;
+import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
+import org.swyp.weddy.domain.checklist.exception.*;
 import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 
 @RestControllerAdvice
@@ -23,6 +21,30 @@ public class ControllerAdvice {
 
     @ExceptionHandler(WikiNotFoundException.class)
     protected ResponseEntity<ErrorResponse> handleWikiNotFoundException(final WikiNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(JwtRefreshTokenInvalidException.class)
+    protected ResponseEntity<ErrorResponse> jwtRefreshTokenInvalidException(final JwtRefreshTokenInvalidException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(JwtTokenExpiredException.class)
+    protected ResponseEntity<ErrorResponse> jwtTokenExpiredException(final JwtTokenExpiredException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(JwtUnauthorizedException.class)
+    protected ResponseEntity<ErrorResponse> jwtUnauthorizedException(final JwtUnauthorizedException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> userNotFoundException(final UserNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }

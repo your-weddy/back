@@ -5,13 +5,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.dao.MemberMapper;
 import org.swyp.weddy.domain.auth.entity.Member;
-import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
+import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
+import org.swyp.weddy.domain.auth.web.response.UserResponse;
 
 import java.util.Collections;
 import java.util.Map;
@@ -33,11 +35,11 @@ public class AuthService {
         KakaoUserInfo kakaoUserInfo = oAuth2Service.getUserInfo(accessToken);
 
         // 3. DB 처리
-        Member member = createMemberFromKakaoUserInfo(kakaoUserInfo);
+        Member member = Member.from(kakaoUserInfo);
         saveDatabase(member);
 
         // 4. 인증 객체 생성
-        Authentication authentication = getAuthentication(member);
+        Authentication authentication = createAuthentication(member);
 
         // 5. JWT 토큰 발급
         TokenInfo tokenInfo = jwtService.generateToken(authentication);
@@ -56,7 +58,7 @@ public class AuthService {
 
 
     private void saveDatabase(Member member) {
-        Member existingUser = memberMapper.findByEmail(member.getEmail());
+        Member existingUser = memberMapper.selectByOAuthId(member.getOAuthId());
         if (existingUser == null) {
             memberMapper.saveMember(member);
         } else {
@@ -64,10 +66,9 @@ public class AuthService {
         }
     }
 
-    private Authentication getAuthentication(Member member) {
-        Member memberInfo = memberMapper.findByEmail(member.getEmail());
+    private Authentication createAuthentication(Member member) {
+        Member memberInfo = memberMapper.selectByOAuthId(member.getOAuthId());
 
-        // 5. authentication 생성
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 Map.of(
                         "id", memberInfo.getId(),
@@ -95,5 +96,24 @@ public class AuthService {
 
     public Map<String, String> resolveToken(HttpServletRequest request) {
         return jwtService.resolveToken(request);
+    }
+
+    public boolean isValidUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public UserResponse getUserInfo() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
+        Number id = (Number) principal.get("id");
+        Member member = memberMapper.selectByMemberId(id.longValue());
+
+        return UserResponse.from(member);
     }
 }
