@@ -34,16 +34,20 @@ class FilteringServiceTest {
         @Test
         public void return_filtering_result_with_one_status() {
             FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
-            List<LargeCatItemResponse> result = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
-            assertThat(result).isNotNull();
+            List<LargeCatItemResponse> filtered = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
+            var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> x.getStatusName().equals("시작전")).toList();
+            assertThat(filteredSmall).isNotNull();
         }
 
         @DisplayName("진행상황 두개를 기준으로 필터링한 결과를 가져올 수 있다")
         @Test
         public void return_filtering_result_with_two_status() {
             FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
-            List<LargeCatItemResponse> result = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전","진행중")));
-            assertThat(result).isNotNull();
+            List<LargeCatItemResponse> filtered = filteringService.filterByStatus(new FilterByStatusDto(2L, List.of("시작전", "진행중")));
+            var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> {
+                return x.getStatusName().equals("시작전") || x.getStatusName().equals("진행중");
+            }).toList();
+            assertThat(filteredSmall).isNotNull();
         }
     }
 
@@ -81,7 +85,11 @@ class FilteringServiceTest {
 
         @Override
         public List<LargeCatItem> selectAllItems(Long checklistId) {
-            return List.of(TestLargeCatItem.from(1L, 1L, "신혼집"));
+            return switch (checklistId.intValue()) {
+                case 1 -> List.of(TestLargeCatItem.from(1L, 1L, "신혼집"));
+                case 2 -> List.of(TestLargeCatItem.from(2L, 1L, "신혼집"));
+                default -> throw new RuntimeException("Unexpected");
+            };
         }
 
         @Override
@@ -137,12 +145,18 @@ class FilteringServiceTest {
         }
 
         @Override
-        public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto smallDto) {
-            return List.of(
-                    TestSmallCatItemPreviewResponse.from(1L, 1L, "시작전"),
-                    TestSmallCatItemPreviewResponse.from(2L, 1L, "시작전"),
-                    TestSmallCatItemPreviewResponse.from(3L, 1L, "시작전")
-            );
+        public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto dto) {
+            return switch (dto.getChecklistId().intValue()) {
+                case 1 -> List.of(
+                        TestSmallCatItemPreviewResponse.from(1L, 1L, "시작전"),
+                        TestSmallCatItemPreviewResponse.from(2L, 1L, "시작전")
+                        );
+                case 2 -> List.of(
+                        TestSmallCatItemPreviewResponse.from(1L, 1L, "시작전"),
+                        TestSmallCatItemPreviewResponse.from(3L, 1L, "진행중")
+                );
+                default -> throw new RuntimeException("Unexpected");
+            };
         }
     }
 }

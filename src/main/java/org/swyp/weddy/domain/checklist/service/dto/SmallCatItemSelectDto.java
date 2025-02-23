@@ -20,4 +20,8 @@ public class SmallCatItemSelectDto {
                 dto.getItemStatus()
         );
     }
+
+    public Long getChecklistId() {
+        return checklistId;
+    }
 }
