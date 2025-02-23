@@ -111,7 +111,9 @@ public class AuthService {
     public UserResponse getUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
-        Member member = memberMapper.selectByMemberId((Long) principal.get("id"));
+        Number id = (Number) principal.get("id");
+        Member member = memberMapper.selectByMemberId(id.longValue());
+
         return UserResponse.from(member);
     }
 }
