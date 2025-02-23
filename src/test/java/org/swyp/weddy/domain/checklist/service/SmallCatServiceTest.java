@@ -252,7 +252,7 @@ class SmallCatServiceTest {
             Long checklistId = 1L;
             String itemStatus = "시작전";
             Long largeCatItemId = 1L;
-            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, itemStatus, largeCatItemId);
+            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus);
 
             when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of());
 
