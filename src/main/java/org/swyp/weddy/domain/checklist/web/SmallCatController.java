@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.SmallCatService;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
+import org.swyp.weddy.domain.checklist.web.request.SmallCatItemMoveRequest;
 import org.swyp.weddy.domain.checklist.web.request.SmallCatItemPatchRequest;
 import org.swyp.weddy.domain.checklist.web.request.SmallCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
@@ -74,6 +76,15 @@ public class SmallCatController {
                                                   @RequestParam(name = "largeCatItemId") Long largeCatItemId) {
 
         boolean result = smallCatService.deleteAll(checklistId, largeCatItemId);
+
+        return ResponseEntity.ok().body(result);
+    }
+
+    @PatchMapping("/move-item")
+    public ResponseEntity<Boolean> moveItem(@RequestBody SmallCatItemMoveRequest request) {
+
+        SmallCatItemMoveDto dto = SmallCatItemMoveDto.from(request);
+        boolean result = smallCatService.moveItem(dto);
 
         return ResponseEntity.ok().body(result);
     }

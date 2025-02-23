@@ -2,7 +2,7 @@ spring:
   application:
     name: weddy
   datasource:
-    url: jdbc:h2:mem:test
+    url: jdbc:h2:mem:test;MODE=MySQL;
 #    url: jdbc:h2:tcp://localhost/~/loginTest //jdbc:h2:tcp://localhost/~/loginTest
     driver-class-name: org.h2.Driver
     username: sa
@@ -25,11 +25,11 @@ mybatis:
 
 jwt:
   secret: ${JWT_SECRET}
+  access-token-duration: ${JWT_ACCESS_TOKEN_DURATION:31536000000}
+  refresh-token-duration: ${JWT_REFRESH_TOKEN_DURATION:31536000000}
 
 authorize:
   uris: "${AUTHORIZE_URIS:/,/home.html,/index.html,/h2-console/**,/css/**,/js/**,/images/**,/swagger-ui/*,/v3/api-docs/**,/auth/**}"
-skip:
-  uris: "${SKIP_URIS:/,/index.html,/h2,/swagger-ui/*,/v3/api-docs/**,/auth/**}"
 cors:
   uris: "${CORS_URIS:http://localhost:3000,https://weddy-oi983a9q6-lawit.vercel.app}"
 
@@ -41,7 +41,7 @@ app:
 kakao:
   auth:
     client: ${KAKAO_CLIENT_ID}
-    redirect: ${KAKAO_REDIRECT_URL:http://localhost:8080/auth/login/kakao}
+    redirect: ${KAKAO_REDIRECT_URL:http://localhost:8080/auth/kakao/callback}
     tokenUrl: https://kauth.kakao.com/oauth/token
     userInfoUrl: https://kapi.kakao.com/v2/user/me
 

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
+import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
+import org.swyp.weddy.domain.auth.web.response.UserResponse;
 
 import java.io.IOException;
 import java.util.Map;
@@ -30,7 +32,7 @@ public class AuthController {
     private final AuthService authService;
     private final CookieService cookieService;
 
-    @GetMapping("/login/kakao")
+    @GetMapping("/kakao/callback")
     public void kakaoCallback(@RequestParam("code") String code, HttpServletResponse response) throws IOException {
         TokenInfo tokenInfo = authService.processKakaoLogin(code);
 
@@ -52,22 +54,19 @@ public class AuthController {
 
             return ResponseEntity.ok().build();
         } catch (JwtRefreshTokenInvalidException e) {
-            return ResponseEntity.status(Integer.parseInt(ErrorCode.TOKEN_INVALID.getCode())).build();
+            return ResponseEntity.status(ErrorCode.TOKEN_INVALID.getCode()).build();
         }
     }
 
-    /*@GetMapping("/userinfo")
-    public ResponseEntity<String> getUserInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getUserInfo() {
 
-        if (authentication == null || !authentication.isAuthenticated()) {
-            // 인증되지 않은 사용자일 경우 에러 응답 반환
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        if(!authService.isValidUser()){
+            throw new UserNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
-        Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
-
-        return ResponseEntity.ok("ok");
-    }*/
+        UserResponse userResponse = authService.getUserInfo();
+        return ResponseEntity.ok(userResponse);
+    }
 
 }
