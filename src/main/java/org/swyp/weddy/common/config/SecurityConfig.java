@@ -50,7 +50,7 @@ public class SecurityConfig {
                 .logout(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
-                            response.setStatus(Integer.parseInt(ErrorCode.UNAUTHORIZED.getCode()));
+                            response.setStatus(ErrorCode.UNAUTHORIZED.getCode());
                         })
                 );
 

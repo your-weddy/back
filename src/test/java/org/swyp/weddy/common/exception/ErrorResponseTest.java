@@ -61,7 +61,7 @@ class ErrorResponseTest {
     public void handle_code_not_in_range() {
         //given
         ErrorCode mockErrorCode = Mockito.mock(ErrorCode.class);
-        Mockito.when(mockErrorCode.getCode()).thenReturn("1000");
+        Mockito.when(mockErrorCode.getCode()).thenReturn(1000);
         ErrorResponse invalidErrorResponse = new ErrorResponse(mockErrorCode);
 
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
