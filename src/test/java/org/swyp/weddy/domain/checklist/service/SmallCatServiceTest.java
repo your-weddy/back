@@ -14,7 +14,7 @@ import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteExceptio
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemFindByStatusDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
 import java.util.List;
@@ -252,7 +252,7 @@ class SmallCatServiceTest {
             Long checklistId = 1L;
             String itemStatus = "시작전";
             Long largeCatItemId = 1L;
-            SmallCatItemFindByStatusDto dto = new SmallCatItemFindByStatusDto(checklistId, itemStatus, largeCatItemId);
+            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, itemStatus, largeCatItemId);
 
             when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of());
 
@@ -266,7 +266,7 @@ class SmallCatServiceTest {
         }
 
         @Override
-        public List<SmallCatItemPreview> selectItemPreviewsByStatus(SmallCatItemFindByStatusDto dto) {
+        public List<SmallCatItemPreview> selectItemPreviewsByStatus(SmallCatItemSelectDto dto) {
             return List.of();
         }
 

@@ -12,7 +12,7 @@ import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemDeleteExceptio
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsException;
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemFindByStatusDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
@@ -157,7 +157,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     @Override
-    public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemFindByStatusDto dto) {
+    public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto dto) {
         List<SmallCatItemPreview> smallCatItemPreviews = mapper.selectItemPreviewsByStatus(dto);
 
         return SmallCatItemPreviewResponse.from(smallCatItemPreviews);

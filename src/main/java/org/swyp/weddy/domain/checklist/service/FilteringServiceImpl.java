@@ -5,7 +5,7 @@ import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.FilterByStatusDto;
-import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemFindByStatusDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
@@ -32,7 +32,7 @@ public class FilteringServiceImpl implements FilteringService {
 
         List<LargeCatItemResponse> result = new ArrayList<>();
         for (LargeCatItem item : allItems) {
-            SmallCatItemFindByStatusDto smallDto = SmallCatItemFindByStatusDto.from(dto, item.getId());
+            SmallCatItemSelectDto smallDto = SmallCatItemSelectDto.from(dto, item.getId());
             List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviewsByStatus(
                     smallDto
             );

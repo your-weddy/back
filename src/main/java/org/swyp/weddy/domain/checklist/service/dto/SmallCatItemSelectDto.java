@@ -1,17 +1,17 @@
 package org.swyp.weddy.domain.checklist.service.dto;
 
-public class SmallCatItemFindByStatusDto {
+public class SmallCatItemSelectDto {
     private Long checklistId;
     private String itemStatus;
     private Long largeCatItemId;
 
-    public SmallCatItemFindByStatusDto(Long checklistId, String itemStatus, Long largeCatItemId) {
+    public SmallCatItemSelectDto(Long checklistId, String itemStatus, Long largeCatItemId) {
         this.checklistId = checklistId;
         this.itemStatus = itemStatus;
         this.largeCatItemId = largeCatItemId;
     }
 
-    public static SmallCatItemFindByStatusDto from(FilterByStatusDto dto, Long id) {
+    public static SmallCatItemSelectDto from(FilterByStatusDto dto, Long id) {
         return null;
     }
 }

@@ -1,7 +1,7 @@
 package org.swyp.weddy.domain.checklist.service;
 
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemFindByStatusDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
@@ -48,7 +48,7 @@ public class FakeSmallCatService implements SmallCatService {
     }
 
     @Override
-    public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemFindByStatusDto smallDto) {
+    public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto smallDto) {
         return List.of();
     }
 }

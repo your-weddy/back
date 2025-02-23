@@ -7,7 +7,7 @@ import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.service.dto.FilterByStatusDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
-import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemFindByStatusDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
@@ -123,7 +123,7 @@ class FilteringServiceTest {
         }
 
         @Override
-        public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemFindByStatusDto smallDto) {
+        public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto smallDto) {
             return List.of(
                     TestSmallCatItemPreviewResponse.from(1L, 1L, "시작전"),
                     TestSmallCatItemPreviewResponse.from(2L, 1L, "시작전"),
