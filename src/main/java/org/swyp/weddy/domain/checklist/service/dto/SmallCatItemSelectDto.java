@@ -12,6 +12,10 @@ public class SmallCatItemSelectDto {
     }
 
     public static SmallCatItemSelectDto from(FilterByStatusDto dto, Long id) {
-        return null;
+        return new SmallCatItemSelectDto(
+                dto.getChecklistId(),
+                id,
+                dto.getItemStatus()
+        );
     }
 }
