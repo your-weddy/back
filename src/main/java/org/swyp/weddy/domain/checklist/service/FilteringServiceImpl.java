@@ -1,5 +1,6 @@
 package org.swyp.weddy.domain.checklist.service;
 
+import org.springframework.stereotype.Service;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
@@ -12,6 +13,7 @@ import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class FilteringServiceImpl implements FilteringService {
 
     private final LargeCatMapper mapper;

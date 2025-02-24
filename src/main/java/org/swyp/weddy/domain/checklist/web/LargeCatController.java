@@ -4,11 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
+import org.swyp.weddy.domain.checklist.service.FilteringService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
-import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.service.dto.*;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemDeleteRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemEditRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
@@ -23,10 +21,12 @@ import java.util.List;
 public class LargeCatController {
     private final LargeCatService largeCatService;
     private final ChecklistService checklistService;
+    private final FilteringService filteringService;
 
-    public LargeCatController(LargeCatService largeCatService, ChecklistService checklistService) {
+    public LargeCatController(LargeCatService largeCatService, ChecklistService checklistService, FilteringService filteringService) {
         this.largeCatService = largeCatService;
         this.checklistService = checklistService;
+        this.filteringService = filteringService;
     }
 
     @GetMapping("/{id}")
