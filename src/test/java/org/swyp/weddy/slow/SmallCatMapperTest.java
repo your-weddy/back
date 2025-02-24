@@ -1,6 +1,7 @@
-package org.swyp.weddy.domain.checklist.dao;
+package org.swyp.weddy.slow;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,8 +13,9 @@ import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
 import java.util.List;
 
-@SpringBootTest
+@Tag("slow")
 @Transactional
+@SpringBootTest
 class SmallCatMapperTest {
     @Autowired
     private SmallCatService smallCatService;
