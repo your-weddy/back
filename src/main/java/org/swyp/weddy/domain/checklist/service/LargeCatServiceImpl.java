@@ -6,6 +6,7 @@ import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.LargeCatItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
@@ -133,14 +134,14 @@ public class LargeCatServiceImpl implements LargeCatService {
     public void moveItem(LargeCatItemMoveDto dto) {
 
         if (dto.getIdSequence() == null || dto.getIdSequence().isEmpty()) {
-            //예외처리
+            throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
         List<LargeCatItem> itemsAfterMove = LargeCatItem.ofMove(dto);
         for (LargeCatItem item : itemsAfterMove) {
             int updatedRow = mapper.updateItemSequence(item);
             if (updatedRow != 1) {
-                //예외처리
+                throw new LargeCatItemUpdateException(ErrorCode.UPDATE_FAILED);
             }
         }
     }
