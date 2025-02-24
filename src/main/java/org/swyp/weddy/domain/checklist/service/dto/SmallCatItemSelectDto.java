@@ -24,4 +24,12 @@ public class SmallCatItemSelectDto {
     public Long getChecklistId() {
         return checklistId;
     }
+
+    public Long getLargeCatItemId() {
+        return largeCatItemId;
+    }
+
+    public List<String> getItemStatus() {
+        return itemStatus;
+    }
 }
