@@ -87,8 +87,7 @@
                small.title,
                small.due_date,
                assignee.name,
-               status.name "status_name",
-               small.sequence
+               status.name "status_name"
         FROM small_category_item small
                  JOIN large_category_item large ON small.large_category_item_id = large.id
                  JOIN checklist ON large.checklist_id = checklist.id
@@ -100,6 +99,7 @@
         <foreach collection="itemStatus" item="itemStatusElem" open="(" close=")" separator="," >
             #{itemStatusElem}
         </foreach>
-        AND small.is_deleted = false;
+        AND small.is_deleted = false
+        ORDER BY small.sequence ASC;
     </select>
 </mapper>
