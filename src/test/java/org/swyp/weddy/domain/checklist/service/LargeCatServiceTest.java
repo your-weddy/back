@@ -13,6 +13,7 @@ import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -150,6 +151,17 @@ class LargeCatServiceTest {
         }
     }
 
+    @DisplayName("moveItem()")
+    @Nested
+    class MoveItem {
+        @DisplayName("대분류 항목을 이동할 수 있다.")
+        @Test
+        public void move_large_cat_item() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            largeCatService.moveItem(new LargeCatItemMoveDto(1L, new ArrayList<Long>(List.of())));
+        }
+    }
+
     private static class FakeSmallCatService implements SmallCatService {
         @Override
         public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
@@ -241,5 +253,11 @@ class LargeCatServiceTest {
         public Long deleteItem(LargeCatItem item) {
             return 0L;
         }
+
+        @Override
+        public int updateItemSequence(LargeCatItem item) {
+            return 1;
+        }
+
     }
 }
