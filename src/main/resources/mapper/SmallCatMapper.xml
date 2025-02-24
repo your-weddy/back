@@ -95,7 +95,10 @@
                  LEFT JOIN small_category_item_status status ON small.status_id = status.id
         WHERE checklist.id = #{checklistId}
           AND large.id = #{largeCatItemId}
-          AND status.name = #{itemStatus}
-          AND small.is_deleted = false;
+          AND status.name IN
+        <foreach collection="itemStatus" item="itemStatusElem" open="(" close=")" separator="," >
+            #{itemStatusElem}
+        </foreach>
+        AND small.is_deleted = false;
     </select>
 </mapper>
