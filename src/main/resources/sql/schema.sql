@@ -33,6 +33,7 @@ CREATE TABLE `large_category_item`
     `id`           bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `checklist_id` bigint             NOT NULL,
     `title`        varchar(255),
+    `sequence`     bigint,
     `created_at`   timestamp,
     `updated_at`   timestamp,
     `is_deleted`   bool

@@ -7,16 +7,19 @@ import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
+import org.swyp.weddy.domain.checklist.exception.LargeCatItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.*;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LargeCatServiceTest {
 
@@ -150,6 +153,44 @@ class LargeCatServiceTest {
         }
     }
 
+    @DisplayName("moveItem()")
+    @Nested
+    class MoveItem {
+        @DisplayName("대분류 항목을 이동할 수 있다.")
+        @Test
+        public void move_large_cat_item() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            largeCatService.moveItem(new LargeCatItemMoveDto(1L, new ArrayList<Long>(List.of(1L))));
+        }
+
+        @DisplayName("이동할 순서 리스트가 없을 시 예외처리")
+        @Test
+        public void throw_exception_if_seqeunce_not_exists() {
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+
+            assertThatThrownBy(() -> {
+                largeCatService.moveItem(new LargeCatItemMoveDto(1L, new ArrayList<Long>(List.of())));
+            }).isInstanceOf(LargeCatItemNotExistsException.class);
+
+        }
+
+        @DisplayName("이동 실패 시 예외처리")
+        @Test
+        public void throw_exception_if_updated_row_zero() {
+            FakeLargeCatMapper fakeMapper = new FakeLargeCatMapper() {
+                @Override
+                public int updateItemSequence(LargeCatItem item) {
+                    return 0;
+                }
+            };
+            LargeCatServiceImpl largeCatService = new LargeCatServiceImpl(fakeMapper, new FakeSmallCatService());
+
+            assertThatThrownBy(() -> {
+                largeCatService.moveItem(new LargeCatItemMoveDto(1L, new ArrayList<Long>(List.of(1L))));
+            }).isInstanceOf(LargeCatItemUpdateException.class);
+        }
+    }
+
     private static class FakeSmallCatService implements SmallCatService {
         @Override
         public List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId) {
@@ -241,5 +282,11 @@ class LargeCatServiceTest {
         public Long deleteItem(LargeCatItem item) {
             return 0L;
         }
+
+        @Override
+        public int updateItemSequence(LargeCatItem item) {
+            return 1;
+        }
+
     }
 }

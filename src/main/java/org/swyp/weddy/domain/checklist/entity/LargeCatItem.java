@@ -3,13 +3,18 @@ package org.swyp.weddy.domain.checklist.entity;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemMoveDto;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LargeCatItem {
     private Long id;
     private Long checklistId;
     private String title;
+
+    private Long sequence;
     private Timestamp createdAt;
     private Timestamp updatedAt;
     private Boolean isDeleted;
@@ -33,6 +38,13 @@ public class LargeCatItem {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.isDeleted = isDeleted;
+    }
+
+    public LargeCatItem(Long id, Long checklistId, Long sequence, Timestamp updatedAt) {
+        this.id = id;
+        this.checklistId = checklistId;
+        this.sequence = sequence;
+        this.updatedAt = updatedAt;
     }
 
     public static LargeCatItem from(LargeCatItemAssignDto dto) {
@@ -65,6 +77,23 @@ public class LargeCatItem {
                 new Timestamp(System.currentTimeMillis()),
                 Boolean.TRUE
         );
+    }
+
+
+    public static List<LargeCatItem> ofMove(LargeCatItemMoveDto dto) {
+        List<Long> idSequence = dto.getIdSequence();
+        ArrayList<LargeCatItem> itemsAfterMove = new ArrayList<>(idSequence.size());
+
+        for (int i = 0; i < idSequence.size(); i++) {
+            itemsAfterMove.add(new LargeCatItem(
+                    idSequence.get(i),
+                    dto.getChecklistId(),
+                    (long) i,
+                    new Timestamp(System.currentTimeMillis())
+            ));
+        }
+
+        return itemsAfterMove;
     }
 
     public Long getId() {

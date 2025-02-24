@@ -8,9 +8,9 @@ public enum ErrorCode {
     NOT_EXISTS         (404, "리소스가 존재하지 않음"),
     TOKEN_EXPIRED      (420, "JWT 토큰이 만료됨"),
     TOKEN_INVALID      (421, "JWT 리프레시 토큰이 유효하지 않음"),
-    DELETE_FAILED      (500, "소분류 항목 삭제에 실패하였습니다"),
-    UPDATE_FAILED      (500, "소분류 항목 변경에 실패하였습니다"),
-    ADD_FAILED         (500, "소분류 항목 추가에 실패하였습니다"),
+    DELETE_FAILED      (500, "항목 삭제에 실패하였습니다"),
+    UPDATE_FAILED      (500, "항목 변경에 실패하였습니다"),
+    ADD_FAILED         (500, "항목 추가에 실패하였습니다"),
 
             ;
 

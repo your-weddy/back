@@ -3,6 +3,7 @@ package org.swyp.weddy.domain.checklist.service;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
 import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemMoveDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 
 import java.util.List;
@@ -21,4 +22,6 @@ public interface LargeCatService {
     Long deleteItemWithSmallItems(LargeCatItemDeleteDto dto);
 
     List<LargeCatItemResponse> findAllItems(Long checklistId);
+
+    void moveItem(LargeCatItemMoveDto dto);
 }
