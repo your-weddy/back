@@ -6,10 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
-import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.service.dto.*;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemDeleteRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemEditRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
@@ -206,6 +203,10 @@ class LargeCatControllerTest {
                     new LargeCatItemResponse(1L, 1L, "test"),
                     new LargeCatItemResponse(1L, 1L, "test")
             );
+        }
+
+        @Override
+        public void moveItem(LargeCatItemMoveDto dto) {
         }
     }
 
