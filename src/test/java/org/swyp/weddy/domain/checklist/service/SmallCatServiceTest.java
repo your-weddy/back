@@ -13,6 +13,7 @@ import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemNotExistsExcep
 import org.swyp.weddy.domain.checklist.exception.SmallCategoryItemUpdateException;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
 import java.util.List;
@@ -273,6 +274,42 @@ class SmallCatServiceTest {
             // then
             assertThat(result).isTrue();
             verify(smallCatMapper, times(1)).moveItem(any(SmallCatItem.class));
+        }
+    }
+
+    @DisplayName("필터링 관련 테스트")
+    @Nested
+    class FilteringTests {
+        @DisplayName("진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
+        @Test
+        void findItemPreviewsByStatusTest() {
+            Long checklistId = 1L;
+            List<String> itemStatus = List.of("시작전");
+            Long largeCatItemId = 1L;
+            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus);
+
+            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
+                    mock(SmallCatItemPreview.class),
+                    mock(SmallCatItemPreview.class)
+            ));
+
+            assertThat(smallCatService.findItemPreviewsByStatus(dto)).isNotNull();
+        }
+
+        @DisplayName("여러 진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
+        @Test
+        void findItemPreviewsByTwoStatusTest() {
+            Long checklistId = 1L;
+            List<String> itemStatus = List.of("시작전", "진행중");
+            Long largeCatItemId = 1L;
+            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus);
+
+            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
+                    mock(SmallCatItemPreview.class),
+                    mock(SmallCatItemPreview.class)
+            ));
+
+            assertThat(smallCatService.findItemPreviewsByStatus(dto)).isNotNull();
         }
     }
 }

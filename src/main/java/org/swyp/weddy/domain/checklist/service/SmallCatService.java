@@ -1,6 +1,7 @@
 package org.swyp.weddy.domain.checklist.service;
 
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemDto;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemMoveDto;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
@@ -17,4 +18,6 @@ public interface SmallCatService {
     boolean deleteItem(Long checklistId, Long largeCatItemId, Long smallCatItemId);
     boolean deleteAll(Long checklistId, Long largeCatItemId);
     boolean moveItem(SmallCatItemMoveDto dto);
+
+    List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto smallDto);
 }

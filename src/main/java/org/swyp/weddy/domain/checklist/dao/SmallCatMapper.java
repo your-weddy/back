@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview;
+import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
 public interface SmallCatMapper {
 
     List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
+    List<SmallCatItemPreview> selectItemPreviewsByStatus(SmallCatItemSelectDto dto);
     SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
     Long insertItem(SmallCatItem smallCatItem);
 

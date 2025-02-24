@@ -193,6 +193,11 @@ class LargeCatServiceTest {
         public boolean moveItem(SmallCatItemMoveDto dto) {
             return false;
         }
+
+        @Override
+        public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto smallDto) {
+            return List.of();
+        }
     }
 
     private static class FakeLargeCatMapper implements LargeCatMapper {
