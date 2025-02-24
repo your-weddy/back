@@ -139,3 +139,18 @@ VALUES
     (@large_id8, '침구/생활용품 구매', NOW(), NOW(), 0),
     (@large_id8, '주방용품 구매', NOW(), NOW(), 0),
     (@large_id8, '신혼집 입주', NOW(), NOW(), 0);
+
+update small_category_item
+set status_id = 1
+where title in ('스튜디오 / 스냅 예약' , '드레스투어 일정 예약' , '스튜디오 드레스 선택' , '본식 드레스 선택')
+and small_category_item.large_category_item_id = 3;
+
+update small_category_item
+set status_id = 1
+where title in ('신혼집 계약', '가전/가구 구매')
+and small_category_item.large_category_item_id = 8;
+
+update small_category_item
+set status_id = 2
+where title in ('침구/생활용품 구매', '주방용품 구매', '신혼집 입주')
+and small_category_item.large_category_item_id = 8;
