@@ -17,7 +17,7 @@ public class SmallCatItemSelectDto {
         return new SmallCatItemSelectDto(
                 dto.getChecklistId(),
                 id,
-                dto.getItemStatus()
+                dto.getItemStatusList()
         );
     }
 

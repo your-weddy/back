@@ -47,19 +47,19 @@ public class LargeCatController {
     @GetMapping
     public ResponseEntity<List<LargeCatItemResponse>> getAllItems(
             @RequestParam(name = "memberId") String memberId,
-            @RequestParam(name = "statusList", required = false, defaultValue = "") String statusList
+            @RequestParam(name = "itemStatuses", required = false, defaultValue = "") String itemStatuses
     ) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistResponse checklist = checklistService.findChecklist(dto);
 
         Long checklistId = checklist.getId();
-        if (statusList.equals("")) {
+        if (itemStatuses.equals("")) {
             List<LargeCatItemResponse> allItems = largeCatService.findAllItems(checklistId);
             return ResponseEntity.ok().body(allItems);
         }
 
         List<LargeCatItemResponse> allItems = filteringService.filterByStatus(
-                FilterByStatusDto.from(checklistId,statusList)
+                FilterByStatusDto.from(checklistId, itemStatuses)
         );
         return ResponseEntity.ok().body(allItems);
     }

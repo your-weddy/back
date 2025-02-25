@@ -5,17 +5,17 @@ import java.util.List;
 
 public class FilterByStatusDto {
     private Long checklistId;
-    private List<String> itemStatus;
+    private List<String> itemStatusList;
 
-    public FilterByStatusDto(Long checklistId, List<String> itemStatus) {
+    public FilterByStatusDto(Long checklistId, List<String> itemStatusList) {
         this.checklistId = checklistId;
-        this.itemStatus = itemStatus;
+        this.itemStatusList = itemStatusList;
     }
 
-    public static FilterByStatusDto from(Long checklistId, String itemStatus) {
+    public static FilterByStatusDto from(Long checklistId, String itemStatuses) {
         return new FilterByStatusDto(
                 checklistId,
-                FilterByStatusDto.convertToList(itemStatus)
+                FilterByStatusDto.convertToList(itemStatuses)
         );
     }
 
@@ -23,11 +23,11 @@ public class FilterByStatusDto {
         return checklistId;
     }
 
-    public List<String> getItemStatus() {
-        return itemStatus;
+    public List<String> getItemStatusList() {
+        return itemStatusList;
     }
 
-    static List<String> convertToList(String statuses) {
-        return Arrays.stream(statuses.split(",")).map(String::strip).toList();
+    static List<String> convertToList(String itemStatuses) {
+        return Arrays.stream(itemStatuses.split(",")).map(String::strip).toList();
     }
 }
