@@ -92,6 +92,25 @@ public class FilteringSlowTest {
         assertThat(response2).isNotNull();
     }
 
+    @DisplayName("진행 상황 기준으로 대분류 항목 필터링 시, 일치하는 소분류 항목이 없는 대분류 항목은 포함하지 않는다")
+    @Test
+    void ignore_large_cat_items_not_matched() {
+        jdbcTemplate.update("""
+                update small_category_item
+                set status_id = 1
+                where title in ('스튜디오 / 스냅 예약' , '드레스투어 일정 예약' , '스튜디오 드레스 선택' , '본식 드레스 선택')
+                and small_category_item.large_category_item_id = 3;
+                """);
+
+        List<LargeCatItemResponse> filteredItems = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
+
+        var itemsWithEmptySmallItems = filteredItems.stream().filter(
+                item -> item.getSmallCatItems().size() == 0
+        );
+
+        assertThat(itemsWithEmptySmallItems.count()).isEqualTo(0);
+    }
+
     @DisplayName("진행 상황 기준으로 소분류 항목을 필터링할 수 있다")
     @Test
     void filter_small_cat_items_by_status() {
