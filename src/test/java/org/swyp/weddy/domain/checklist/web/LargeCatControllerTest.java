@@ -143,10 +143,6 @@ class LargeCatControllerTest {
         @DisplayName("대분류 항목 이동 요청을 받을 수 있다")
         @Test
         public void receive_move_large_item_message() {
-            LargeCatController controller = new LargeCatController(
-                    new FakeLargeCatService(),
-                    new FakeChecklistService()
-            );
             String memberId = "1";
             List<Long> idSequence = List.of();
 
@@ -158,10 +154,6 @@ class LargeCatControllerTest {
         @DisplayName("대분류 항목 이동 결과를 반환할 수 있다")
         @Test
         public void returns_move_large_item() {
-            LargeCatController controller = new LargeCatController(
-                    new FakeLargeCatService(),
-                    new FakeChecklistService()
-            );
             String memberId = "1";
             List<Long> idSequence = List.of();
 

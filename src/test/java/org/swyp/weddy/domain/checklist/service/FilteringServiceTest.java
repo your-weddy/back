@@ -106,6 +106,11 @@ class FilteringServiceTest {
         public Long deleteItem(LargeCatItem item) {
             return 0L;
         }
+
+        @Override
+        public int updateItemSequence(LargeCatItem item) {
+            return 0;
+        }
     }
 
     private static class FakeSmallCatService implements SmallCatService {
