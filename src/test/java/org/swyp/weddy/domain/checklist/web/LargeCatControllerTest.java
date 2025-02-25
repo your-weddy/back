@@ -6,12 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.ResponseEntity;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
-import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemAssignDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemDeleteDto;
-import org.swyp.weddy.domain.checklist.service.dto.LargeCatItemEditDto;
+import org.swyp.weddy.domain.checklist.service.dto.*;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemDeleteRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemEditRequest;
+import org.swyp.weddy.domain.checklist.web.request.LargeCatItemMoveRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
@@ -163,6 +161,40 @@ class LargeCatControllerTest {
         }
     }
 
+    @DisplayName("moveItem()")
+    @Nested
+    class MoveItemTest {
+        @DisplayName("대분류 항목 이동 요청을 받을 수 있다")
+        @Test
+        public void receive_move_large_item_message() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            String memberId = "1";
+            List<Long> idSequence = List.of();
+
+            LargeCatItemMoveRequest request = new LargeCatItemMoveRequest(memberId, idSequence);
+
+            controller.moveItem(request);
+        }
+
+        @DisplayName("대분류 항목 이동 결과를 반환할 수 있다")
+        @Test
+        public void returns_move_large_item() {
+            LargeCatController controller = new LargeCatController(
+                    new FakeLargeCatService(),
+                    new FakeChecklistService()
+            );
+            String memberId = "1";
+            List<Long> idSequence = List.of();
+
+            LargeCatItemMoveRequest request = new LargeCatItemMoveRequest(memberId, idSequence);
+
+            assertThat(controller.moveItem(request)).isEqualTo(ResponseEntity.ok().build());
+        }
+    }
+
     private static class FakeLargeCatService implements LargeCatService {
         @Override
         public LargeCatItemResponse findItem(Long checklistId, Long id) {
@@ -206,6 +238,10 @@ class LargeCatControllerTest {
                     new LargeCatItemResponse(1L, 1L, "test"),
                     new LargeCatItemResponse(1L, 1L, "test")
             );
+        }
+
+        @Override
+        public void moveItem(LargeCatItemMoveDto dto) {
         }
     }
 
