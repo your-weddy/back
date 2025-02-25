@@ -1,6 +1,7 @@
 package org.swyp.weddy.slow;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,9 @@ public class LargeCatSlowTest {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @DisplayName("진행 상황 기준으로 대분류 항목을 필터링할 수 있다")
     @Test
-    void testMyBatisQuery() {
+    void filter_large_cat_items_by_status() {
         jdbcTemplate.update("""
                 update small_category_item
                 set status_id = 1
