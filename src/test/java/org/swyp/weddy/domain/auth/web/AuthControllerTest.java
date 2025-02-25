@@ -20,7 +20,7 @@ class AuthControllerTest {
     AuthController authController;
 
     @BeforeEach
-    void setUp() {
+    void set_up() {
         authService = mock(AuthService.class);
         cookieService = mock(CookieService.class);
         authController = new AuthController(authService, cookieService);
@@ -28,7 +28,7 @@ class AuthControllerTest {
 
     @DisplayName("Invalid User일 시 예외처리한다.")
     @Test
-    void InvalidUserTest() {
+    void invalid_user_test() {
         //given
         when(authService.isValidUser()).thenReturn(false);
 
@@ -43,7 +43,7 @@ class AuthControllerTest {
 
         @DisplayName("로그아웃을 할 수 있다.")
         @Test
-        void testLogout_success() {
+        void logout_return_success() {
             //given
             when(authService.isValidUser()).thenReturn(true);
 
@@ -52,15 +52,15 @@ class AuthControllerTest {
 
             //then
             assertEquals(200, result.getStatusCodeValue());
-            verify(cookieService, times(1)).deleteCookies(any(HttpServletResponse.class));
+            verify(cookieService, times(1)).deleteCookie(any(HttpServletResponse.class));
         }
 
         @DisplayName("인증되지 않은 사용자 시 예외처리.")
         @Test
-        void throws_Exception_If_Not_Authorized() {
+        void throws_exception_if_not_authorized() {
             //when, then
             assertThatThrownBy(() -> {
-                var result = authController.logout(mock(HttpServletResponse.class));
+                 authController.logout(mock(HttpServletResponse.class));
             }).isInstanceOf(UserNotFoundException.class);
         }
     }

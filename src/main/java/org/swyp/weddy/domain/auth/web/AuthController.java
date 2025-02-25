@@ -73,7 +73,7 @@ public class AuthController {
             throw new UserNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
-        cookieService.deleteCookies(response);
+        cookieService.deleteCookie(response);
         return ResponseEntity.ok().build();
     }
 

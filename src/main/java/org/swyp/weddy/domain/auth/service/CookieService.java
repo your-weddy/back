@@ -23,7 +23,7 @@ public class CookieService {
         response.addCookie(cookie);
     }
 
-    public void deleteCookies(HttpServletResponse response) {
+    public void deleteCookie(HttpServletResponse response) {
         addCookie(response, "accessToken", null, "/", 0);
     }
 }
