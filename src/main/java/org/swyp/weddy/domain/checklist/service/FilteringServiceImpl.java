@@ -28,7 +28,7 @@ public class FilteringServiceImpl implements FilteringService {
     public List<LargeCatItemResponse> filterByStatus(FilterByStatusDto dto) {
         List<LargeCatItem> allItems = mapper.selectAllItems(dto.getChecklistId());
 
-        if (allItems == null) {
+        if (allItems.isEmpty()) {
             throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
