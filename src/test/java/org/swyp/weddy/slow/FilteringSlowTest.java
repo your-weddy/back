@@ -1,6 +1,6 @@
 package org.swyp.weddy.slow;
 
-import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -19,6 +19,8 @@ import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("slow")
 @Transactional
@@ -42,7 +44,8 @@ public class FilteringSlowTest {
                 """);
 
         List<LargeCatItem> noResult = largeCatMapper.selectAllItems(1L);
-        Assertions.assertThat(noResult).isEmpty();
+
+        assertThat(noResult).isEmpty();
     }
 
     @DisplayName("filteringService.filterByStatus() 검색 결과가 없을 때 예외를 반환한다")
@@ -53,7 +56,7 @@ public class FilteringSlowTest {
                 set is_deleted = true
                 """);
 
-        org.junit.jupiter.api.Assertions.assertThrows(LargeCatItemNotExistsException.class, () -> {
+        Assertions.assertThrows(LargeCatItemNotExistsException.class, () -> {
             filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
         });
     }
@@ -82,17 +85,16 @@ public class FilteringSlowTest {
                 and small_category_item.large_category_item_id = 8;
                 """);
 
-        List<LargeCatItemResponse> res = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
-        List<LargeCatItemResponse> res2 = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전", "진행중")));
+        List<LargeCatItemResponse> response1 = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
+        List<LargeCatItemResponse> response2 = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전", "진행중")));
 
-        Assertions.assertThat(res).isNotNull();
-        Assertions.assertThat(res2).isNotNull();
+        assertThat(response1).isNotNull();
+        assertThat(response2).isNotNull();
     }
 
     @DisplayName("진행 상황 기준으로 소분류 항목을 필터링할 수 있다")
     @Test
     void filter_small_cat_items_by_status() {
-
         jdbcTemplate.update("""
                 update small_category_item
                 set status_id = 1
@@ -114,9 +116,10 @@ public class FilteringSlowTest {
                 and small_category_item.large_category_item_id = 8;
                 """);
 
-        List<SmallCatItemPreviewResponse> res = smallCatService.findItemPreviewsByStatus(new SmallCatItemSelectDto(1L, 3L, List.of("시작전")));
-        List<SmallCatItemPreviewResponse> res2 = smallCatService.findItemPreviewsByStatus(new SmallCatItemSelectDto(1L, 8L, List.of("시작전", "진행중")));
-        Assertions.assertThat(res).isNotNull();
-        Assertions.assertThat(res2).isNotNull();
+        List<SmallCatItemPreviewResponse> response1 = smallCatService.findItemPreviewsByStatus(new SmallCatItemSelectDto(1L, 3L, List.of("시작전")));
+        List<SmallCatItemPreviewResponse> response2 = smallCatService.findItemPreviewsByStatus(new SmallCatItemSelectDto(1L, 8L, List.of("시작전", "진행중")));
+
+        assertThat(response1).isNotNull();
+        assertThat(response2).isNotNull();
     }
 }
