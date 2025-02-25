@@ -59,6 +59,12 @@ class LargeCatControllerTest {
 
             assertThat(response).isNotNull();
         }
+
+        @DisplayName("진행 상황 필터링 기준을 요청에 포함할 수 있다")
+        @Test
+        public void message_can_contain_status_filtering_condition() {
+            controller.getAllItems("1", "시작전");
+        }
     }
 
     @DisplayName("postItem()")
