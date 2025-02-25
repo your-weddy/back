@@ -45,7 +45,10 @@ public class LargeCatController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LargeCatItemResponse>> getAllItems(@RequestParam(name = "memberId") String memberId) {
+    public ResponseEntity<List<LargeCatItemResponse>> getAllItems(
+            @RequestParam(name = "memberId") String memberId,
+            @RequestParam(name = "statusList", required = false) String statusList
+    ) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistResponse checklist = checklistService.findChecklist(dto);
 
