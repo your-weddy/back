@@ -65,6 +65,14 @@ class LargeCatControllerTest {
         public void message_can_contain_status_filtering_condition() {
             controller.getAllItems("1", "시작전");
         }
+
+        @DisplayName("주어진 진행 상황을 포함하는 모든 대분류 항목 가져오기 결과를 반환할 수 있다")
+        @Test
+        public void returns_all_large_items_filtered_by_status() {
+            ResponseEntity<List<LargeCatItemResponse>> response = controller.getAllItems("1", "시작전");
+
+            assertThat(response).isNotNull();
+        }
     }
 
     @DisplayName("postItem()")
