@@ -67,6 +67,13 @@ public class ControllerAdvice {
         return errorResponse.makeResponseEntity();
     }
 
+    @ExceptionHandler(LargeCatItemUpdateException.class)
+    protected ResponseEntity<ErrorResponse> LargeCatItemUpdateException(final LargeCatItemNotExistsException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+
     @ExceptionHandler(SmallCategoryItemNotExistsException.class)
     protected ResponseEntity<ErrorResponse> handleSmallCategoryItemNotExistsException(final SmallCategoryItemNotExistsException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());

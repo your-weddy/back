@@ -9,6 +9,7 @@ import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.*;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemDeleteRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemEditRequest;
+import org.swyp.weddy.domain.checklist.web.request.LargeCatItemMoveRequest;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemPostRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
@@ -89,6 +90,19 @@ public class LargeCatController {
 
         LargeCatItemDeleteDto deleteDto = LargeCatItemDeleteDto.of(checklist.getId(), request);
         largeCatService.deleteItemWithSmallItems(deleteDto);
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/move")
+    public ResponseEntity<Void> moveItem(@RequestBody LargeCatItemMoveRequest request) {
+        String memberId = request.getMemberId();
+        ChecklistDto dto = ChecklistDto.from(memberId);
+
+        ChecklistResponse checklist = checklistService.findChecklist(dto);
+
+        LargeCatItemMoveDto moveDto = LargeCatItemMoveDto.of(checklist.getId(), request);
+        largeCatService.moveItem(moveDto);
 
         return ResponseEntity.ok().build();
     }

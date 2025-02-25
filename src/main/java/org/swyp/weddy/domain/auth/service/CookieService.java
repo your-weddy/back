@@ -22,4 +22,8 @@ public class CookieService {
         cookie.setMaxAge(maxAge);
         response.addCookie(cookie);
     }
+
+    public void deleteCookie(HttpServletResponse response) {
+        addCookie(response, "accessToken", null, "/", 0);
+    }
 }
