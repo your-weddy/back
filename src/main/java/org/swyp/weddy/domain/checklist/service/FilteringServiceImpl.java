@@ -39,7 +39,7 @@ public class FilteringServiceImpl implements FilteringService {
                     smallDto
             );
 
-            if (itemPreviews != null) {
+            if (!itemPreviews.isEmpty()) {
                 LargeCatItemResponse itemWithSmallItems = LargeCatItemResponse.from(item).withSmallCatItems(itemPreviews);
                 result.add(itemWithSmallItems);
             }
