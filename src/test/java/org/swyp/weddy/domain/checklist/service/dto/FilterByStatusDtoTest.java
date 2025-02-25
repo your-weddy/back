@@ -3,7 +3,6 @@ package org.swyp.weddy.domain.checklist.service.dto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,7 +13,7 @@ class FilterByStatusDtoTest {
     @Test
     public void convert_string_separated_by_comma_into_list() {
         String statuses = "진행중,완료";
-        List<String> statusList = Arrays.stream(statuses.split(",")).toList();
+        List<String> statusList = FilterByStatusDto.convertToList(statuses);
         assertThat(statusList).contains("진행중", "완료");
     }
 
@@ -22,7 +21,7 @@ class FilterByStatusDtoTest {
     @Test
     public void convert_string_with_space_separated_by_comma_into_list() {
         String statuses = "진행중 , 완료 , 시작전";
-        List<String> statusList = Arrays.stream(statuses.split(",")).map(String::strip).toList();
+        List<String> statusList = FilterByStatusDto.convertToList(statuses);
         assertThat(statusList).contains("진행중", "완료", "시작전");
     }
 }
