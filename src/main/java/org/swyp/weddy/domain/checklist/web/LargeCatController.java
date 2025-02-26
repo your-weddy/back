@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
+import org.swyp.weddy.domain.checklist.service.FilteringService;
 import org.swyp.weddy.domain.checklist.service.LargeCatService;
 import org.swyp.weddy.domain.checklist.service.dto.*;
 import org.swyp.weddy.domain.checklist.web.request.LargeCatItemDeleteRequest;
@@ -21,10 +22,12 @@ import java.util.List;
 public class LargeCatController {
     private final LargeCatService largeCatService;
     private final ChecklistService checklistService;
+    private final FilteringService filteringService;
 
-    public LargeCatController(LargeCatService largeCatService, ChecklistService checklistService) {
+    public LargeCatController(LargeCatService largeCatService, ChecklistService checklistService, FilteringService filteringService) {
         this.largeCatService = largeCatService;
         this.checklistService = checklistService;
+        this.filteringService = filteringService;
     }
 
     @GetMapping("/{id}")
@@ -42,13 +45,22 @@ public class LargeCatController {
     }
 
     @GetMapping
-    public ResponseEntity<List<LargeCatItemResponse>> getAllItems(@RequestParam(name = "memberId") String memberId) {
+    public ResponseEntity<List<LargeCatItemResponse>> getAllItems(
+            @RequestParam(name = "memberId") String memberId,
+            @RequestParam(name = "itemStatuses", required = false, defaultValue = "") String itemStatuses
+    ) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistResponse checklist = checklistService.findChecklist(dto);
 
         Long checklistId = checklist.getId();
-        List<LargeCatItemResponse> allItems = largeCatService.findAllItems(checklistId);
+        if (itemStatuses.equals("")) {
+            List<LargeCatItemResponse> allItems = largeCatService.findAllItems(checklistId);
+            return ResponseEntity.ok().body(allItems);
+        }
 
+        List<LargeCatItemResponse> allItems = filteringService.filterByStatus(
+                FilterByStatusDto.from(checklistId, itemStatuses)
+        );
         return ResponseEntity.ok().body(allItems);
     }
 

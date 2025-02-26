@@ -33,6 +33,15 @@ GET http://localhost:8080/checklist/large-cat-item/1?memberId=1
 GET http://localhost:8080/checklist/large-cat-item?memberId=1
 
 ###
+GET http://localhost:8080/checklist/large-cat-item?memberId=1&itemStatuses=시작전
+
+###
+GET http://localhost:8080/checklist/large-cat-item?memberId=1&itemStatuses=시작전,진행중
+
+###
+GET http://localhost:8080/checklist/large-cat-item?memberId=1&itemStatuses= 시작전, 진행중
+
+###
 POST http://localhost:8080/checklist/large-cat-item
 Content-Type: application/json
 

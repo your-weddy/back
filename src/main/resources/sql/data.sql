@@ -139,3 +139,4 @@ VALUES
     (@large_id8, '침구/생활용품 구매', NOW(), NOW(), 0),
     (@large_id8, '주방용품 구매', NOW(), NOW(), 0),
     (@large_id8, '신혼집 입주', NOW(), NOW(), 0);
+
