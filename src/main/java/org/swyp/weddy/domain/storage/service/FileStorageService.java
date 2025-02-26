@@ -4,6 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.swyp.weddy.common.exception.ErrorCode;
+import org.swyp.weddy.domain.storage.exception.FileDeleteException;
+import org.swyp.weddy.domain.storage.exception.FileUploadException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
@@ -13,8 +16,8 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
-import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.time.Duration;
 
 @Slf4j
@@ -30,23 +33,18 @@ public class FileStorageService {
         this.bucketName = bucketName;
     }
 
-    public String uploadFile(MultipartFile file) throws IOException {
-        String fileKey = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucketName)
-                .key(fileKey)
-                .build();
-        s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
-        return generatePresignedUrl(fileKey);
-    }
-
-    public void deleteFile(String fileUrl) {
-        String fileKey = extractFileKey(fileUrl);
-        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
-                .bucket(bucketName)
-                .key(fileKey)
-                .build();
-        s3Client.deleteObject(deleteObjectRequest);
+    public String uploadFile(MultipartFile file) {
+        try {
+            String fileKey = System.currentTimeMillis() + "_" + file.getOriginalFilename();
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileKey)
+                    .build();
+            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+            return generatePresignedUrl(fileKey);
+        } catch (Exception e) {
+            throw new FileUploadException(ErrorCode.UPLOAD_FILE_FAILED);
+        }
     }
 
     private String generatePresignedUrl(String fileKey) {
@@ -62,13 +60,23 @@ public class FileStorageService {
         );
         return presignedRequest.url().toString();
     }
-    private String extractFileKey(String fileUrl) {
+
+    public void deleteFile(String fileUrl) {
         try {
-            URI uri = new URI(fileUrl);
-            String path = uri.getPath();
-            return path.substring( 1);
+            String fileKey = extractFileKey(fileUrl);
+            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                    .bucket(bucketName)
+                    .key(fileKey)
+                    .build();
+            s3Client.deleteObject(deleteObjectRequest);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid file identifier provided: " + fileUrl);
+            throw new FileDeleteException(ErrorCode.DELETE_FILE_FAILED);
         }
+    }
+
+    private String extractFileKey(String fileUrl) throws URISyntaxException {
+        URI uri = new URI(fileUrl);
+        String path = uri.getPath();
+        return path.substring(1);
     }
 }
