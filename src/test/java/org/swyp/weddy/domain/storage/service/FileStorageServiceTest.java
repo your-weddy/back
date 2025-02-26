@@ -39,6 +39,7 @@ class FileStorageServiceTest {
     }
 
     @Nested
+    @DisplayName("파일 업로드 테스트")
     class UploadTests {
         @DisplayName("파일 업로드 후 파일주소를 응답할 수 있다.")
         @Test
@@ -62,7 +63,7 @@ class FileStorageServiceTest {
 
         }
 
-        @DisplayName("S3 업로드 실패 시 예외처리가 발생한다.")
+        @DisplayName("업로드 실패 시 예외처리가 발생한다.")
         @Test
         void throws_exception_if_s3_upload_failed() {
             // given
@@ -94,7 +95,7 @@ class FileStorageServiceTest {
             verify(s3Client, times(1)).deleteObject(any(DeleteObjectRequest.class));
         }
 
-        @DisplayName("S3 삭제 실패 시 FileDeleteException을 던진다")
+        @DisplayName("파일 삭제 실패 시 예외처리가 발생한다")
         @Test
         void throws_exception_if_s3_delete_failed() {
             // given
