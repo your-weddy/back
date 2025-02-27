@@ -19,4 +19,5 @@ public class SmallCatItemPatchRequest {
     private String body;
     private String statusName;
     private Long amount;
+    private String getAttachedFileUrl;
 }
