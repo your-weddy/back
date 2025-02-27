@@ -17,7 +17,7 @@ public class ChecklistResponse {
         return new ChecklistResponse(
                 checklist.getId(),
                 String.valueOf(checklist.getMemberId()),
-                checklist.getdDay()
+                0 //checklist.getdDay()
         );
     }
 

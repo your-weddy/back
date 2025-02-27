@@ -16,7 +16,7 @@ VALUES ('test@example.com', '테스트 사용자', NULL, 'oauth_1234', 0);
 
 -- 2. checklist 테이블에 테스트 데이터 삽입
 INSERT INTO checklist (member_id, d_day, created_at, updated_at, is_deleted)
-VALUES (1, 100, NOW(), NOW(), 0);
+VALUES (1, '2030-03-01 12:00:00', NOW(), NOW(), 0);
 
 -- 3. large_category_item 및 small_category_item 데이터 삽입
 
