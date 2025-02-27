@@ -9,19 +9,20 @@ import java.time.temporal.ChronoUnit;
 public class ChecklistResponse {
     private final Long id;
     private final String memberId;
-    private final Integer dDay;
+    private final Long dDay;
 
-    public ChecklistResponse(Long id, String memberId, Integer dDay) {
+    public ChecklistResponse(Long id, String memberId, Long dDay) {
         this.id = id;
         this.memberId = memberId;
         this.dDay = dDay;
     }
 
     public static ChecklistResponse from(Checklist checklist) {
+        LocalDate weddingDate = ChecklistResponse.weddingDate(checklist);
         return new ChecklistResponse(
                 checklist.getId(),
                 String.valueOf(checklist.getMemberId()),
-                0 //checklist.getdDay()
+                ChecklistResponse.daysBeforeWedding(weddingDate, LocalDate.now())
         );
     }
 
@@ -50,7 +51,7 @@ public class ChecklistResponse {
         return memberId;
     }
 
-    public Integer getdDay() {
+    public Long getdDay() {
         return dDay;
     }
 }
