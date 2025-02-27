@@ -18,6 +18,14 @@ public class ChecklistResponse {
     }
 
     public static ChecklistResponse from(Checklist checklist) {
+        if (checklist.getdDay() == null) {
+            return new ChecklistResponse(
+                    checklist.getId(),
+                    String.valueOf(checklist.getMemberId()),
+                    null
+            );
+        }
+
         LocalDate weddingDate = ChecklistResponse.weddingDate(checklist);
         return new ChecklistResponse(
                 checklist.getId(),
