@@ -246,6 +246,11 @@ class LargeCatControllerTest {
             }
             return new ChecklistResponse(1L, "1L", 100L);
         }
+
+        @Override
+        public Long editDday(ChecklistDdayAssignDto dto) {
+            return 0L;
+        }
     }
 
     private static class FakeFilteringService implements FilteringService {

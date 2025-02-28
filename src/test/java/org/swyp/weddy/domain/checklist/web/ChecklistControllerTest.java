@@ -58,5 +58,10 @@ class ChecklistControllerTest {
         public ChecklistResponse findChecklist(ChecklistDto dto) {
             return null;
         }
+
+        @Override
+        public Long editDday(ChecklistDdayAssignDto dto) {
+            return 0L;
+        }
     }
 }

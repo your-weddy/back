@@ -8,6 +8,7 @@ import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
+import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
@@ -117,6 +118,11 @@ class ChecklistServiceTest {
             }
 
             return ChecklistResponse.from(Checklist.from(dto));
+        }
+
+        @Override
+        public Long editDday(ChecklistDdayAssignDto dto) {
+            return 0L;
         }
     }
 
