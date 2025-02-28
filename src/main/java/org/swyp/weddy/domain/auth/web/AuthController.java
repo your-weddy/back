@@ -58,7 +58,7 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<MemberResponse> getMemberInfo() {
 
-        if(!authService.isValidUser()){
+        if(!authService.isValidMember()){
             throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
@@ -69,7 +69,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
 
-        if(!authService.isValidUser()){
+        if(!authService.isValidMember()){
             throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 

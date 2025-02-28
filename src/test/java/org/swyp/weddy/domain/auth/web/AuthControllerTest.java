@@ -30,7 +30,7 @@ class AuthControllerTest {
     @Test
     void invalid_user_test() {
         //given
-        when(authService.isValidUser()).thenReturn(false);
+        when(authService.isValidMember()).thenReturn(false);
 
         //when,then
         assertThatThrownBy(() -> {
@@ -45,7 +45,7 @@ class AuthControllerTest {
         @Test
         void logout_return_success() {
             //given
-            when(authService.isValidUser()).thenReturn(true);
+            when(authService.isValidMember()).thenReturn(true);
 
             //when
             var result = authController.logout(mock(HttpServletResponse.class));

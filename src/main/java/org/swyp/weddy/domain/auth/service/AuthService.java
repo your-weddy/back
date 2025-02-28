@@ -98,7 +98,7 @@ public class AuthService {
         return jwtService.resolveToken(request);
     }
 
-    public boolean isValidUser() {
+    public boolean isValidMember() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
