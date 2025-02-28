@@ -11,6 +11,7 @@ import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedExcepti
 import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 import java.time.LocalDate;
@@ -96,6 +97,18 @@ class ChecklistServiceTest {
         public void receive_assign_wedding_date_message() {
             ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
             service.editDday(new ChecklistDdayAssignDto("1", LocalDate.of(2025,12,1)));
+        }
+
+        @DisplayName("컨트롤러로부터 결혼 예정일 등록 요청을 받을 수 있다")
+        @Test
+        public void receive_assign_wedding_date_message_from_controller() {
+            ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+            ChecklistDdayAssignDto dto = ChecklistDdayAssignDto.from(
+                    "1",
+                    new ChecklistDdayAssignRequest(LocalDate.of(2025, 12, 1))
+            );
+            assertThat(dto).isNotNull();
+            service.editDday(dto);
         }
     }
 
