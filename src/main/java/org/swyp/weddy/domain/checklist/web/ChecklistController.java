@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
+import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
@@ -53,6 +54,8 @@ public class ChecklistController {
             @PathVariable("memberId") String memberId,
             @RequestBody ChecklistDdayAssignRequest request
     ) {
-        return null;
+        ChecklistDdayAssignDto dto = ChecklistDdayAssignDto.from(memberId, request);
+        checklistService.editDday(dto);
+        return ResponseEntity.ok().build();
     }
 }
