@@ -12,6 +12,9 @@ public enum ErrorCode {
     UPDATE_FAILED      (500, "항목 변경에 실패하였습니다"),
     ADD_FAILED         (500, "항목 추가에 실패하였습니다"),
 
+    UPLOAD_FILE_FAILED (500, "파일 업로드에 실패하였습니다"),
+    DELETE_FILE_FAILED (500, "파일 삭제에 실패하였습니다"),
+
             ;
 
     private final Integer code;

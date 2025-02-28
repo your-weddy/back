@@ -8,6 +8,8 @@ import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
 import org.swyp.weddy.domain.auth.exception.JwtUnauthorizedException;
 import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
 import org.swyp.weddy.domain.checklist.exception.*;
+import org.swyp.weddy.domain.storage.exception.FileDeleteException;
+import org.swyp.weddy.domain.storage.exception.FileUploadException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -87,6 +89,18 @@ public class ControllerAdvice {
 
     @ExceptionHandler(SmallCategoryItemDeleteException.class)
     protected ResponseEntity<ErrorResponse> SmallCategoryItemDeleteException(final SmallCategoryItemDeleteException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(FileUploadException.class)
+    protected ResponseEntity<ErrorResponse> FileUploadException(final FileUploadException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(FileDeleteException.class)
+    protected ResponseEntity<ErrorResponse> FileDeleteException(final FileDeleteException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }
