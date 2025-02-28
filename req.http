@@ -62,3 +62,19 @@ Content-Type: application/json
   "memberId": "1",
   "id": "1"
 }
+
+###
+POST http://localhost:8080/checklist/1
+Content-Type: application/json
+
+{
+  "dDay": "2025-12-01"
+}
+
+###
+POST http://localhost:8080/checklist/1
+Content-Type: application/json
+
+{
+  "dDay": "2025-1201"
+}
