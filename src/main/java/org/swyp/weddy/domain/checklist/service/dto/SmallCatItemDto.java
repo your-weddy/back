@@ -48,7 +48,7 @@ public class SmallCatItemDto {
                 request.getBody(),
                 request.getStatusName(),
                 request.getAmount(),
-                request.getGetAttachedFileUrl()
+                request.getAttachedFileUrl()
         );
     }
 }
