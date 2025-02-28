@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
-import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
+import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
@@ -59,7 +59,7 @@ public class AuthController {
     public ResponseEntity<MemberResponse> getMemberInfo() {
 
         if(!authService.isValidUser()){
-            throw new UserNotFoundException(ErrorCode.UNAUTHORIZED);
+            throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
         MemberResponse memberResponse = authService.getMemberInfo();
@@ -70,7 +70,7 @@ public class AuthController {
     public ResponseEntity<Void> logout(HttpServletResponse response) {
 
         if(!authService.isValidUser()){
-            throw new UserNotFoundException(ErrorCode.UNAUTHORIZED);
+            throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
         cookieService.deleteCookie(response);

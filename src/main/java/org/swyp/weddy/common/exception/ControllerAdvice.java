@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
 import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
 import org.swyp.weddy.domain.auth.exception.JwtUnauthorizedException;
-import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
+import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.checklist.exception.*;
 import org.swyp.weddy.domain.storage.exception.FileDeleteException;
 import org.swyp.weddy.domain.storage.exception.FileUploadException;
@@ -38,8 +38,8 @@ public class ControllerAdvice {
         return errorResponse.makeResponseEntity();
     }
 
-    @ExceptionHandler(UserNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> userNotFoundException(final UserNotFoundException exception) {
+    @ExceptionHandler(MemberNotFoundException.class)
+    protected ResponseEntity<ErrorResponse> userNotFoundException(final MemberNotFoundException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }

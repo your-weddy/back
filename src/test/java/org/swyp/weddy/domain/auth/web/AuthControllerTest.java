@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
+import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 
@@ -35,7 +35,7 @@ class AuthControllerTest {
         //when,then
         assertThatThrownBy(() -> {
             authController.getMemberInfo();
-        }).isInstanceOf(UserNotFoundException.class);
+        }).isInstanceOf(MemberNotFoundException.class);
     }
 
     @Nested
@@ -61,7 +61,7 @@ class AuthControllerTest {
             //when, then
             assertThatThrownBy(() -> {
                  authController.logout(mock(HttpServletResponse.class));
-            }).isInstanceOf(UserNotFoundException.class);
+            }).isInstanceOf(MemberNotFoundException.class);
         }
     }
 }
