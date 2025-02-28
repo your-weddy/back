@@ -14,7 +14,9 @@ import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -108,6 +110,20 @@ class ChecklistServiceTest {
             );
             assertThat(dto).isNotNull();
         }
+
+        @DisplayName("결혼 예정일을 등록할 수 있다")
+        @Test
+        public void assign_wedding_date() {
+            ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+
+            Long l = service.editDday(
+                    new ChecklistDdayAssignDto(
+                            "2",
+                            LocalDate.of(2025, 12, 1)
+                    )
+            );
+            assertThat(l).isEqualTo(2L);
+        }
     }
 
     private static class FakeChecklistService implements ChecklistService {
@@ -162,12 +178,29 @@ class ChecklistServiceTest {
 
         @Override
         public Checklist selectChecklistByMemberId(Long memberId) {
+            if (memberId == 2L) {
+                return TestChecklist.from();
+            }
+
             if (!hasChecklist) {
                 return null;
             }
 
             ChecklistDto dto = ChecklistDto.from(memberId.toString());
             return Checklist.from(dto);
+        }
+    }
+
+    private static class TestChecklist extends Checklist {
+        static Checklist from() {
+            return new Checklist(
+                    2L,
+                    1L,
+                    LocalDateTime.now(),
+                    new Timestamp(System.currentTimeMillis()),
+                    null,
+                    Boolean.FALSE
+            );
         }
     }
 }
