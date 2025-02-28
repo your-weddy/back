@@ -108,7 +108,7 @@ public class AuthService {
         return true;
     }
 
-    public MemberResponse getUserInfo() {
+    public MemberResponse getMemberInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         Number id = (Number) principal.get("id");
