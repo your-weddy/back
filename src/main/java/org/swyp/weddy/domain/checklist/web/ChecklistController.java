@@ -12,7 +12,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/checklist")
-public class ChecklistController {
+public class ChecklistController implements ChecklistApiSpec {
 
     private final ChecklistService checklistService;
 
