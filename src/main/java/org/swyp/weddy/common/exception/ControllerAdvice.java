@@ -10,7 +10,6 @@ import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
 import org.swyp.weddy.domain.checklist.exception.*;
 import org.swyp.weddy.domain.storage.exception.FileDeleteException;
 import org.swyp.weddy.domain.storage.exception.FileUploadException;
-import org.swyp.weddy.domain.wiki.exception.WikiNotFoundException;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -18,12 +17,6 @@ public class ControllerAdvice {
     @ExceptionHandler(RuntimeException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(final RuntimeException exception) {
         ErrorResponse errorResponse = new ErrorResponse(ErrorCode.BAD_REQUEST);
-        return errorResponse.makeResponseEntity();
-    }
-
-    @ExceptionHandler(WikiNotFoundException.class)
-    protected ResponseEntity<ErrorResponse> handleWikiNotFoundException(final WikiNotFoundException exception) {
-        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }
 
