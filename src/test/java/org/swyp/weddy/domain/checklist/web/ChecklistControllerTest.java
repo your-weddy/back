@@ -4,11 +4,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
+import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class ChecklistControllerTest {
 
@@ -29,6 +32,14 @@ class ChecklistControllerTest {
             controller.assignWeddingDate("1", new ChecklistDdayAssignRequest(LocalDate.of(2025, 12, 1)));
         }
 
+        @DisplayName("결혼 예정일 등록 결과를 반환할 수 있다")
+        @Test
+        public void returns_assign_wedding_date() {
+            ChecklistController controller = new ChecklistController(new FakeChecklistService());
+            assertThat(
+                    controller.assignWeddingDate("1", new ChecklistDdayAssignRequest())
+            ).isNotNull();
+        }
     }
 
     private static class FakeChecklistService implements ChecklistService {
