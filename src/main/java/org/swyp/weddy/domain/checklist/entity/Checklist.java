@@ -48,6 +48,7 @@ public class Checklist {
 
     public static Checklist withNewDday(Checklist checklist, ChecklistDdayAssignDto dto) {
         return new Checklist(
+                checklist.getId(),
                 Long.valueOf(dto.getMemberId()),
                 convertDday(dto.getdDay()),
                 checklist.getCreatedAt(),
