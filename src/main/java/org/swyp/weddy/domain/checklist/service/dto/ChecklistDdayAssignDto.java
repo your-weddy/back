@@ -16,4 +16,8 @@ public class ChecklistDdayAssignDto {
     public static ChecklistDdayAssignDto from(String memberId, ChecklistDdayAssignRequest request) {
         return new ChecklistDdayAssignDto(memberId, request.getdDay());
     }
+
+    public String getMemberId() {
+        return memberId;
+    }
 }
