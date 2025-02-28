@@ -16,6 +16,7 @@ import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -35,16 +36,28 @@ public class FileStorageService {
 
     public String uploadFile(MultipartFile file) {
         try {
-            String fileKey = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(fileKey)
-                    .build();
-            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+            String fileKey = createFileKey(file);
+            uploadToS3(file, fileKey);
             return generatePresignedUrl(fileKey);
         } catch (Exception e) {
             throw new FileUploadException(ErrorCode.UPLOAD_FILE_FAILED);
         }
+    }
+
+    private String createFileKey(MultipartFile file) {
+        return System.currentTimeMillis() + "_" + file.getOriginalFilename();
+    }
+
+    private void uploadToS3(MultipartFile file, String fileKey) throws IOException {
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileKey)
+                .build();
+        s3Client.putObject(putObjectRequest, getRequestBodyForUpload(file));
+    }
+
+    private RequestBody getRequestBodyForUpload(MultipartFile file) throws IOException {
+        return RequestBody.fromInputStream(file.getInputStream(), file.getSize());
     }
 
     private String generatePresignedUrl(String fileKey) {
@@ -64,14 +77,18 @@ public class FileStorageService {
     public void deleteFile(String fileUrl) {
         try {
             String fileKey = extractFileKey(fileUrl);
-            DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
-                    .bucket(bucketName)
-                    .key(fileKey)
-                    .build();
-            s3Client.deleteObject(deleteObjectRequest);
+            deleteToS3(fileKey);
         } catch (Exception e) {
             throw new FileDeleteException(ErrorCode.DELETE_FILE_FAILED);
         }
+    }
+
+    private void deleteToS3(String fileKey) {
+        DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(fileKey)
+                .build();
+        s3Client.deleteObject(deleteObjectRequest);
     }
 
     private String extractFileKey(String fileUrl) throws URISyntaxException {

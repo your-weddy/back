@@ -11,8 +11,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class FileControllerTest {
-    FileController fileController;
-    FileStorageService fileStorageService;
+    private FileController fileController;
+    private FileStorageService fileStorageService;
     @BeforeEach
     void setUp() {
         fileStorageService = mock(FileStorageService.class);

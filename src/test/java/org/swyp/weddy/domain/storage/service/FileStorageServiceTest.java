@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.mock.web.MockMultipartFile;
 import org.swyp.weddy.domain.storage.exception.FileDeleteException;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -16,7 +16,6 @@ import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignReques
 import software.amazon.awssdk.services.s3.presigner.model.PresignedGetObjectRequest;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,10 +24,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class FileStorageServiceTest {
-    S3Client s3Client;
-    S3Presigner s3Presigner;
-    String bucketName;
-    FileStorageService fileStorageService;
+    private S3Client s3Client;
+    private S3Presigner s3Presigner;
+    private String bucketName;
+    private FileStorageService fileStorageService;
 
     @BeforeEach
     void setUp() {
@@ -45,18 +44,24 @@ class FileStorageServiceTest {
         @Test
         void upload_file_and_return_fileurl() throws IOException {
             //given
-            MultipartFile mockMultipartFile = mock(MultipartFile.class);
-            when(mockMultipartFile.getOriginalFilename()).thenReturn("test");
-            when(mockMultipartFile.getInputStream()).thenReturn(mock(InputStream.class));
-            when(mockMultipartFile.getSize()).thenReturn(1L);
+            //업로드할 파일 모킹
+            MockMultipartFile mockFile = new MockMultipartFile(
+                    "file",
+                    "test.txt",
+                    "text/plain",
+                    "data".getBytes()
+            );
+
+            //s3업로드 성공 모킹
             when(s3Client.putObject(any(PutObjectRequest.class), any(RequestBody.class))).thenReturn(mock(PutObjectResponse.class));
 
+            //Presigned URL 생성 모킹
             PresignedGetObjectRequest presignedRequest = mock(PresignedGetObjectRequest.class);
             when(presignedRequest.url()).thenReturn(URI.create("https://mock-bucket.s3.amazonaws.com/123_test.txt").toURL());
             when(s3Presigner.presignGetObject(any(GetObjectPresignRequest.class))).thenReturn(presignedRequest);
 
             //when
-            String result = fileStorageService.uploadFile(mockMultipartFile);
+            String result = fileStorageService.uploadFile(mockFile);
 
             //then
             assertThat(result).isNotNull();
