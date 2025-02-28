@@ -8,6 +8,8 @@ import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
+import java.time.LocalDate;
+
 class ChecklistControllerTest {
 
     @DisplayName("assignWeddingDate()")
@@ -19,6 +21,14 @@ class ChecklistControllerTest {
             ChecklistController controller = new ChecklistController(new FakeChecklistService());
             controller.assignWeddingDate("1", new ChecklistDdayAssignRequest());
         }
+
+        @DisplayName("요청은 날짜 정보를 포함한다")
+        @Test
+        public void date_in_message_follows_format() {
+            ChecklistController controller = new ChecklistController(new FakeChecklistService());
+            controller.assignWeddingDate("1", new ChecklistDdayAssignRequest(LocalDate.of(2025, 12, 1)));
+        }
+
     }
 
     private static class FakeChecklistService implements ChecklistService {
