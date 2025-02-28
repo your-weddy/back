@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 import java.util.Map;
@@ -45,5 +46,13 @@ public class ChecklistController {
         log.warn("hasChecklist: " + hasChecklist);
 
         return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{memberId}")
+    public ResponseEntity<Void> assignWeddingDate(
+            @PathVariable("memberId") String memberId,
+            @RequestBody ChecklistDdayAssignRequest request
+    ) {
+        return null;
     }
 }
