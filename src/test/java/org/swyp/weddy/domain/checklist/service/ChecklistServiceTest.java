@@ -189,6 +189,11 @@ class ChecklistServiceTest {
             ChecklistDto dto = ChecklistDto.from(memberId.toString());
             return Checklist.from(dto);
         }
+
+        @Override
+        public int updateChecklist(Checklist checklist) {
+            return 0;
+        }
     }
 
     private static class TestChecklist extends Checklist {
