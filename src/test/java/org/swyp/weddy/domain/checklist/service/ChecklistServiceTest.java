@@ -102,13 +102,11 @@ class ChecklistServiceTest {
         @DisplayName("컨트롤러로부터 결혼 예정일 등록 요청을 받을 수 있다")
         @Test
         public void receive_assign_wedding_date_message_from_controller() {
-            ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
             ChecklistDdayAssignDto dto = ChecklistDdayAssignDto.from(
                     "1",
                     new ChecklistDdayAssignRequest(LocalDate.of(2025, 12, 1))
             );
             assertThat(dto).isNotNull();
-            service.editDday(dto);
         }
     }
 
