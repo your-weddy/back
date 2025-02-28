@@ -2,6 +2,7 @@ package org.swyp.weddy.domain.checklist.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
@@ -11,6 +12,8 @@ import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
+
+import java.time.LocalDate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -83,6 +86,17 @@ class ChecklistServiceTest {
                 ChecklistNotExistsException.class,
                 () -> service.findChecklist(dto)
         );
+    }
+
+    @DisplayName("editDday()")
+    @Nested
+    class EditDdayTest {
+        @DisplayName("결혼 예정일 등록 요청을 받을 수 있다")
+        @Test
+        public void receive_assign_wedding_date_message() {
+            ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+            service.editDday(new ChecklistDdayAssignDto("1", LocalDate.of(2025,12,1)));
+        }
     }
 
     private static class FakeChecklistService implements ChecklistService {
