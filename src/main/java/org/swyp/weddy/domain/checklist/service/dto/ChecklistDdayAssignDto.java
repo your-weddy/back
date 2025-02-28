@@ -20,4 +20,8 @@ public class ChecklistDdayAssignDto {
     public String getMemberId() {
         return memberId;
     }
+
+    public LocalDate getdDay() {
+        return dDay;
+    }
 }

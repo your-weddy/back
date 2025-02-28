@@ -51,6 +51,7 @@ public class ChecklistServiceImpl implements ChecklistService {
         return ChecklistResponse.from(checklist);
     }
 
+    @Transactional
     @Override
     public Long editDday(ChecklistDdayAssignDto dto) {
         Long memberId = Long.valueOf(dto.getMemberId());
@@ -60,8 +61,8 @@ public class ChecklistServiceImpl implements ChecklistService {
             throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
-//        Checklist.withNewDday(checklist, dto);
-        mapper.updateChecklist(checklist);
+        Checklist checklistWithNewDday = Checklist.withNewDday(checklist, dto);
+        mapper.updateChecklist(checklistWithNewDday);
 
         return checklist.getId();
     }

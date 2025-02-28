@@ -1,9 +1,12 @@
 package org.swyp.weddy.domain.checklist.entity;
 
+import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 public class Checklist {
     private Long id;
@@ -43,6 +46,16 @@ public class Checklist {
         );
     }
 
+    public static Checklist withNewDday(Checklist checklist, ChecklistDdayAssignDto dto) {
+        return new Checklist(
+                Long.valueOf(dto.getMemberId()),
+                convertDday(dto.getdDay()),
+                checklist.getCreatedAt(),
+                new Timestamp(System.currentTimeMillis()),
+                Boolean.FALSE
+        );
+    }
+
     public Long getId() {
         return id;
     }
@@ -53,5 +66,13 @@ public class Checklist {
 
     public LocalDateTime getdDay() {
         return dDay;
+    }
+
+    public Timestamp getCreatedAt() {
+        return createdAt;
+    }
+
+    static LocalDateTime convertDday(LocalDate localDate) {
+        return LocalDateTime.of(localDate, LocalTime.NOON);
     }
 }
