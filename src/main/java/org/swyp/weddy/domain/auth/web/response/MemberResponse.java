@@ -8,14 +8,14 @@ import org.swyp.weddy.domain.auth.entity.Member;
 @AllArgsConstructor
 @Getter
 @Builder
-public class UserResponse {
+public class MemberResponse {
     private Long id;
     private String email;
     private String name;
     private String profileImageUrl;
 
-    public static UserResponse from(Member member) {
-        return UserResponse.builder()
+    public static MemberResponse from(Member member) {
+        return MemberResponse.builder()
                 .id(member.getId())
                 .email(member.getEmail())
                 .name(member.getName())
