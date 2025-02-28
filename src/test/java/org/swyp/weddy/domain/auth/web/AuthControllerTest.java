@@ -26,7 +26,7 @@ class AuthControllerTest {
         authController = new AuthController(authService, cookieService);
     }
 
-    @DisplayName("Invalid User일 시 예외처리한다.")
+    @DisplayName("Invalid Member일 시 예외처리한다.")
     @Test
     void invalid_user_test() {
         //given
