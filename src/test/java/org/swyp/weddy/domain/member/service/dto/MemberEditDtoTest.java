@@ -7,9 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MemberEditDtoTest {
 
-    MemberEditDto memberEditDto;
-
-    @DisplayName("memberId와 imageUrl을 받아, EditDto를 반환할 수 있다.")
+    @DisplayName("변경요청 데이터를 받아, EditDto를 반환할 수 있다.")
     @Test
     void can_return_edit_dto() {
         //given

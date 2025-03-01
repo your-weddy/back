@@ -23,14 +23,14 @@ class MemberControllerTest {
     @Nested
     class UpdateProfileImageUrl{
 
-        @DisplayName("사용자 프로필 이미지 업로드 요청을 받을 수 있다.")
+        @DisplayName("사용자 프로필 이미지 변경 요청을 받을 수 있다.")
         @Test
         void get_user_profile_image_request(){
             //when, then
             memberController.updateProfileImageUrl(memberId, profileImgUrl);
         }
 
-        @DisplayName("사용자 프로필 이미지 업로드를 성공 할 수 있다.")
+        @DisplayName("사용자 프로필 이미지 변경 응답에 성공 할 수 있다.")
         @Test
         void success_user_profile_image_request(){
             //when
