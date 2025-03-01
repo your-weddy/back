@@ -105,8 +105,7 @@ class ChecklistServiceTest {
         @Test
         public void receive_assign_wedding_date_message_from_controller() {
             ChecklistDdayAssignDto dto = ChecklistDdayAssignDto.from(
-                    "2",
-                    new ChecklistDdayAssignRequest(LocalDate.of(2025, 12, 1))
+                    new ChecklistDdayAssignRequest("2", LocalDate.of(2025, 12, 1))
             );
             assertThat(dto).isNotNull();
         }

@@ -30,14 +30,14 @@ class ChecklistControllerTest {
         @Test
         public void receive_assign_wedding_date_message() {
             ChecklistController controller = new ChecklistController(new FakeChecklistService());
-            controller.assignWeddingDate("1", new ChecklistDdayAssignRequest());
+            controller.assignWeddingDate(new ChecklistDdayAssignRequest());
         }
 
         @DisplayName("요청은 날짜 정보를 포함한다")
         @Test
         public void date_in_message_follows_format() {
             ChecklistController controller = new ChecklistController(new FakeChecklistService());
-            controller.assignWeddingDate("1", new ChecklistDdayAssignRequest(LocalDate.of(2025, 12, 1)));
+            controller.assignWeddingDate(new ChecklistDdayAssignRequest("1", LocalDate.of(2025, 12, 1)));
         }
 
         @DisplayName("결혼 예정일 등록 결과를 반환할 수 있다")
@@ -45,7 +45,7 @@ class ChecklistControllerTest {
         public void returns_assign_wedding_date() {
             ChecklistController controller = new ChecklistController(new FakeChecklistService());
             assertThat(
-                    controller.assignWeddingDate("1", new ChecklistDdayAssignRequest())
+                    controller.assignWeddingDate(new ChecklistDdayAssignRequest())
             ).isNotNull();
         }
     }
