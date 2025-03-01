@@ -28,20 +28,15 @@ public class AuthService {
     private final JwtService jwtService;
 
     public TokenInfo processKakaoLogin(String code) {
-        // 1. 액세스 토큰 받기
         String accessToken = oAuth2Service.getAccessToken(code);
 
-        // 2. 사용자 정보 받기
         KakaoUserInfo kakaoUserInfo = oAuth2Service.getUserInfo(accessToken);
 
-        // 3. DB 처리
         Member member = Member.from(kakaoUserInfo);
         saveDatabase(member);
 
-        // 4. 인증 객체 생성
         Authentication authentication = createAuthentication(member);
 
-        // 5. JWT 토큰 발급
         TokenInfo tokenInfo = jwtService.generateToken(authentication);
 
         return tokenInfo;

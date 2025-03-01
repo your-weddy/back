@@ -38,7 +38,6 @@ public class AuthController {
         response.sendRedirect(HOME_PAGE_URL);
     }
 
-    //access토큰 만료 시 재발급
     @GetMapping("/regenerate-token")
     public ResponseEntity<Void> refreshToken(HttpServletRequest request, HttpServletResponse response) {
         try {
