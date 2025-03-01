@@ -13,7 +13,7 @@ import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
-import org.swyp.weddy.domain.auth.web.response.MemberResponse;
+import org.swyp.weddy.domain.auth.web.response.AuthResponse;
 
 import java.io.IOException;
 import java.util.Map;
@@ -55,14 +55,14 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<MemberResponse> getMemberInfo() {
+    public ResponseEntity<AuthResponse> getMemberInfo() {
 
         if(!authService.isValidMember()){
             throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
-        MemberResponse memberResponse = authService.getMemberInfo();
-        return ResponseEntity.ok(memberResponse);
+        AuthResponse authResponse = authService.getMemberInfo();
+        return ResponseEntity.ok(authResponse);
     }
 
     @PostMapping("/logout")

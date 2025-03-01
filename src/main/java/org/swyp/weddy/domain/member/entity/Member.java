@@ -1,4 +1,4 @@
-package org.swyp.weddy.domain.auth.entity;
+package org.swyp.weddy.domain.member.entity;
 
 import lombok.*;
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;

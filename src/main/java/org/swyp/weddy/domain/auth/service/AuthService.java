@@ -8,12 +8,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.swyp.weddy.common.exception.ErrorCode;
-import org.swyp.weddy.domain.auth.dao.MemberMapper;
-import org.swyp.weddy.domain.auth.entity.Member;
+import org.swyp.weddy.domain.member.dao.MemberMapper;
+import org.swyp.weddy.domain.member.entity.Member;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
-import org.swyp.weddy.domain.auth.web.response.MemberResponse;
+import org.swyp.weddy.domain.auth.web.response.AuthResponse;
 
 import java.util.Collections;
 import java.util.Map;
@@ -93,12 +93,12 @@ public class AuthService {
         return true;
     }
 
-    public MemberResponse getMemberInfo() {
+    public AuthResponse getMemberInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         Number id = (Number) principal.get("id");
         Member member = memberMapper.selectByMemberId(id.longValue());
 
-        return MemberResponse.from(member);
+        return AuthResponse.from(member);
     }
 }

@@ -3,26 +3,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.swyp.weddy.domain.auth.dao.MemberMapper">
+<mapper namespace="org.swyp.weddy.domain.member.dao.MemberMapper">
 
-    <select id="selectByMemberId" resultType="org.swyp.weddy.domain.auth.entity.Member">
+    <select id="selectByMemberId" resultType="org.swyp.weddy.domain.member.entity.Member">
         SELECT id, email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted
         FROM member
         WHERE id = #{id}
     </select>
 
-    <select id="selectByOAuthId" resultType="org.swyp.weddy.domain.auth.entity.Member">
+    <select id="selectByOAuthId" resultType="org.swyp.weddy.domain.member.entity.Member">
         SELECT id, email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted
         FROM member
         WHERE oauth_id = #{oAuthId}
     </select>
 
-    <insert id="saveMember" parameterType="org.swyp.weddy.domain.auth.entity.Member">
+    <insert id="saveMember" parameterType="org.swyp.weddy.domain.member.entity.Member">
         INSERT INTO member ( email, name, profile_image_url, oauth_id, created_at, updated_at, is_deleted)
         VALUES ( #{email}, #{name}, #{profileImageUrl}, #{oAuthId}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, #{isDeleted})
     </insert>
 
-    <update id="updateMember" parameterType="org.swyp.weddy.domain.auth.entity.Member">
+    <update id="updateMember" parameterType="org.swyp.weddy.domain.member.entity.Member">
         UPDATE member
            SET email = #{email}, name = #{name}, profile_image_url = #{profileImageUrl},updated_at = CURRENT_TIMESTAMP
          WHERE id = #{id}

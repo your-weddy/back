@@ -1,8 +1,8 @@
-package org.swyp.weddy.domain.auth.dao;
+package org.swyp.weddy.domain.member.dao;
 
 
 import org.apache.ibatis.annotations.Mapper;
-import org.swyp.weddy.domain.auth.entity.Member;
+import org.swyp.weddy.domain.member.entity.Member;
 
 @Mapper
 public interface MemberMapper {
