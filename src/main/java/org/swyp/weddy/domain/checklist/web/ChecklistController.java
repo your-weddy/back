@@ -48,12 +48,9 @@ public class ChecklistController implements ChecklistApiSpec {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/{memberId}")
-    public ResponseEntity<Void> assignWeddingDate(
-            @PathVariable("memberId") String memberId,
-            @RequestBody ChecklistDdayAssignRequest request
-    ) {
-        ChecklistDdayAssignDto dto = ChecklistDdayAssignDto.from(memberId, request);
+    @PatchMapping("/me/d-day")
+    public ResponseEntity<Void> assignWeddingDate(@RequestBody ChecklistDdayAssignRequest request) {
+        ChecklistDdayAssignDto dto = ChecklistDdayAssignDto.from(request);
         checklistService.editDday(dto);
         return ResponseEntity.ok().build();
     }

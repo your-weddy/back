@@ -13,8 +13,8 @@ public class ChecklistDdayAssignDto {
         this.dDay = dDay;
     }
 
-    public static ChecklistDdayAssignDto from(String memberId, ChecklistDdayAssignRequest request) {
-        return new ChecklistDdayAssignDto(memberId, request.getdDay());
+    public static ChecklistDdayAssignDto from(ChecklistDdayAssignRequest request) {
+        return new ChecklistDdayAssignDto(request.getMemberId(), request.getdDay());
     }
 
     public String getMemberId() {
