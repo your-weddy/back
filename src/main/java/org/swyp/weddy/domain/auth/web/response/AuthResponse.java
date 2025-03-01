@@ -18,7 +18,7 @@ public class AuthResponse {
     }
 
     public static AuthResponse from(Member member) {
-        return new AuthResponse(member.getId(), member.getName(), member.getEmail(), member.getProfileImageUrl());
+        return new AuthResponse(member.getId(), member.getEmail(), member.getName(), member.getProfileImageUrl());
     }
 }
 
