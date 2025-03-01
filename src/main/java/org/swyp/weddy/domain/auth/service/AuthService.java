@@ -47,16 +47,6 @@ public class AuthService {
         return tokenInfo;
     }
 
-    private Member createMemberFromKakaoUserInfo(KakaoUserInfo kakaoUserInfo) {
-        return Member.builder()
-                .email(kakaoUserInfo.getEmail())
-                .oAuthId(String.valueOf(kakaoUserInfo.getOAuthId()))
-                .name(kakaoUserInfo.getNickname())
-                .profileImageUrl(kakaoUserInfo.getImgUrl())
-                .build();
-    }
-
-
     private void saveDatabase(Member member) {
         Member existingUser = memberMapper.selectByOAuthId(member.getOAuthId());
         if (existingUser == null) {
