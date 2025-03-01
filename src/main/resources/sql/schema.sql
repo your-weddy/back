@@ -14,7 +14,7 @@ CREATE TABLE `checklist`
 (
     `id`         bigint PRIMARY KEY NOT NULL AUTO_INCREMENT,
     `member_id`  bigint             NOT NULL,
-    `d_day`      integer,
+    `d_day`      datetime,
     `created_at` timestamp,
     `updated_at` timestamp,
     `is_deleted` bool
@@ -42,6 +42,7 @@ CREATE TABLE `small_category_item`
     `status_id`              bigint,
     `amount`                 bigint,
     `sequence`               bigint,
+    `attached_file_url`      text,
     `created_at`             timestamp,
     `updated_at`             timestamp,
     `is_deleted`             bool

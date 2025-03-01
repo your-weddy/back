@@ -26,6 +26,7 @@ public class SmallCatItem {
     private String statusName;
     private Long amount;
     private Long sequence;
+    private String attachedFileUrl;
 
     public static SmallCatItem from(SmallCatItemDto dto) {
         return new SmallCatItem(
@@ -37,7 +38,8 @@ public class SmallCatItem {
                 dto.getBody(),
                 dto.getStatusName(),
                 dto.getAmount(),
-                null
+                null,
+                dto.getAttachedFileUrl()
         );
     }
 

@@ -6,8 +6,6 @@ import lombok.NoArgsConstructor;
 import org.swyp.weddy.domain.checklist.entity.SmallCatItem;
 
 import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,21 +19,7 @@ public class SmallCatItemResponse {
     private String body;
     private String statusName;
     private Long amount;
-
-    public static List<SmallCatItemResponse> from(List<SmallCatItem> smallCatItems) {
-        return smallCatItems.stream()
-                .map(item -> new SmallCatItemResponse(
-                        item.getId(),
-                        item.getLargeCatItemId(),
-                        item.getTitle(),
-                        item.getDueDate(),
-                        item.getAssigneeName(),
-                        item.getBody(),
-                        item.getStatusName(),
-                        item.getAmount()
-                ))
-                .collect(Collectors.toList());
-    }
+    private String attachedFileUrl;
 
     public static SmallCatItemResponse from(SmallCatItem item) {
         return new SmallCatItemResponse(
@@ -46,7 +30,8 @@ public class SmallCatItemResponse {
                         item.getAssigneeName(),
                         item.getBody(),
                         item.getStatusName(),
-                        item.getAmount()
+                        item.getAmount(),
+                        item.getAttachedFileUrl()
                 );
     }
 

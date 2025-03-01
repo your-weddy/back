@@ -8,4 +8,6 @@ public interface ChecklistMapper {
     int insertChecklist(Checklist checklist);
 
     Checklist selectChecklistByMemberId(Long memberId);
+
+    int updateChecklist(Checklist checklist);
 }

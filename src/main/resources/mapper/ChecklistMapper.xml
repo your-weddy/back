@@ -28,4 +28,13 @@
         FROM checklist
         WHERE member_id = #{memberId}
     </select>
+
+    <update id="updateChecklist" useGeneratedKeys="true" keyProperty="id"
+            parameterType="org.swyp.weddy.domain.checklist.entity.Checklist">
+        UPDATE checklist
+        SET d_day      = #{dDay},
+            updated_at = #{updatedAt}
+        WHERE member_id = #{memberId}
+          AND id = #{id};
+    </update>
 </mapper>

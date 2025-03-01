@@ -21,6 +21,7 @@ public class SmallCatItemDto {
     private String body;
     private String statusName;
     private Long amount;
+    private String attachedFileUrl;
 
     public static SmallCatItemDto from(SmallCatItemPostRequest request) {
         return new SmallCatItemDto(
@@ -32,7 +33,8 @@ public class SmallCatItemDto {
                 request.getAssigneeName(),
                 request.getBody(),
                 request.getStatusName(),
-                request.getAmount()
+                request.getAmount(),
+                null
         );
     }
     public static SmallCatItemDto from(SmallCatItemPatchRequest request) {
@@ -45,7 +47,8 @@ public class SmallCatItemDto {
                 request.getAssigneeName(),
                 request.getBody(),
                 request.getStatusName(),
-                request.getAmount()
+                request.getAmount(),
+                request.getAttachedFileUrl()
         );
     }
 }
