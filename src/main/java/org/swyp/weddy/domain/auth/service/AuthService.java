@@ -47,8 +47,6 @@ public class AuthService {
         Member existingUser = memberMapper.selectByOAuthId(member.getOAuthId());
         if (existingUser == null) {
             memberMapper.saveMember(member);
-        } else {
-            memberMapper.updateMember(member);
         }
     }
 
