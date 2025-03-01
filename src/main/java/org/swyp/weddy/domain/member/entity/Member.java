@@ -1,6 +1,7 @@
 package org.swyp.weddy.domain.member.entity;
 
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
+import org.swyp.weddy.domain.member.service.dto.MemberEditDto;
 
 import java.time.LocalDateTime;
 
@@ -14,6 +15,13 @@ public class Member {
     private LocalDateTime updatedAt;
     private boolean isDeleted;
 
+    public Member(Long id, String email, String name, String profileImageUrl, String oAuthId) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.profileImageUrl = profileImageUrl;
+        this.oAuthId = oAuthId;
+    }
     public Member(String email, String name, String profileImageUrl, String oAuthId) {
         this.email = email;
         this.name = name;
@@ -27,6 +35,16 @@ public class Member {
                 kakaoUserInfo.getNickname(),
                 kakaoUserInfo.getImgUrl(),
                 String.valueOf(kakaoUserInfo.getOAuthId()));
+    }
+
+    public static Member ofEdit(Member member, MemberEditDto dto) {
+        return new Member(
+                member.getId(),
+                dto.getEmail() == null ? member.getEmail() : dto.getEmail(),
+                dto.getName() == null ? member.getName() : dto.getName(),
+                dto.getProfileImageUrl() == null ? member.getProfileImageUrl() : dto.getProfileImageUrl(),
+                dto.getOAuthId() == null ? member.getOAuthId() : dto.getOAuthId()
+        );
     }
 
     public Long getId() {
