@@ -242,9 +242,14 @@ class LargeCatControllerTest {
         @Override
         public ChecklistResponse findChecklist(ChecklistDto dto) {
             if (dto.getMemberId().equals("-1")) {
-                return new ChecklistResponse(-1L, "1L", 100);
+                return new ChecklistResponse(-1L, "1L", 100L);
             }
-            return new ChecklistResponse(1L, "1L", 100);
+            return new ChecklistResponse(1L, "1L", 100L);
+        }
+
+        @Override
+        public Long editDday(ChecklistDdayAssignDto dto) {
+            return 0L;
         }
     }
 

@@ -2,14 +2,21 @@ package org.swyp.weddy.domain.checklist.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
 import org.swyp.weddy.domain.checklist.exception.ChecklistNotExistsException;
+import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -84,6 +91,41 @@ class ChecklistServiceTest {
         );
     }
 
+    @DisplayName("editDday()")
+    @Nested
+    class EditDdayTest {
+        @DisplayName("결혼 예정일 등록 요청을 받을 수 있다")
+        @Test
+        public void receive_assign_wedding_date_message() {
+            ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+            service.editDday(new ChecklistDdayAssignDto("2", LocalDate.of(2025,12,1)));
+        }
+
+        @DisplayName("컨트롤러로부터 결혼 예정일 등록 요청을 받을 수 있다")
+        @Test
+        public void receive_assign_wedding_date_message_from_controller() {
+            ChecklistDdayAssignDto dto = ChecklistDdayAssignDto.from(
+                    "2",
+                    new ChecklistDdayAssignRequest(LocalDate.of(2025, 12, 1))
+            );
+            assertThat(dto).isNotNull();
+        }
+
+        @DisplayName("결혼 예정일을 등록할 수 있다")
+        @Test
+        public void assign_wedding_date() {
+            ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+
+            Long l = service.editDday(
+                    new ChecklistDdayAssignDto(
+                            "2",
+                            LocalDate.of(2025, 12, 1)
+                    )
+            );
+            assertThat(l).isEqualTo(2L);
+        }
+    }
+
     private static class FakeChecklistService implements ChecklistService {
         private final ChecklistMapper mapper;
 
@@ -118,6 +160,11 @@ class ChecklistServiceTest {
 
             return ChecklistResponse.from(Checklist.from(dto));
         }
+
+        @Override
+        public Long editDday(ChecklistDdayAssignDto dto) {
+            return 0L;
+        }
     }
 
     private static class FakeChecklistMapper implements ChecklistMapper {
@@ -131,12 +178,34 @@ class ChecklistServiceTest {
 
         @Override
         public Checklist selectChecklistByMemberId(Long memberId) {
+            if (memberId == 2L) {
+                return TestChecklist.from();
+            }
+
             if (!hasChecklist) {
                 return null;
             }
 
             ChecklistDto dto = ChecklistDto.from(memberId.toString());
             return Checklist.from(dto);
+        }
+
+        @Override
+        public int updateChecklist(Checklist checklist) {
+            return 0;
+        }
+    }
+
+    private static class TestChecklist extends Checklist {
+        static Checklist from() {
+            return new Checklist(
+                    2L,
+                    1L,
+                    LocalDateTime.now(),
+                    new Timestamp(System.currentTimeMillis()),
+                    null,
+                    Boolean.FALSE
+            );
         }
     }
 }
