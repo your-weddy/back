@@ -1,10 +1,14 @@
 package org.swyp.weddy.domain.member.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.member.service.dto.MemberEditDto;
 
 import java.time.LocalDateTime;
 
+@Getter
+@AllArgsConstructor
 public class Member {
     private Long id;
     private String email;
