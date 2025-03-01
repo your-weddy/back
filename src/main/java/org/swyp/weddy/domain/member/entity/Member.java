@@ -29,6 +29,15 @@ public class Member {
         this.oAuthId = oAuthId;
     }
 
+    public Member(Long id, String email, String name, String profileImageUrl, String oAuthId, boolean isDeleted) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.profileImageUrl = profileImageUrl;
+        this.oAuthId = oAuthId;
+        this.isDeleted = isDeleted;
+    }
+
     public static Member from(KakaoUserInfo kakaoUserInfo) {
         return new Member(
                 kakaoUserInfo.getEmail(),
