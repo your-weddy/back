@@ -9,11 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
-import org.swyp.weddy.domain.auth.exception.UserNotFoundException;
+import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
-import org.swyp.weddy.domain.auth.web.response.UserResponse;
+import org.swyp.weddy.domain.auth.web.response.MemberResponse;
 
 import java.io.IOException;
 import java.util.Map;
@@ -56,21 +56,21 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponse> getUserInfo() {
+    public ResponseEntity<MemberResponse> getMemberInfo() {
 
-        if(!authService.isValidUser()){
-            throw new UserNotFoundException(ErrorCode.UNAUTHORIZED);
+        if(!authService.isValidMember()){
+            throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
-        UserResponse userResponse = authService.getUserInfo();
-        return ResponseEntity.ok(userResponse);
+        MemberResponse memberResponse = authService.getMemberInfo();
+        return ResponseEntity.ok(memberResponse);
     }
 
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletResponse response) {
 
-        if(!authService.isValidUser()){
-            throw new UserNotFoundException(ErrorCode.UNAUTHORIZED);
+        if(!authService.isValidMember()){
+            throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
         cookieService.deleteCookie(response);

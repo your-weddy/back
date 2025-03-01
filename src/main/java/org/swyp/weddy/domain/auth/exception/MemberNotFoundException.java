@@ -2,11 +2,11 @@ package org.swyp.weddy.domain.auth.exception;
 
 import org.swyp.weddy.common.exception.ErrorCode;
 
-public class UserNotFoundException extends RuntimeException {
+public class MemberNotFoundException extends RuntimeException {
 
     private final ErrorCode errorCode;
 
-    public UserNotFoundException(ErrorCode errorCode) {
+    public MemberNotFoundException(ErrorCode errorCode) {
         super(errorCode.getReason());
         this.errorCode = errorCode;
     }

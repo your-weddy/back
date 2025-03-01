@@ -13,7 +13,7 @@ import org.swyp.weddy.domain.auth.entity.Member;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
 import org.swyp.weddy.domain.auth.service.dto.KakaoUserInfo;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
-import org.swyp.weddy.domain.auth.web.response.UserResponse;
+import org.swyp.weddy.domain.auth.web.response.MemberResponse;
 
 import java.util.Collections;
 import java.util.Map;
@@ -98,7 +98,7 @@ public class AuthService {
         return jwtService.resolveToken(request);
     }
 
-    public boolean isValidUser() {
+    public boolean isValidMember() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null || !authentication.isAuthenticated()) {
@@ -108,12 +108,12 @@ public class AuthService {
         return true;
     }
 
-    public UserResponse getUserInfo() {
+    public MemberResponse getMemberInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         Number id = (Number) principal.get("id");
         Member member = memberMapper.selectByMemberId(id.longValue());
 
-        return UserResponse.from(member);
+        return MemberResponse.from(member);
     }
 }
