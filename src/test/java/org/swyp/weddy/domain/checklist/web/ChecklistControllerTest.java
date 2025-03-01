@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.request.ChecklistCreateRequest;
 import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
@@ -14,6 +15,13 @@ import java.time.LocalDate;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChecklistControllerTest {
+
+    @DisplayName("체크리스트 생성 요청을 받을 수 있다")
+    @Test
+    public void receive_assign_checklist_message() {
+        ChecklistController controller = new ChecklistController(new FakeChecklistService());
+        controller.createChecklist(new ChecklistCreateRequest("1"));
+    }
 
     @DisplayName("assignWeddingDate()")
     @Nested
