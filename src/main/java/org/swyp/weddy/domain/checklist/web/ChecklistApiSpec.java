@@ -8,9 +8,11 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.swyp.weddy.domain.checklist.web.request.ChecklistCreateRequest;
+import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
 
 public interface ChecklistApiSpec {
@@ -46,5 +48,23 @@ public interface ChecklistApiSpec {
     ResponseEntity<Void> hasChecklist(
             @Parameter(name = "memberId", description = "사용자 아이디", example = "1", required = true)
             @RequestParam(name = "memberId") String memberId
+    );
+
+    @Tag(name = "checklist", description = "체크리스트 관련 API")
+    @Operation(summary = "결혼 예정일 설정", description = "체크리스트에서 보여줄 d-day 계산에 필요한 사용자의 결혼 예정일을 설정한다")
+    @PatchMapping("/me/d-day")
+    ResponseEntity<Void> assignWeddingDate(
+            @Parameter(name = "ChecklistDdayAssignRequest", description = "사용자 아이디와 yyyy-MM-dd 형식의 결혼 예정일", required = true)
+            @RequestBody(content = @Content(
+                    examples = {
+                            @ExampleObject(name = "someExample1", value = """
+                                        {
+                                            "memberId" : "1",
+                                            "dDay" : "2025-12-01"
+                                        }
+                                    """)
+                    }
+            ))
+            @org.springframework.web.bind.annotation.RequestBody ChecklistDdayAssignRequest request
     );
 }
