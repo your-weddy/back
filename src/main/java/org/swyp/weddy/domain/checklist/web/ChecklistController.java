@@ -6,10 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDdayAssignDto;
 import org.swyp.weddy.domain.checklist.service.dto.ChecklistDto;
+import org.swyp.weddy.domain.checklist.web.request.ChecklistCreateRequest;
 import org.swyp.weddy.domain.checklist.web.request.ChecklistDdayAssignRequest;
 import org.swyp.weddy.domain.checklist.web.response.ChecklistResponse;
-
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -23,8 +22,8 @@ public class ChecklistController implements ChecklistApiSpec {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createChecklist(@RequestBody Map<String, String> memberIdMap) {
-        Long insertId = checklistService.assignChecklist(ChecklistDto.from(memberIdMap.get("memberId")));
+    public ResponseEntity<Void> createChecklist(@RequestBody ChecklistCreateRequest request) {
+        Long insertId = checklistService.assignChecklist(ChecklistDto.fromCreateRequest(request));
         log.warn("---------------------");
         log.warn("insertId: " + insertId);
 
