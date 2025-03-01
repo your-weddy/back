@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.swyp.weddy.common.exception.ErrorCode;
+import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.member.dao.MemberMapper;
 import org.swyp.weddy.domain.member.entity.Member;
 import org.swyp.weddy.domain.auth.exception.JwtRefreshTokenInvalidException;
@@ -93,11 +94,15 @@ public class AuthService {
         return true;
     }
 
-    public AuthResponse getMemberInfo() {
+    public AuthResponse getAuthInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Map<String, Object> principal = (Map<String, Object>) authentication.getPrincipal();
         Number id = (Number) principal.get("id");
         Member member = memberMapper.selectByMemberId(id.longValue());
+
+        if (member == null) {
+            throw new MemberNotFoundException(ErrorCode.NOT_EXISTS);
+        }
 
         return AuthResponse.from(member);
     }

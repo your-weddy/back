@@ -55,13 +55,13 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<AuthResponse> getMemberInfo() {
+    public ResponseEntity<AuthResponse> getAuthInfo() {
 
         if(!authService.isValidMember()){
             throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
-        AuthResponse authResponse = authService.getMemberInfo();
+        AuthResponse authResponse = authService.getAuthInfo();
         return ResponseEntity.ok(authResponse);
     }
 
