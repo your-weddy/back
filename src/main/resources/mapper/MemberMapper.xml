@@ -6,15 +6,17 @@
 <mapper namespace="org.swyp.weddy.domain.member.dao.MemberMapper">
 
     <select id="selectByMemberId" resultType="org.swyp.weddy.domain.member.entity.Member">
-        SELECT id, email, name, profile_image_url, oauth_id, is_deleted
+        SELECT id, email, name, profile_image_url, oauth_id
         FROM member
         WHERE id = #{id}
+          AND is_deleted = false
     </select>
 
     <select id="selectByOAuthId" resultType="org.swyp.weddy.domain.member.entity.Member">
-        SELECT id, email, name, profile_image_url, oauth_id, is_deleted
+        SELECT id, email, name, profile_image_url, oauth_id
         FROM member
         WHERE oauth_id = #{oAuthId}
+          AND is_deleted = false
     </select>
 
     <insert id="saveMember" parameterType="org.swyp.weddy.domain.member.entity.Member">
