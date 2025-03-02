@@ -194,6 +194,10 @@ class ChecklistServiceTest {
         public int updateChecklist(Checklist checklist) {
             return 0;
         }
+
+        @Override
+        public void insertTemplateData(Checklist checklist) {
+        }
     }
 
     private static class TestChecklist extends Checklist {
