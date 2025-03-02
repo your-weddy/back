@@ -15,7 +15,7 @@ class MemberControllerTest {
 
     @BeforeEach
     void set_up(){
-        Long memberId = 1L;
+        memberId = 1L;
         memberEditRequest = new MemberEditRequest("test.img");
         memberService = mock(MemberService.class);
         memberController = new MemberController(memberService);

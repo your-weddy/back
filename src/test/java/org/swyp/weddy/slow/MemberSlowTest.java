@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.swyp.weddy.domain.member.dao.MemberMapper;
 import org.swyp.weddy.domain.member.entity.Member;
@@ -21,8 +20,6 @@ public class MemberSlowTest {
     private MemberService memberService;
     @Autowired
     private MemberMapper memberMapper;
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
 
     @DisplayName("1명의 멤버를 업데이트 한다.")
@@ -46,7 +43,7 @@ public class MemberSlowTest {
         Member member = new Member(1L, "test@email.com", "testName", "test.img", "testOauthId");
 
         //when
-        int updatedRows = memberMapper.updateMember(member);
+        memberMapper.updateMember(member);
 
         //then
         Member result = memberMapper.selectByMemberId(1L);
