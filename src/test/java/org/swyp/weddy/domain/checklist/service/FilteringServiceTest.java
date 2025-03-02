@@ -72,7 +72,8 @@ class FilteringServiceTest {
                     "",
                     null,
                     null,
-                    statusName
+                    statusName,
+                    1L
             );
         }
     }

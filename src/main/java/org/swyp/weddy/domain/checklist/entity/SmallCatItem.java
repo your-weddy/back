@@ -28,6 +28,18 @@ public class SmallCatItem {
     private Long sequence;
     private String attachedFileUrl;
 
+    public SmallCatItem(Long id, Long largeCatItemId, String title, Date dueDate, String assigneeName, String body, String statusName, Long amount, String attachedFileUrl) {
+        this.id = id;
+        this.largeCatItemId = largeCatItemId;
+        this.title = title;
+        this.dueDate = dueDate;
+        this.assigneeName = assigneeName;
+        this.body = body;
+        this.statusName = statusName;
+        this.amount = amount;
+        this.attachedFileUrl = attachedFileUrl;
+    }
+
     public static SmallCatItem from(SmallCatItemDto dto) {
         return new SmallCatItem(
                 dto.getId(),

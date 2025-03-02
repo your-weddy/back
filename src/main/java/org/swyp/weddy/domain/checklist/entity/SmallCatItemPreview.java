@@ -17,6 +17,7 @@ public class SmallCatItemPreview {
     private Date dueDate;
     private String assigneeName;
     private String statusName;
+    private Long amount;
     private Long sequence;
 
     public SmallCatItemPreview(Long id, Long largeCatItemId, String title, Date dueDate, String assigneeName, String statusName) {
@@ -26,5 +27,14 @@ public class SmallCatItemPreview {
         this.dueDate = dueDate;
         this.assigneeName = assigneeName;
         this.statusName = statusName;
+    }
+    public SmallCatItemPreview(Long id, Long largeCatItemId, String title, Date dueDate, String assigneeName, String statusName, Long amount) {
+        this.id = id;
+        this.largeCatItemId = largeCatItemId;
+        this.title = title;
+        this.dueDate = dueDate;
+        this.assigneeName = assigneeName;
+        this.statusName = statusName;
+        this.amount = amount;
     }
 }
