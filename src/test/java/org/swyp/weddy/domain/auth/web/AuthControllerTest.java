@@ -34,7 +34,7 @@ class AuthControllerTest {
 
         //when,then
         assertThatThrownBy(() -> {
-            authController.getMemberInfo();
+            authController.getAuthInfo();
         }).isInstanceOf(MemberNotFoundException.class);
     }
 

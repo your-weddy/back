@@ -13,7 +13,7 @@ import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
 import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
-import org.swyp.weddy.domain.auth.web.response.MemberResponse;
+import org.swyp.weddy.domain.auth.web.response.AuthResponse;
 
 import java.io.IOException;
 import java.util.Map;
@@ -38,7 +38,6 @@ public class AuthController {
         response.sendRedirect(HOME_PAGE_URL);
     }
 
-    //access토큰 만료 시 재발급
     @GetMapping("/regenerate-token")
     public ResponseEntity<Void> refreshToken(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -56,14 +55,14 @@ public class AuthController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<MemberResponse> getMemberInfo() {
+    public ResponseEntity<AuthResponse> getAuthInfo() {
 
         if(!authService.isValidMember()){
             throw new MemberNotFoundException(ErrorCode.UNAUTHORIZED);
         }
 
-        MemberResponse memberResponse = authService.getMemberInfo();
-        return ResponseEntity.ok(memberResponse);
+        AuthResponse authResponse = authService.getAuthInfo();
+        return ResponseEntity.ok(authResponse);
     }
 
     @PostMapping("/logout")
