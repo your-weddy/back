@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDate;
 
 public class ChecklistDdayAssignRequest {
+    private String memberId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @JsonProperty("dDay")
     private LocalDate dDay;
@@ -13,8 +14,13 @@ public class ChecklistDdayAssignRequest {
     public ChecklistDdayAssignRequest() {
     }
 
-    public ChecklistDdayAssignRequest(LocalDate dDay) {
+    public ChecklistDdayAssignRequest(String memberId, LocalDate dDay) {
+        this.memberId = memberId;
         this.dDay = dDay;
+    }
+
+    public String getMemberId() {
+        return memberId;
     }
 
     public LocalDate getdDay() {
