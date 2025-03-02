@@ -10,4 +10,6 @@ public interface ChecklistMapper {
     Checklist selectChecklistByMemberId(Long memberId);
 
     int updateChecklist(Checklist checklist);
+
+    void insertTemplateData(Checklist checklist);
 }

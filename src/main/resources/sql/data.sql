@@ -14,6 +14,9 @@ VALUES ('완료');
 INSERT INTO member (email, name, profile_image_url, oauth_id, is_deleted)
 VALUES ('test@example.com', '테스트 사용자', NULL, 'oauth_1234', 0);
 
+INSERT INTO member (email, name, profile_image_url, oauth_id, is_deleted)
+VALUES ('test2@example.com', 'test2', NULL, 'oauth_1234', 0);
+
 -- 2. checklist 테이블에 테스트 데이터 삽입
 INSERT INTO checklist (member_id, d_day, created_at, updated_at, is_deleted)
 VALUES (1, '2030-03-01 12:00:00', NOW(), NOW(), 0);

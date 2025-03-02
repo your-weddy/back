@@ -30,6 +30,8 @@ public class ChecklistServiceImpl implements ChecklistService {
         Checklist checklist = Checklist.from(dto);
         mapper.insertChecklist(checklist);
 
+        mapper.insertTemplateData(checklist);
+
         return checklist.getId();
     }
 
