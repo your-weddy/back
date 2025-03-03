@@ -8,6 +8,7 @@ import org.swyp.weddy.domain.auth.exception.JwtTokenExpiredException;
 import org.swyp.weddy.domain.auth.exception.JwtUnauthorizedException;
 import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.checklist.exception.*;
+import org.swyp.weddy.domain.member.exception.MemberUpdateException;
 import org.swyp.weddy.domain.storage.exception.FileDeleteException;
 import org.swyp.weddy.domain.storage.exception.FileUploadException;
 
@@ -40,6 +41,12 @@ public class ControllerAdvice {
 
     @ExceptionHandler(MemberNotFoundException.class)
     protected ResponseEntity<ErrorResponse> userNotFoundException(final MemberNotFoundException exception) {
+        ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
+        return errorResponse.makeResponseEntity();
+    }
+
+    @ExceptionHandler(MemberUpdateException.class)
+    protected ResponseEntity<ErrorResponse> memberUpdateException(final MemberUpdateException exception) {
         ErrorResponse errorResponse = new ErrorResponse(exception.getErrorCode());
         return errorResponse.makeResponseEntity();
     }
