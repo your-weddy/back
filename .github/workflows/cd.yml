@@ -29,7 +29,10 @@ jobs:
         run: |
           echo "$EC2_KEY" > weddy-key.pem
           chmod 400 weddy-key.pem
+          ls -l ./build/libs/  # JAR 파일 존재 여부 확인
+          echo "Starting SCP transfer..."
           scp -i weddy-key.pem -o StrictHostKeyChecking=no ./build/libs/weddy-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/app/
+          echo "SCP completed"
 
       - name: Deploy to EC2
         env:
