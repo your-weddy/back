@@ -44,13 +44,20 @@ class ChecklistServiceTest {
         assertThat(service.hasChecklist(dto)).isEqualTo(false);
     }
 
+    @DisplayName("사용자에 할당된 체크리스트가 이미 있다면 오류를 반환한다")
+    @Test
+    public void check_if_member_already_has_checklist() {
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
-        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
 
         service.assignChecklist(dto);
 
-        assertThat(service.hasChecklist(dto)).isEqualTo(true);
+        Assertions.assertThrows(
+                ChecklistAlreadyAssignedException.class,
+                () -> service.hasChecklist(dto)
+        );
     }
 
     @DisplayName("사용자에게 할당된 체크리스트가 있다면, 추가로 할당하지 않는다")
