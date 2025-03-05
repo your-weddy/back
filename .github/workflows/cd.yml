@@ -29,9 +29,12 @@ jobs:
         run: |
           echo "$EC2_KEY" > weddy-key.pem
           chmod 400 weddy-key.pem
-          ls -l ./build/libs/  # JAR 파일 존재 여부 확인
+          
+          # EC2에서 기존 JAR 파일 삭제
+          ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST "rm -f /home/$EC2_USER/app/*.jar"
+          
           echo "Starting SCP transfer..."
-          timeout=480 scp -i weddy-key.pem -o StrictHostKeyChecking=no -v ./build/libs/weddy-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/app/ || echo "SCP failed"
+          timeout 480 scp -i weddy-key.pem -o StrictHostKeyChecking=no -v ./build/libs/weddy-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/app/ || { echo "SCP failed"; exit 1; }
           echo "SCP completed"
 
       - name: Deploy to EC2
@@ -54,27 +57,42 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_ACCESS_KEY_SECRET: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
         run: |
-          ssh -i weddy-key.pem $EC2_USER@$EC2_HOST << 'EOF'
+          echo "$EC2_KEY" > weddy-key.pem
+          chmod 400 weddy-key.pem
+          ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
             cd /home/$EC2_USER/app
+          
             # 기존 프로세스 종료
-            PID=$(ps aux | grep '[j]ava -jar' | awk '{print $2}')
-            if [ -n "$PID" ]; then
-              kill -9 $PID
+            PID=\$(ps aux | grep '[j]ava -jar' | awk '{print \$2}')
+            if [ -n "\$PID" ]; then
+              kill -9 \$PID
+              sleep 2
             fi
+          
             # JAR 실행
             nohup java -Dspring.profiles.active=prod -jar weddy-0.0.1-SNAPSHOT.jar \
-              --MYSQL_URL=$MYSQL_URL \
-              --MYSQL_PORT=$MYSQL_PORT \
-              --MYSQL_DBNAME=$MYSQL_DBNAME \
-              --MYSQL_USERNAME=$MYSQL_USERNAME \
-              --MYSQL_PASSWORD=$MYSQL_PASSWORD \
-              --JWT_SECRET=$JWT_SECRET \
-              --AUTHORIZE_URIS=$AUTHORIZE_URIS \
-              --CORS_URIS=$CORS_URIS \
-              --LOGIN_PAGE_URL=$LOGIN_PAGE_URL \
-              --HOME_PAGE_URL=$HOME_PAGE_URL \
-              --KAKAO_CLIENT_ID=$KAKAO_CLIENT_ID \
-              --KAKAO_REDIRECT_URL=$KAKAO_REDIRECT_URL \
-              --AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \
-              --AWS_ACCESS_KEY_SECRET=$AWS_ACCESS_KEY_SECRET &
+              --MYSQL_URL="$MYSQL_URL" \
+              --MYSQL_PORT="$MYSQL_PORT" \
+              --MYSQL_DBNAME="$MYSQL_DBNAME" \
+              --MYSQL_USERNAME="$MYSQL_USERNAME" \
+              --MYSQL_PASSWORD="$MYSQL_PASSWORD" \
+              --JWT_SECRET="$JWT_SECRET" \
+              --AUTHORIZE_URIS="$AUTHORIZE_URIS" \
+              --CORS_URIS="$CORS_URIS" \
+              --LOGIN_PAGE_URL="$LOGIN_PAGE_URL" \
+              --HOME_PAGE_URL="$HOME_PAGE_URL" \
+              --KAKAO_CLIENT_ID="$KAKAO_CLIENT_ID" \
+              --KAKAO_REDIRECT_URL="$KAKAO_REDIRECT_URL" \
+              --AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+              --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > nohup.out 2>&1 &
+          
+            # 실행 확인
+            sleep 5
+            if ps aux | grep '[j]ava -jar'; then
+              echo "Application started successfully"
+            else
+              echo "Application failed to start"
+              cat nohup.out
+              exit 1
+            fi
           EOF
