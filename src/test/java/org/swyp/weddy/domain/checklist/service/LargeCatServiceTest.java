@@ -199,9 +199,9 @@ class LargeCatServiceTest {
             }
 
             return List.of(
-                    new SmallCatItemPreviewResponse(1L, 1L, "t1", new Date(), "세훈", "진행중"),
-                    new SmallCatItemPreviewResponse(2L, 1L, "t2", new Date(), "세순", "완료"),
-                    new SmallCatItemPreviewResponse(3L, 1L, "t3", new Date(), "세준", "진행중")
+                    new SmallCatItemPreviewResponse(1L, 1L, "t1", new Date(), "세훈", "진행중", 1L),
+                    new SmallCatItemPreviewResponse(2L, 1L, "t2", new Date(), "세순", "완료", 1L),
+                    new SmallCatItemPreviewResponse(3L, 1L, "t3", new Date(), "세준", "진행중", 1L)
             );
         }
 
