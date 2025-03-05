@@ -58,6 +58,9 @@ jobs:
           AWS_ACCESS_KEY_SECRET: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
         run: |
           ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+            # SDKMAN 환경 로드
+            [ -s "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh" ] && . "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh"
+          
             cd /home/$EC2_USER/app
             PID=\$(ps aux | grep '[j]ava -jar' | awk '{print \$2}')
           
@@ -81,6 +84,7 @@ jobs:
               --KAKAO_REDIRECT_URL="$KAKAO_REDIRECT_URL" \
               --AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
               --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > nohup.out 2>&1 &
+          
             sleep 5
             if ps aux | grep '[j]ava -jar'; then
               echo "Application started successfully"
