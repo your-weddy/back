@@ -33,9 +33,17 @@ class ChecklistServiceTest {
         assertThat(service.assignChecklist(dto)).isEqualTo(1);
     }
 
-    @DisplayName("사용자에 할당된 체크리스트가 있는지 확인할 수 있다")
+    @DisplayName("사용자에 할당된 체크리스트가 없는지 확인할 수 있다")
     @Test
-    public void check_if_member_has_checklist() {
+    public void check_if_member_has_no_checklist() {
+        String memberId = "1";
+        ChecklistDto dto = ChecklistDto.from(memberId);
+
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+
+        assertThat(service.hasChecklist(dto)).isEqualTo(false);
+    }
+
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
