@@ -34,9 +34,9 @@ jobs:
           EC2_USER: ${{ secrets.EC2_USER }}
         run: |
           ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST "rm -f /home/$EC2_USER/app/*.jar"
-          echo "Starting SFTP transfer..."
-          echo "put ./build/libs/weddy-0.0.1-SNAPSHOT.jar /home/$EC2_USER/app/" | timeout 480 sftp -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST || { echo "SFTP failed"; exit 1; }
-          echo "SFTP completed"
+          echo "Starting rsync transfer..."
+          rsync -avz --progress -e "ssh -i weddy-key.pem -o StrictHostKeyChecking=no" ./build/libs/weddy-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/app/ || { echo "rsync failed"; exit 1; }
+          echo "rsync completed"
 
       - name: Deploy to EC2
         env:
