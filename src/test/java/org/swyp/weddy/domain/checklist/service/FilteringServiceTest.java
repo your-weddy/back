@@ -60,6 +60,17 @@ class FilteringServiceTest {
             }).toList();
             assertThat(filteredSmall).isNotNull();
         }
+
+        @DisplayName("담당자 두개를 기준으로 필터링한 결과를 가져올 수 있다")
+        @Test
+        public void return_filtering_result_with_two_assignees() {
+            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(4L, Collections.emptyList(), List.of("신랑", "신부")));
+            var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> {
+                return x.getAssigneeName().equals("신랑") || x.getAssigneeName().equals("신부");
+            }).toList();
+            assertThat(filteredSmall).isNotNull();
+        }
     }
 
     private static class TestLargeCatItem extends LargeCatItem {
@@ -101,6 +112,7 @@ class FilteringServiceTest {
                 case 1 -> List.of(TestLargeCatItem.of(1L, 1L, "신혼집"));
                 case 2 -> List.of(TestLargeCatItem.of(2L, 1L, "신혼집"));
                 case 3 -> List.of(TestLargeCatItem.of(3L, 1L, "신혼집"));
+                case 4 -> List.of(TestLargeCatItem.of(4L, 1L, "신혼집"));
                 default -> throw new RuntimeException("Unexpected");
             };
         }
@@ -176,6 +188,10 @@ class FilteringServiceTest {
                 case 3 -> List.of(
                         TestSmallCatItemPreviewResponse.of(1L, 1L, "신랑", null),
                         TestSmallCatItemPreviewResponse.of(3L, 1L, "신랑", null)
+                );
+                case 4 -> List.of(
+                        TestSmallCatItemPreviewResponse.of(1L, 1L, "신랑", null),
+                        TestSmallCatItemPreviewResponse.of(3L, 1L, "신부", null)
                 );
                 default -> throw new RuntimeException("Unexpected");
             };
