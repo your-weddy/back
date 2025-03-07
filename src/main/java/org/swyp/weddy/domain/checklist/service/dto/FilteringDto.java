@@ -12,7 +12,7 @@ public class FilteringDto {
         this.itemStatusList = itemStatusList;
     }
 
-    public static FilteringDto from(Long checklistId, String itemStatuses) {
+    public static FilteringDto of(Long checklistId, String itemStatuses) {
         return new FilteringDto(
                 checklistId,
                 FilteringDto.convertToList(itemStatuses)

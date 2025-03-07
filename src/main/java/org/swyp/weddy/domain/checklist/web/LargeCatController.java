@@ -60,7 +60,7 @@ public class LargeCatController {
         }
 
         List<LargeCatItemResponse> allItems = filteringService.filterBy(
-                FilteringDto.from(checklistId, itemStatuses)
+                FilteringDto.of(checklistId, itemStatuses)
         );
         return ResponseEntity.ok().body(allItems);
     }
