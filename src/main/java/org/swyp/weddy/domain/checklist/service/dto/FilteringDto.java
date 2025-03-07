@@ -35,11 +35,11 @@ public class FilteringDto {
         return itemAssigneeList;
     }
 
-    static List<String> convertToList(String itemStatuses) {
-        if (itemStatuses.equals("")) {
+    static List<String> convertToList(String filteringCondition) {
+        if (filteringCondition.equals("")) {
             return Collections.emptyList();
         }
 
-        return Arrays.stream(itemStatuses.split(",")).map(String::strip).toList();
+        return Arrays.stream(filteringCondition.split(",")).map(String::strip).toList();
     }
 }
