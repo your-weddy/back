@@ -5,14 +5,14 @@ import java.util.List;
 public class SmallCatItemSelectDto {
     private Long checklistId;
     private Long largeCatItemId;
-    private List<String> itemStatus;
-    private List<String> itemAssignee;
+    private List<String> itemStatusList;
+    private List<String> itemAssigneeList;
 
-    public SmallCatItemSelectDto(Long checklistId, Long largeCatItemId, List<String> itemStatus, List<String> itemAssignee) {
+    public SmallCatItemSelectDto(Long checklistId, Long largeCatItemId, List<String> itemStatusList, List<String> itemAssigneeList) {
         this.checklistId = checklistId;
         this.largeCatItemId = largeCatItemId;
-        this.itemStatus = itemStatus;
-        this.itemAssignee = itemAssignee;
+        this.itemStatusList = itemStatusList;
+        this.itemAssigneeList = itemAssigneeList;
     }
 
     public static SmallCatItemSelectDto of(FilteringDto dto, Long id) {
@@ -32,11 +32,11 @@ public class SmallCatItemSelectDto {
         return largeCatItemId;
     }
 
-    public List<String> getItemStatus() {
-        return itemStatus;
+    public List<String> getItemStatusList() {
+        return itemStatusList;
     }
 
-    public List<String> getItemAssignee() {
-        return itemAssignee;
+    public List<String> getItemAssigneeList() {
+        return itemAssigneeList;
     }
 }
