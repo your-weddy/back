@@ -18,6 +18,7 @@ import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -57,7 +58,7 @@ public class FilteringSlowTest {
                 """);
 
         Assertions.assertThrows(LargeCatItemNotExistsException.class, () -> {
-            filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
+            filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
         });
     }
 
@@ -85,8 +86,8 @@ public class FilteringSlowTest {
                 and small_category_item.large_category_item_id = 8;
                 """);
 
-        List<LargeCatItemResponse> response1 = filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
-        List<LargeCatItemResponse> response2 = filteringService.filterBy(new FilteringDto(1L, List.of("시작전", "진행중")));
+        List<LargeCatItemResponse> response1 = filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
+        List<LargeCatItemResponse> response2 = filteringService.filterBy(new FilteringDto(1L, List.of("시작전", "진행중"), Collections.emptyList()));
 
         assertThat(response1).isNotNull();
         assertThat(response2).isNotNull();
@@ -102,7 +103,7 @@ public class FilteringSlowTest {
                 and small_category_item.large_category_item_id = 3;
                 """);
 
-        List<LargeCatItemResponse> filteredItems = filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
+        List<LargeCatItemResponse> filteredItems = filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
 
         var itemsWithEmptySmallItems = filteredItems.stream().filter(
                 item -> item.getSmallCatItems().size() == 0

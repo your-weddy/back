@@ -14,6 +14,7 @@ import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemResponse;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -27,14 +28,14 @@ class FilteringServiceTest {
         @Test
         public void receive_one_status_as_filtering_condition() {
             FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
-            filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
+            filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
         }
 
         @DisplayName("진행상황 하나를 기준으로 필터링한 결과를 가져올 수 있다")
         @Test
         public void return_filtering_result_with_one_status() {
             FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
-            List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
+            List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
             var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> x.getStatusName().equals("시작전")).toList();
             assertThat(filteredSmall).isNotNull();
         }
@@ -43,7 +44,7 @@ class FilteringServiceTest {
         @Test
         public void return_filtering_result_with_two_status() {
             FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
-            List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(2L, List.of("시작전", "진행중")));
+            List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(2L, List.of("시작전", "진행중"), Collections.emptyList()));
             var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> {
                 return x.getStatusName().equals("시작전") || x.getStatusName().equals("진행중");
             }).toList();
