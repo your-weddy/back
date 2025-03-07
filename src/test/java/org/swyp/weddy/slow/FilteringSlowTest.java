@@ -142,4 +142,36 @@ public class FilteringSlowTest {
         assertThat(response1).isNotNull();
         assertThat(response2).isNotNull();
     }
+
+    @DisplayName("담당자 기준으로 대분류 항목을 필터링할 수 있다")
+    @Test
+    void filter_large_cat_items_by_assignee() {
+        jdbcTemplate.update("""
+                update small_category_item
+                set assignee_id = 1
+                where title in ('스튜디오 / 스냅 예약' , '드레스투어 일정 예약' , '스튜디오 드레스 선택' , '본식 드레스 선택')
+                and small_category_item.large_category_item_id = 3;
+                """);
+
+        jdbcTemplate.update("""
+                update small_category_item
+                set assignee_id = 1
+                where title in ('신혼집 계약', '가전/가구 구매')
+                and small_category_item.large_category_item_id = 8;
+                        """);
+
+        jdbcTemplate.update("""
+                update small_category_item
+                set assignee_id = 2
+                where title in ('침구/생활용품 구매', '주방용품 구매', '신혼집 입주')
+                and small_category_item.large_category_item_id = 8;
+                """);
+
+        List<LargeCatItemResponse> response1 = filteringService.filterBy(new FilteringDto(1L, Collections.emptyList(), List.of("신랑")));
+        List<LargeCatItemResponse> response2 = filteringService.filterBy(new FilteringDto(1L, Collections.emptyList(), List.of("신랑", "신부")));
+
+        assertThat(response1).isNotNull();
+        assertThat(response2).isNotNull();
+    }
+
 }
