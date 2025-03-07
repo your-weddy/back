@@ -136,8 +136,8 @@ public class FilteringSlowTest {
                 and small_category_item.large_category_item_id = 8;
                 """);
 
-        List<SmallCatItemPreviewResponse> response1 = smallCatService.findItemPreviewsBy(new SmallCatItemSelectDto(1L, 3L, List.of("시작전")));
-        List<SmallCatItemPreviewResponse> response2 = smallCatService.findItemPreviewsBy(new SmallCatItemSelectDto(1L, 8L, List.of("시작전", "진행중")));
+        List<SmallCatItemPreviewResponse> response1 = smallCatService.findItemPreviewsBy(new SmallCatItemSelectDto(1L, 3L, List.of("시작전"), Collections.emptyList()));
+        List<SmallCatItemPreviewResponse> response2 = smallCatService.findItemPreviewsBy(new SmallCatItemSelectDto(1L, 8L, List.of("시작전", "진행중"), Collections.emptyList()));
 
         assertThat(response1).isNotNull();
         assertThat(response2).isNotNull();

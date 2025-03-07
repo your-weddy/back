@@ -287,7 +287,7 @@ class SmallCatServiceTest {
             Long checklistId = 1L;
             List<String> itemStatus = List.of("시작전");
             Long largeCatItemId = 1L;
-            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus);
+            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus, Collections.emptyList());
 
             when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
                     mock(SmallCatItemPreview.class),
@@ -303,7 +303,7 @@ class SmallCatServiceTest {
             Long checklistId = 1L;
             List<String> itemStatus = List.of("시작전", "진행중");
             Long largeCatItemId = 1L;
-            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus);
+            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus, Collections.emptyList());
 
             when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
                     mock(SmallCatItemPreview.class),
