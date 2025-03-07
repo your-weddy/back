@@ -66,7 +66,7 @@ jobs:
           
             if [ -n "\$PID" ]; then
               kill -9 \$PID
-              sleep 2
+              sleep 5
             fi
           
             nohup java -Dspring.profiles.active=prod -jar weddy-0.0.1-SNAPSHOT.jar \
@@ -85,7 +85,7 @@ jobs:
               --AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
               --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > nohup.out 2>&1 &
           
-            sleep 5
+            sleep 20
             if ps aux | grep '[j]ava -jar'; then
               echo "Application started successfully"
             else
