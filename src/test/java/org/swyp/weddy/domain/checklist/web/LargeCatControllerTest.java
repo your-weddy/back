@@ -49,13 +49,13 @@ class LargeCatControllerTest {
         @DisplayName("모든 대분류 항목 가져오기 요청을 받을 수 있다")
         @Test
         public void receive_get_all_large_items_message() {
-            controller.getAllItems("1", "");
+            controller.getAllItems("1", "", "");
         }
 
         @DisplayName("모든 대분류 항목 가져오기 결과를 반환할 수 있다")
         @Test
         public void returns_all_large_items() {
-            ResponseEntity<List<LargeCatItemResponse>> response = controller.getAllItems("1", "");
+            ResponseEntity<List<LargeCatItemResponse>> response = controller.getAllItems("1", "", "");
 
             assertThat(response).isNotNull();
         }
@@ -63,13 +63,13 @@ class LargeCatControllerTest {
         @DisplayName("진행 상황 필터링 기준을 요청에 포함할 수 있다")
         @Test
         public void message_can_contain_status_filtering_condition() {
-            controller.getAllItems("1", "시작전");
+            controller.getAllItems("1", "시작전", "");
         }
 
         @DisplayName("주어진 진행 상황을 포함하는 모든 대분류 항목 가져오기 결과를 반환할 수 있다")
         @Test
         public void returns_all_large_items_filtered_by_status() {
-            ResponseEntity<List<LargeCatItemResponse>> response = controller.getAllItems("1", "시작전");
+            ResponseEntity<List<LargeCatItemResponse>> response = controller.getAllItems("1", "시작전", "");
 
             assertThat(response).isNotNull();
         }
