@@ -166,12 +166,12 @@ class FilteringServiceTest {
         public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto dto) {
             return switch (dto.getChecklistId().intValue()) {
                 case 1 -> List.of(
-                        TestSmallCatItemPreviewResponse.of(1L, 1L, "시작전"),
-                        TestSmallCatItemPreviewResponse.of(2L, 1L, "시작전")
+                        TestSmallCatItemPreviewResponse.of(1L, 1L, null, "시작전"),
+                        TestSmallCatItemPreviewResponse.of(2L, 1L, null, "시작전")
                         );
                 case 2 -> List.of(
-                        TestSmallCatItemPreviewResponse.of(1L, 1L, "시작전"),
-                        TestSmallCatItemPreviewResponse.of(3L, 1L, "진행중")
+                        TestSmallCatItemPreviewResponse.of(1L, 1L, null, "시작전"),
+                        TestSmallCatItemPreviewResponse.of(3L, 1L, null, "진행중")
                 );
                 case 3 -> List.of(
                         TestSmallCatItemPreviewResponse.of(1L, 1L, "신랑", null),
