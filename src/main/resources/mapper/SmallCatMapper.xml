@@ -5,7 +5,7 @@
 
     <!-- 프리뷰 컬럼 조회 -->
     <select id="selectItemPreviews" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, status.name "status_name", small.sequence
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, status.name "status_name", small.amount
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id
@@ -19,7 +19,7 @@
 
     <!-- 모든 컬럼 조회 -->
     <select id="selectItem" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItem">
-        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, small.body, status.name "status_name", small.amount, small.sequence, small.attached_file_url
+        SELECT small.id, small.large_category_item_id, small.title, small.due_date, assignee.name, small.body, status.name "status_name", small.amount, small.attached_file_url
           FROM small_category_item small
           JOIN large_category_item large ON small.large_category_item_id = large.id
           JOIN checklist ON large.checklist_id = checklist.id

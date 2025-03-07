@@ -43,6 +43,8 @@ kakao:
     userInfoUrl: https://kapi.kakao.com/v2/user/me
 
 logging:
+  file:
+    name: log/app.log
   level:
     root: INFO
     org.swyp.weddy: DEBUG      # 프로젝트 패키지는 DEBUG 레벨로 설정
