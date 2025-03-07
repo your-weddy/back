@@ -6,18 +6,21 @@ public class SmallCatItemSelectDto {
     private Long checklistId;
     private Long largeCatItemId;
     private List<String> itemStatus;
+    private List<String> itemAssignee;
 
-    public SmallCatItemSelectDto(Long checklistId, Long largeCatItemId, List<String> itemStatus) {
+    public SmallCatItemSelectDto(Long checklistId, Long largeCatItemId, List<String> itemStatus, List<String> itemAssignee) {
         this.checklistId = checklistId;
         this.largeCatItemId = largeCatItemId;
         this.itemStatus = itemStatus;
+        this.itemAssignee = itemAssignee;
     }
 
     public static SmallCatItemSelectDto of(FilteringDto dto, Long id) {
         return new SmallCatItemSelectDto(
                 dto.getChecklistId(),
                 id,
-                dto.getItemStatusList()
+                dto.getItemStatusList(),
+                dto.getItemAssigneeList()
         );
     }
 
@@ -31,5 +34,9 @@ public class SmallCatItemSelectDto {
 
     public List<String> getItemStatus() {
         return itemStatus;
+    }
+
+    public List<String> getItemAssignee() {
+        return itemAssignee;
     }
 }
