@@ -53,7 +53,7 @@ class FilteringServiceTest {
     }
 
     private static class TestLargeCatItem extends LargeCatItem {
-        static LargeCatItem from(Long id, Long checklistId, String title) {
+        static LargeCatItem of(Long id, Long checklistId, String title) {
             return new LargeCatItem(
                     id,
                     checklistId,
@@ -66,7 +66,7 @@ class FilteringServiceTest {
     }
 
     private static class TestSmallCatItemPreviewResponse extends SmallCatItemPreviewResponse {
-        static SmallCatItemPreviewResponse from(Long id, Long largeCatItemId, String statusName) {
+        static SmallCatItemPreviewResponse of(Long id, Long largeCatItemId, String statusName) {
             return new SmallCatItemPreviewResponse(
                     id,
                     largeCatItemId,
@@ -88,8 +88,8 @@ class FilteringServiceTest {
         @Override
         public List<LargeCatItem> selectAllItems(Long checklistId) {
             return switch (checklistId.intValue()) {
-                case 1 -> List.of(TestLargeCatItem.from(1L, 1L, "신혼집"));
-                case 2 -> List.of(TestLargeCatItem.from(2L, 1L, "신혼집"));
+                case 1 -> List.of(TestLargeCatItem.of(1L, 1L, "신혼집"));
+                case 2 -> List.of(TestLargeCatItem.of(2L, 1L, "신혼집"));
                 default -> throw new RuntimeException("Unexpected");
             };
         }
@@ -155,12 +155,12 @@ class FilteringServiceTest {
         public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto dto) {
             return switch (dto.getChecklistId().intValue()) {
                 case 1 -> List.of(
-                        TestSmallCatItemPreviewResponse.from(1L, 1L, "시작전"),
-                        TestSmallCatItemPreviewResponse.from(2L, 1L, "시작전")
+                        TestSmallCatItemPreviewResponse.of(1L, 1L, "시작전"),
+                        TestSmallCatItemPreviewResponse.of(2L, 1L, "시작전")
                         );
                 case 2 -> List.of(
-                        TestSmallCatItemPreviewResponse.from(1L, 1L, "시작전"),
-                        TestSmallCatItemPreviewResponse.from(3L, 1L, "진행중")
+                        TestSmallCatItemPreviewResponse.of(1L, 1L, "시작전"),
+                        TestSmallCatItemPreviewResponse.of(3L, 1L, "진행중")
                 );
                 default -> throw new RuntimeException("Unexpected");
             };
