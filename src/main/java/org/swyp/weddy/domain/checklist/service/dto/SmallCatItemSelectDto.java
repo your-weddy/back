@@ -13,7 +13,7 @@ public class SmallCatItemSelectDto {
         this.itemStatus = itemStatus;
     }
 
-    public static SmallCatItemSelectDto from(FilteringDto dto, Long id) {
+    public static SmallCatItemSelectDto of(FilteringDto dto, Long id) {
         return new SmallCatItemSelectDto(
                 dto.getChecklistId(),
                 id,
