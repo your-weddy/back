@@ -36,4 +36,12 @@ class FilteringDtoTest {
         assertThat(filterByAssignee.getItemStatusList().size()).isEqualTo(0);
         assertThat(filterByAssignee.getItemAssigneeList()).isNotNull();
     }
+
+    @DisplayName("진행상황과 담당자 필터링 조건을 모두 가질 수 있다")
+    @Test
+    public void construct_with_two_filtering_conditions() {
+        FilteringDto filterByStatus = FilteringDto.of(1L, "진행중", "신랑");
+        assertThat(filterByStatus.getItemStatusList().size()).isGreaterThan(0);
+        assertThat(filterByStatus.getItemAssigneeList().size()).isGreaterThan(0);
+    }
 }
