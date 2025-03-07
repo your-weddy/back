@@ -73,6 +73,12 @@ class LargeCatControllerTest {
 
             assertThat(response).isNotNull();
         }
+
+        @DisplayName("담당자 필터링 기준을 요청에 포함할 수 있다")
+        @Test
+        public void message_can_contain_assignee_filtering_condition() {
+            controller.getAllItems("1", "", "신랑");
+        }
     }
 
     @DisplayName("postItem()")
