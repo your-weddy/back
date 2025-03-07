@@ -96,10 +96,18 @@
                  LEFT JOIN small_category_item_status status ON small.status_id = status.id
         WHERE checklist.id = #{checklistId}
           AND large.id = #{largeCatItemId}
-          AND status.name IN
-        <foreach collection="itemStatus" item="itemStatusElem" open="(" close=")" separator="," >
-            #{itemStatusElem}
-        </foreach>
+        <if test="itemStatus.isEmpty() == false">
+            AND status.name IN
+            <foreach collection="itemStatus" item="itemStatusElem" open="(" close=")" separator=",">
+                #{itemStatusElem}
+            </foreach>
+        </if>
+        <if test="itemAssignee.isEmpty() == false">
+            AND assignee.name IN
+            <foreach collection="itemAssignee" item="itemAssigneeElem" open="(" close=")" separator=",">
+                #{itemAssigneeElem}
+            </foreach>
+        </if>
         AND small.is_deleted = false
         ORDER BY small.sequence ASC;
     </select>
