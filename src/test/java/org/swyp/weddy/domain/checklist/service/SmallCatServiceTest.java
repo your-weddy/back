@@ -293,7 +293,7 @@ class SmallCatServiceTest {
                     mock(SmallCatItemPreview.class)
             ));
 
-            assertThat(smallCatService.findItemPreviewsByStatus(dto)).isNotNull();
+            assertThat(smallCatService.findItemPreviewsBy(dto)).isNotNull();
         }
 
         @DisplayName("여러 진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
@@ -309,7 +309,7 @@ class SmallCatServiceTest {
                     mock(SmallCatItemPreview.class)
             ));
 
-            assertThat(smallCatService.findItemPreviewsByStatus(dto)).isNotNull();
+            assertThat(smallCatService.findItemPreviewsBy(dto)).isNotNull();
         }
     }
 }

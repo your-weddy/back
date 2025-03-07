@@ -175,7 +175,7 @@ class FilteringServiceTest {
         }
 
         @Override
-        public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto dto) {
+        public List<SmallCatItemPreviewResponse> findItemPreviewsBy(SmallCatItemSelectDto dto) {
             return switch (dto.getChecklistId().intValue()) {
                 case 1 -> List.of(
                         TestSmallCatItemPreviewResponse.of(1L, 1L, null, "시작전"),

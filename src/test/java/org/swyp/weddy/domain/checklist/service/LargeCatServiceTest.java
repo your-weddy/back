@@ -236,7 +236,7 @@ class LargeCatServiceTest {
         }
 
         @Override
-        public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto smallDto) {
+        public List<SmallCatItemPreviewResponse> findItemPreviewsBy(SmallCatItemSelectDto smallDto) {
             return List.of();
         }
     }

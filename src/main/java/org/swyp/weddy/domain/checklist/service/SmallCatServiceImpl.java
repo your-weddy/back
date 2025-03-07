@@ -177,7 +177,7 @@ public class SmallCatServiceImpl implements SmallCatService {
     }
 
     @Override
-    public List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto dto) {
+    public List<SmallCatItemPreviewResponse> findItemPreviewsBy(SmallCatItemSelectDto dto) {
         List<SmallCatItemPreview> smallCatItemPreviews = mapper.selectItemPreviewsByStatus(dto);
 
         return SmallCatItemPreviewResponse.from(smallCatItemPreviews);

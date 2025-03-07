@@ -35,7 +35,7 @@ public class FilteringServiceImpl implements FilteringService {
         List<LargeCatItemResponse> result = new ArrayList<>();
         for (LargeCatItem item : allItems) {
             SmallCatItemSelectDto smallDto = SmallCatItemSelectDto.of(dto, item.getId());
-            List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviewsByStatus(
+            List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviewsBy(
                     smallDto
             );
 
