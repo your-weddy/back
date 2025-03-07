@@ -270,7 +270,7 @@ class LargeCatControllerTest {
     private static class FakeFilteringService implements FilteringService {
 
         @Override
-        public List<LargeCatItemResponse> filterByStatus(FilterByStatusDto dto) {
+        public List<LargeCatItemResponse> filterBy(FilteringDto dto) {
             return List.of();
         }
     }

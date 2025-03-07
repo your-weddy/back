@@ -59,8 +59,8 @@ public class LargeCatController {
             return ResponseEntity.ok().body(allItems);
         }
 
-        List<LargeCatItemResponse> allItems = filteringService.filterByStatus(
-                FilterByStatusDto.from(checklistId, itemStatuses)
+        List<LargeCatItemResponse> allItems = filteringService.filterBy(
+                FilteringDto.from(checklistId, itemStatuses)
         );
         return ResponseEntity.ok().body(allItems);
     }

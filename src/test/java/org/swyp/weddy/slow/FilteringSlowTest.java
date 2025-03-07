@@ -13,7 +13,7 @@ import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
 import org.swyp.weddy.domain.checklist.service.FilteringService;
 import org.swyp.weddy.domain.checklist.service.SmallCatService;
-import org.swyp.weddy.domain.checklist.service.dto.FilterByStatusDto;
+import org.swyp.weddy.domain.checklist.service.dto.FilteringDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
@@ -57,7 +57,7 @@ public class FilteringSlowTest {
                 """);
 
         Assertions.assertThrows(LargeCatItemNotExistsException.class, () -> {
-            filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
+            filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
         });
     }
 
@@ -85,8 +85,8 @@ public class FilteringSlowTest {
                 and small_category_item.large_category_item_id = 8;
                 """);
 
-        List<LargeCatItemResponse> response1 = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
-        List<LargeCatItemResponse> response2 = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전", "진행중")));
+        List<LargeCatItemResponse> response1 = filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
+        List<LargeCatItemResponse> response2 = filteringService.filterBy(new FilteringDto(1L, List.of("시작전", "진행중")));
 
         assertThat(response1).isNotNull();
         assertThat(response2).isNotNull();
@@ -102,7 +102,7 @@ public class FilteringSlowTest {
                 and small_category_item.large_category_item_id = 3;
                 """);
 
-        List<LargeCatItemResponse> filteredItems = filteringService.filterByStatus(new FilterByStatusDto(1L, List.of("시작전")));
+        List<LargeCatItemResponse> filteredItems = filteringService.filterBy(new FilteringDto(1L, List.of("시작전")));
 
         var itemsWithEmptySmallItems = filteredItems.stream().filter(
                 item -> item.getSmallCatItems().size() == 0

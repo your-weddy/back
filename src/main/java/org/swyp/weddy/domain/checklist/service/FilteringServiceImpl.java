@@ -5,7 +5,7 @@ import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.LargeCatMapper;
 import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 import org.swyp.weddy.domain.checklist.exception.LargeCatItemNotExistsException;
-import org.swyp.weddy.domain.checklist.service.dto.FilterByStatusDto;
+import org.swyp.weddy.domain.checklist.service.dto.FilteringDto;
 import org.swyp.weddy.domain.checklist.service.dto.SmallCatItemSelectDto;
 import org.swyp.weddy.domain.checklist.web.response.LargeCatItemResponse;
 import org.swyp.weddy.domain.checklist.web.response.SmallCatItemPreviewResponse;
@@ -25,7 +25,7 @@ public class FilteringServiceImpl implements FilteringService {
     }
 
     @Override
-    public List<LargeCatItemResponse> filterByStatus(FilterByStatusDto dto) {
+    public List<LargeCatItemResponse> filterBy(FilteringDto dto) {
         List<LargeCatItem> allItems = mapper.selectAllItems(dto.getChecklistId());
 
         if (allItems.isEmpty()) {

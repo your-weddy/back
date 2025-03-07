@@ -7,13 +7,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class FilterByStatusDtoTest {
+class FilteringDtoTest {
 
     @DisplayName("쉼표로 구분된 진행상황 문자열을 리스트로 만들 수 있다")
     @Test
     public void convert_string_separated_by_comma_into_list() {
         String statuses = "진행중,완료";
-        List<String> statusList = FilterByStatusDto.convertToList(statuses);
+        List<String> statusList = FilteringDto.convertToList(statuses);
         assertThat(statusList).contains("진행중", "완료");
     }
 
@@ -21,7 +21,7 @@ class FilterByStatusDtoTest {
     @Test
     public void convert_string_with_space_separated_by_comma_into_list() {
         String statuses = "진행중 , 완료 , 시작전";
-        List<String> statusList = FilterByStatusDto.convertToList(statuses);
+        List<String> statusList = FilteringDto.convertToList(statuses);
         assertThat(statusList).contains("진행중", "완료", "시작전");
     }
 }
