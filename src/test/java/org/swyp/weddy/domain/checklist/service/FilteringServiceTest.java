@@ -41,15 +41,6 @@ class FilteringServiceTest {
             assertThat(filteredSmall).isNotNull();
         }
 
-        @DisplayName("담당자 하나를 기준으로 필터링한 결과를 가져올 수 있다")
-        @Test
-        public void return_filtering_result_with_one_assignee() {
-            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
-            List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(3L, Collections.emptyList(), List.of("신랑")));
-            var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> x.getAssigneeName().equals("신랑")).toList();
-            assertThat(filteredSmall).isNotNull();
-        }
-
         @DisplayName("진행상황 두개를 기준으로 필터링한 결과를 가져올 수 있다")
         @Test
         public void return_filtering_result_with_two_status() {
@@ -58,6 +49,15 @@ class FilteringServiceTest {
             var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> {
                 return x.getStatusName().equals("시작전") || x.getStatusName().equals("진행중");
             }).toList();
+            assertThat(filteredSmall).isNotNull();
+        }
+
+        @DisplayName("담당자 하나를 기준으로 필터링한 결과를 가져올 수 있다")
+        @Test
+        public void return_filtering_result_with_one_assignee() {
+            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+            List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(3L, Collections.emptyList(), List.of("신랑")));
+            var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> x.getAssigneeName().equals("신랑")).toList();
             assertThat(filteredSmall).isNotNull();
         }
 
