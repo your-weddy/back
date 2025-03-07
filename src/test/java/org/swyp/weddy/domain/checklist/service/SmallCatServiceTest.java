@@ -329,5 +329,22 @@ class SmallCatServiceTest {
 
             assertThat(smallCatService.findItemPreviewsBy(dto)).isNotNull();
         }
+
+
+        @DisplayName("여러 담당자를 기준으로 소분류 항목을 필터링할 수 있다")
+        @Test
+        void findItemPreviewsByTwoAssigneesTest() {
+            Long checklistId = 1L;
+            List<String> itemAssignee = List.of("신랑", "신부");
+            Long largeCatItemId = 1L;
+            SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, Collections.emptyList(), itemAssignee);
+
+            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
+                    mock(SmallCatItemPreview.class),
+                    mock(SmallCatItemPreview.class)
+            ));
+
+            assertThat(smallCatService.findItemPreviewsBy(dto)).isNotNull();
+        }
     }
 }
