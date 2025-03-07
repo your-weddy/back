@@ -62,9 +62,10 @@ jobs:
             [ -s "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh" ] && . "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh"
           
             cd /home/$EC2_USER/app
-            PID=\$(ps aux | grep '[j]ava -jar' | awk '{print \$2}')
+            PID=\$(ps aux | grep '[j]ava.*-jar' | awk '{print \$2}')
           
             if [ -n "\$PID" ]; then
+              echo "Killing existing Java process: $PID"
               kill -9 \$PID
               sleep 5
             fi
