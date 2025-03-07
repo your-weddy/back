@@ -289,7 +289,7 @@ class SmallCatServiceTest {
             Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus, Collections.emptyList());
 
-            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
+            when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
                     mock(SmallCatItemPreview.class),
                     mock(SmallCatItemPreview.class)
             ));
@@ -305,7 +305,7 @@ class SmallCatServiceTest {
             Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus, Collections.emptyList());
 
-            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
+            when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
                     mock(SmallCatItemPreview.class),
                     mock(SmallCatItemPreview.class)
             ));
@@ -322,7 +322,7 @@ class SmallCatServiceTest {
             Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, Collections.emptyList(), itemAssignee);
 
-            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
+            when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
                     mock(SmallCatItemPreview.class),
                     mock(SmallCatItemPreview.class)
             ));
@@ -339,7 +339,7 @@ class SmallCatServiceTest {
             Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, Collections.emptyList(), itemAssignee);
 
-            when(smallCatMapper.selectItemPreviewsByStatus(dto)).thenReturn(List.of(
+            when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
                     mock(SmallCatItemPreview.class),
                     mock(SmallCatItemPreview.class)
             ));

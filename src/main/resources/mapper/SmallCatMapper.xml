@@ -82,7 +82,7 @@
          WHERE id = #{id};
     </update>
 
-    <select id="selectItemPreviewsByStatus" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
+    <select id="selectItemPreviewsBy" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
         SELECT small.id,
                small.large_category_item_id,
                small.title,
