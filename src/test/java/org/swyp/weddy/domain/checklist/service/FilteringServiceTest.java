@@ -24,11 +24,12 @@ class FilteringServiceTest {
     @DisplayName("진행상황 기준으로 필터링할 수 있다")
     @Nested
     class FilterByStatusTest {
-        @DisplayName("진행상황 하나를 필터링 조건으로 입력받을 수 있다")
+        @DisplayName("필터링 기준 하나를 필터링 조건으로 입력받을 수 있다")
         @Test
         public void receive_one_status_as_filtering_condition() {
             FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
+            filteringService.filterBy(new FilteringDto(1L, Collections.emptyList(), List.of("신랑")));
         }
 
         @DisplayName("진행상황 하나를 기준으로 필터링한 결과를 가져올 수 있다")
