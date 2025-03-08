@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.swyp.weddy.common.exception.ErrorCode;
 import org.swyp.weddy.domain.checklist.dao.ChecklistMapper;
 import org.swyp.weddy.domain.checklist.entity.Checklist;
 import org.swyp.weddy.domain.checklist.exception.ChecklistAlreadyAssignedException;
@@ -29,20 +28,35 @@ class ChecklistServiceTest {
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
 
-        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
-        assertThat(service.assignChecklist(dto)).isEqualTo(1);
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+        assertThat(service.assignChecklist(dto)).isEqualTo(null);
     }
 
-    @DisplayName("사용자에 할당된 체크리스트가 있는지 확인할 수 있다")
+    @DisplayName("사용자에 할당된 체크리스트가 없는지 확인할 수 있다")
     @Test
-    public void check_if_member_has_checklist() {
+    public void check_if_member_has_no_checklist() {
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
-        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
+
+        assertThat(service.hasChecklist(dto)).isEqualTo(false);
+    }
+
+    @DisplayName("사용자에 할당된 체크리스트가 이미 있다면 오류를 반환한다")
+    @Test
+    public void check_if_member_already_has_checklist() {
+        String memberId = "1";
+        ChecklistDto dto = ChecklistDto.from(memberId);
+
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
 
         service.assignChecklist(dto);
 
-        assertThat(service.hasChecklist(dto)).isEqualTo(true);
+        Assertions.assertThrows(
+                ChecklistAlreadyAssignedException.class,
+                () -> service.hasChecklist(dto)
+        );
     }
 
     @DisplayName("사용자에게 할당된 체크리스트가 있다면, 추가로 할당하지 않는다")
@@ -50,7 +64,7 @@ class ChecklistServiceTest {
     public void prevent_adding_checklist_if_member_already_has_one() {
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
-        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
 
         service.assignChecklist(dto);
         Assertions.assertThrows(ChecklistAlreadyAssignedException.class, () ->
@@ -71,7 +85,7 @@ class ChecklistServiceTest {
     public void find_checklist_by_id() {
         String memberId = "1";
         ChecklistDto dto = ChecklistDto.from(memberId);
-        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
         service.assignChecklist(dto);
 
         ChecklistResponse checklistResponse = service.findChecklist(dto);
@@ -83,7 +97,7 @@ class ChecklistServiceTest {
     public void fail_to_find_checklist_by_id() {
         String memberId = "-1";
         ChecklistDto dto = ChecklistDto.from(memberId);
-        ChecklistService service = new FakeChecklistService(new FakeChecklistMapper());
+        ChecklistService service = new ChecklistServiceImpl(new FakeChecklistMapper());
 
         assertThrows(
                 ChecklistNotExistsException.class,
@@ -122,47 +136,6 @@ class ChecklistServiceTest {
                     )
             );
             assertThat(l).isEqualTo(2L);
-        }
-    }
-
-    private static class FakeChecklistService implements ChecklistService {
-        private final ChecklistMapper mapper;
-
-        public FakeChecklistService(ChecklistMapper mapper) {
-            this.mapper = mapper;
-        }
-
-        @Override
-        public Long assignChecklist(ChecklistDto dto) {
-            if (hasChecklist(dto)) {
-                throw new ChecklistAlreadyAssignedException(ErrorCode.BAD_REQUEST);
-            }
-
-            return Long.valueOf(mapper.insertChecklist(null));
-        }
-
-        @Override
-        public boolean hasChecklist(ChecklistDto dto) {
-            Long memberId = Long.valueOf(dto.getMemberId());
-            Checklist checklist = mapper.selectChecklistByMemberId(memberId);
-            return checklist != null;
-        }
-
-        @Override
-        public ChecklistResponse findChecklist(ChecklistDto dto) {
-            Long memberId = Long.valueOf(dto.getMemberId());
-            Checklist checklist = mapper.selectChecklistByMemberId(memberId);
-
-            if (checklist == null) {
-                throw new ChecklistNotExistsException(ErrorCode.NOT_EXISTS);
-            }
-
-            return ChecklistResponse.from(Checklist.from(dto));
-        }
-
-        @Override
-        public Long editDday(ChecklistDdayAssignDto dto) {
-            return 0L;
         }
     }
 
