@@ -54,7 +54,7 @@ public class LargeCatController {
         ChecklistResponse checklist = checklistService.findChecklist(dto);
 
         Long checklistId = checklist.getId();
-        if (itemStatuses.equals("")) {
+        if (itemStatuses.equals("") && itemAssignees.equals("")) {
             List<LargeCatItemResponse> allItems = largeCatService.findAllItems(checklistId);
             return ResponseEntity.ok().body(allItems);
         }
