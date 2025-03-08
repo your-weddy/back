@@ -82,7 +82,7 @@
          WHERE id = #{id};
     </update>
 
-    <select id="selectItemPreviewsByStatus" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
+    <select id="selectItemPreviewsBy" resultType="org.swyp.weddy.domain.checklist.entity.SmallCatItemPreview">
         SELECT small.id,
                small.large_category_item_id,
                small.title,
@@ -96,10 +96,18 @@
                  LEFT JOIN small_category_item_status status ON small.status_id = status.id
         WHERE checklist.id = #{checklistId}
           AND large.id = #{largeCatItemId}
-          AND status.name IN
-        <foreach collection="itemStatus" item="itemStatusElem" open="(" close=")" separator="," >
-            #{itemStatusElem}
-        </foreach>
+        <if test="itemStatusList.isEmpty() == false">
+            AND status.name IN
+            <foreach collection="itemStatusList" item="itemStatusElem" open="(" close=")" separator=",">
+                #{itemStatusElem}
+            </foreach>
+        </if>
+        <if test="itemAssigneeList.isEmpty() == false">
+            AND assignee.name IN
+            <foreach collection="itemAssigneeList" item="itemAssigneeElem" open="(" close=")" separator=",">
+                #{itemAssigneeElem}
+            </foreach>
+        </if>
         AND small.is_deleted = false
         ORDER BY small.sequence ASC;
     </select>

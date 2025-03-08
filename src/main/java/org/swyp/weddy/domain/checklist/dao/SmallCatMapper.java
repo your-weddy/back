@@ -12,7 +12,7 @@ import java.util.List;
 public interface SmallCatMapper {
 
     List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
-    List<SmallCatItemPreview> selectItemPreviewsByStatus(SmallCatItemSelectDto dto);
+    List<SmallCatItemPreview> selectItemPreviewsBy(SmallCatItemSelectDto dto);
     SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
     Long insertItem(SmallCatItem smallCatItem);
 
