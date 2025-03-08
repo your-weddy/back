@@ -174,4 +174,58 @@ public class FilteringSlowTest {
         assertThat(response2).isNotNull();
     }
 
+    @DisplayName("담당자, 진행상황 기준으로 대분류 항목을 필터링할 수 있다")
+    @Test
+    void filter_large_cat_items_by_multiple_conditions() {
+        jdbcTemplate.update("""
+                update SMALL_CATEGORY_ITEM\s
+                set assignee_id = 1
+                where large_category_item_id = 1 and title = '결혼식 컨셉 나눔';
+                """);
+        jdbcTemplate.update("""
+                update SMALL_CATEGORY_ITEM\s
+                set assignee_id = 2
+                where large_category_item_id = 1 and title = '결혼 비용 논의';
+                """);
+        jdbcTemplate.update("""
+                update SMALL_CATEGORY_ITEM\s
+                set status_id = 1
+                where large_category_item_id = 1 and title = '결혼 비용 논의';
+                """);
+        jdbcTemplate.update("""
+                update SMALL_CATEGORY_ITEM\s
+                set status_id = 2
+                where large_category_item_id = 1 and title = '양가 부모님 첫인사';
+                """);
+
+        List<LargeCatItemResponse> filterByOneAssignee = filteringService.filterBy(
+                new FilteringDto(1L, Collections.emptyList(), List.of("신랑"))
+        );
+        assertThat(
+                filterByOneAssignee.get(0).getSmallCatItems().stream().filter(
+                        x -> x.getAssigneeName().equals("신랑")
+                ).count()
+        ).isEqualTo(1);
+
+        List<LargeCatItemResponse> filterByTwoAssignee = filteringService.filterBy(
+                new FilteringDto(1L, Collections.emptyList(), List.of("신랑", "신부"))
+        );
+        assertThat(
+                filterByTwoAssignee.get(0).getSmallCatItems().stream().filter(
+                        x -> x.getAssigneeName().equals("신랑")
+                ).count()
+        ).isEqualTo(1);
+        assertThat(
+                filterByTwoAssignee.get(0).getSmallCatItems().stream().filter(
+                        x -> x.getAssigneeName().equals("신부")
+                ).count()
+        ).isEqualTo(1);
+
+        List<LargeCatItemResponse> filterByOneStatusAndOneAssignee = filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), List.of("신부")));
+        assertThat(
+                filterByOneStatusAndOneAssignee.get(0).getSmallCatItems().stream().filter(
+                        x -> x.getAssigneeName().equals("신부") && x.getStatusName().equals("시작전")
+                ).count()
+        ).isEqualTo(1);
+    }
 }
