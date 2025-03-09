@@ -284,9 +284,7 @@ class SmallCatServiceTest {
         @DisplayName("진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
         @Test
         void findItemPreviewsByStatusTest() {
-            Long checklistId = 1L;
             List<String> itemStatus = List.of("시작전");
-            Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus, Collections.emptyList());
 
             when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
@@ -300,9 +298,7 @@ class SmallCatServiceTest {
         @DisplayName("여러 진행 상황을 기준으로 소분류 항목을 필터링할 수 있다")
         @Test
         void findItemPreviewsByTwoStatusTest() {
-            Long checklistId = 1L;
             List<String> itemStatus = List.of("시작전", "진행중");
-            Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, itemStatus, Collections.emptyList());
 
             when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
@@ -317,9 +313,7 @@ class SmallCatServiceTest {
         @DisplayName("담당자를 기준으로 소분류 항목을 필터링할 수 있다")
         @Test
         void findItemPreviewsByAssigneeTest() {
-            Long checklistId = 1L;
             List<String> itemAssignee = List.of("신랑");
-            Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, Collections.emptyList(), itemAssignee);
 
             when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
@@ -334,9 +328,7 @@ class SmallCatServiceTest {
         @DisplayName("여러 담당자를 기준으로 소분류 항목을 필터링할 수 있다")
         @Test
         void findItemPreviewsByTwoAssigneesTest() {
-            Long checklistId = 1L;
             List<String> itemAssignee = List.of("신랑", "신부");
-            Long largeCatItemId = 1L;
             SmallCatItemSelectDto dto = new SmallCatItemSelectDto(checklistId, largeCatItemId, Collections.emptyList(), itemAssignee);
 
             when(smallCatMapper.selectItemPreviewsBy(dto)).thenReturn(List.of(
