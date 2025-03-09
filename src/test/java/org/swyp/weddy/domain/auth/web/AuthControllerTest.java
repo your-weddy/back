@@ -8,6 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.swyp.weddy.domain.auth.exception.MemberNotFoundException;
 import org.swyp.weddy.domain.auth.service.AuthService;
 import org.swyp.weddy.domain.auth.service.CookieService;
+import org.swyp.weddy.domain.auth.service.dto.TokenInfo;
+
+import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,6 +27,22 @@ class AuthControllerTest {
         authService = mock(AuthService.class);
         cookieService = mock(CookieService.class);
         authController = new AuthController(authService, cookieService);
+    }
+
+    @Nested
+    class KakaoCallbackTest {
+        @DisplayName("사용자의 카카오 로그인 후, 카카오 서버는 인가 코드와 함께 redirect_uri로 리다이렉트한다")
+        @Test
+        void kakao_server_redirects_with_auth_code_after_user_login() throws IOException {
+            HttpServletResponse httpServletResponse = mock(HttpServletResponse.class);
+
+            when(authService.processKakaoLogin("x")).thenReturn(new TokenInfo("x", "y", "z"));
+
+            // 사용자가 카카오 로그인에 성공한다
+
+            // 카카오 서버는 인가 코드를 redirect_uri로 리다이렉트한다
+            authController.kakaoCallback("x", httpServletResponse);
+        }
     }
 
     @DisplayName("Invalid Member일 시 예외처리한다.")
