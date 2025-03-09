@@ -45,16 +45,19 @@ class AuthControllerTest {
         }
     }
 
-    @DisplayName("Invalid Member일 시 예외처리한다.")
-    @Test
-    void invalid_user_test() {
-        //given
-        when(authService.isValidMember()).thenReturn(false);
+    @Nested
+    class GetAuthInfoTest {
+        @DisplayName("Invalid Member일 시 예외처리한다.")
+        @Test
+        void invalid_user_test() {
+            //given
+            when(authService.isValidMember()).thenReturn(false);
 
-        //when,then
-        assertThatThrownBy(() -> {
-            authController.getAuthInfo();
-        }).isInstanceOf(MemberNotFoundException.class);
+            //when,then
+            assertThatThrownBy(() -> {
+                authController.getAuthInfo();
+            }).isInstanceOf(MemberNotFoundException.class);
+        }
     }
 
     @Nested
