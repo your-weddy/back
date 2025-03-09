@@ -94,7 +94,7 @@ public interface LargeCatApiSpec {
     @Operation(summary = "대분류 항목 위치 변경", description = "웹 페이지에 보이는 대분류 항목의 위치를 변경한다")
     @PatchMapping("/move")
     ResponseEntity<Void> moveItem(
-            @Parameter(name = "LargeCatItemMoveRequest", description = "사용자 아이디와 yyyy-MM-dd 형식의 결혼 예정일", required = true)
+            @Parameter(name = "LargeCatItemMoveRequest", description = "사용자 아이디와 수정된 항목의 순서", required = true)
             @io.swagger.v3.oas.annotations.parameters.RequestBody(content = @Content(
                     examples = {
                             @ExampleObject(name = "someExample1", value = """
