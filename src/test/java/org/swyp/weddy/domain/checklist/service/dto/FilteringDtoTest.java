@@ -25,7 +25,7 @@ class FilteringDtoTest {
         assertThat(statusList).contains("진행중", "완료", "시작전");
     }
 
-    @DisplayName("진행상황과 담당자 핉터링 조건을 선택적으로 가질 수 있다")
+    @DisplayName("진행상황과 담당자 필터링 조건을 선택적으로 가질 수 있다")
     @Test
     public void construct_with_one_filtering_condition() {
         FilteringDto filterByStatus = FilteringDto.of(1L, "진행중", "");
