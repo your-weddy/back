@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/checklist/large-cat-item")
-public class LargeCatController {
+public class LargeCatController implements LargeCatApiSpec {
     private final LargeCatService largeCatService;
     private final ChecklistService checklistService;
     private final FilteringService filteringService;
