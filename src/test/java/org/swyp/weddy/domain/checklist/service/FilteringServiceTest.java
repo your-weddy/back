@@ -1,5 +1,6 @@
 package org.swyp.weddy.domain.checklist.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,6 +21,12 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FilteringServiceTest {
+    private FilteringService filteringService;
+
+    @BeforeEach
+    public void setUp() {
+         filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
+    }
 
     @DisplayName("필터링 조건 하나를 기준으로 필터링할 수 있다")
     @Nested
@@ -27,7 +34,6 @@ class FilteringServiceTest {
         @DisplayName("필터링 기준 하나를 필터링 조건으로 입력받을 수 있다")
         @Test
         public void receive_one_status_as_filtering_condition() {
-            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
             filteringService.filterBy(new FilteringDto(1L, Collections.emptyList(), List.of("신랑")));
         }
@@ -35,7 +41,6 @@ class FilteringServiceTest {
         @DisplayName("진행상황 하나를 기준으로 필터링한 결과를 가져올 수 있다")
         @Test
         public void return_filtering_result_with_one_status() {
-            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(1L, List.of("시작전"), Collections.emptyList()));
             var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> x.getStatusName().equals("시작전")).toList();
             assertThat(filteredSmall).isNotNull();
@@ -44,7 +49,6 @@ class FilteringServiceTest {
         @DisplayName("진행상황 두개를 기준으로 필터링한 결과를 가져올 수 있다")
         @Test
         public void return_filtering_result_with_two_status() {
-            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(2L, List.of("시작전", "진행중"), Collections.emptyList()));
             var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> {
                 return x.getStatusName().equals("시작전") || x.getStatusName().equals("진행중");
@@ -55,7 +59,6 @@ class FilteringServiceTest {
         @DisplayName("담당자 하나를 기준으로 필터링한 결과를 가져올 수 있다")
         @Test
         public void return_filtering_result_with_one_assignee() {
-            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(3L, Collections.emptyList(), List.of("신랑")));
             var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> x.getAssigneeName().equals("신랑")).toList();
             assertThat(filteredSmall).isNotNull();
@@ -64,7 +67,6 @@ class FilteringServiceTest {
         @DisplayName("담당자 두개를 기준으로 필터링한 결과를 가져올 수 있다")
         @Test
         public void return_filtering_result_with_two_assignees() {
-            FilteringService filteringService = new FilteringServiceImpl(new FakeLargeCatMapper(), new FakeSmallCatService());
             List<LargeCatItemResponse> filtered = filteringService.filterBy(new FilteringDto(4L, Collections.emptyList(), List.of("신랑", "신부")));
             var filteredSmall = filtered.get(0).getSmallCatItems().stream().filter(x -> {
                 return x.getAssigneeName().equals("신랑") || x.getAssigneeName().equals("신부");
