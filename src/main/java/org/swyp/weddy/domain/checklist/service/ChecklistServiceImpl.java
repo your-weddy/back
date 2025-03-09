@@ -40,7 +40,10 @@ public class ChecklistServiceImpl implements ChecklistService {
         Long memberId = Long.valueOf(dto.getMemberId());
         Checklist checklist = mapper.selectChecklistByMemberId(memberId);
 
-        return checklist != null;
+        if (checklist != null) {
+            throw new ChecklistAlreadyAssignedException(ErrorCode.DUPLICATE_CHECKLIST);
+        }
+        return false;
     }
 
     @Override

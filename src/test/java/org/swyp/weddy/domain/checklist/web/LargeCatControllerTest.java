@@ -74,6 +74,14 @@ class LargeCatControllerTest {
             assertThat(response).isNotNull();
         }
 
+        @DisplayName("주어진 담당자를 소분류 항목 담당자로 하는 모든 대분류 항목을 가져올 수 있다")
+        @Test
+        public void returns_all_large_items_filtered_by_assignee() {
+            ResponseEntity<List<LargeCatItemResponse>> response = controller.getAllItems("1", "", "신랑");
+
+            assertThat(response).isNotNull();
+        }
+
         @DisplayName("담당자 필터링 기준을 요청에 포함할 수 있다")
         @Test
         public void message_can_contain_assignee_filtering_condition() {
@@ -262,7 +270,7 @@ class LargeCatControllerTest {
     private static class FakeFilteringService implements FilteringService {
 
         @Override
-        public List<LargeCatItemResponse> filterByStatus(FilterByStatusDto dto) {
+        public List<LargeCatItemResponse> filterBy(FilteringDto dto) {
             return List.of();
         }
     }
