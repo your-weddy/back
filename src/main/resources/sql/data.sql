@@ -1,7 +1,7 @@
 INSERT INTO `small_category_item_assignee` (`name`)
-VALUES ('나');
+VALUES ('신랑');
 INSERT INTO `small_category_item_assignee` (`name`)
-VALUES ('짝궁');
+VALUES ('신부');
 
 INSERT INTO `small_category_item_status` (`name`)
 VALUES ('시작전');
