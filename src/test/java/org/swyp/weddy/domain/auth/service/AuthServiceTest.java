@@ -82,8 +82,8 @@ class AuthServiceTest {
             }
             if (accessToken.equals("access_token.db_fail")) {
                 return KakaoUserInfo.builder()
-                        .id(1)
-                        .oAuthId(1L)
+                        .id(2)
+                        .oAuthId(2L)
                         .email("x@y")
                         .nickname("db_fail")
                         .build();
@@ -113,7 +113,19 @@ class AuthServiceTest {
 
         @Override
         public Member selectByOAuthId(String oAuthId) {
-            return new Member(1L, "x@y", "t", "", "");
+            if ("1".equals(oAuthId)) {
+                return new Member(1L, "x@y", "t", "", "");
+            }
+            if ("2".equals(oAuthId)) {
+                KakaoUserInfo dbFail = KakaoUserInfo.builder()
+                        .id(2)
+                        .oAuthId(2L)
+                        .email("x@y")
+                        .nickname("db_fail")
+                        .build();
+                return Member.from(dbFail);
+            }
+            throw new RuntimeException("unreachable");
         }
     }
 
