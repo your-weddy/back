@@ -39,6 +39,14 @@ class AuthServiceTest {
                 authService.processKakaoLogin("access_token_retrieve_fail");
             });
         }
+
+        @DisplayName("사용자 정보 DB에 저장에 실패했을 때")
+        @Test
+        public void fail_to_save_user_into_db() {
+            Assertions.assertThrows(RuntimeException.class, () -> {
+                authService.processKakaoLogin("save_user_to_db_fail");
+            });
+        }
     }
 
     private static class FakeOAuth2Service implements OAuth2Service {
@@ -46,6 +54,8 @@ class AuthServiceTest {
         public String getAccessToken(String code) {
             if (code.equals("login_success")) {
                 return "access_token";
+            } else if (code.equals("save_user_to_db_fail")) {
+                return "access_token.db_fail";
             }
             throw new RuntimeException("fail_to_retrieve_access_token");
         }
@@ -60,6 +70,14 @@ class AuthServiceTest {
                         .nickname("t")
                         .build();
             }
+            if (accessToken.equals("access_token.db_fail")) {
+                return KakaoUserInfo.builder()
+                        .id(1)
+                        .oAuthId(1L)
+                        .email("x@y")
+                        .nickname("db_fail")
+                        .build();
+            }
             throw new RuntimeException("fail_to_retrieve_user_info");
         }
     }
@@ -68,7 +86,9 @@ class AuthServiceTest {
 
         @Override
         public void saveMember(Member memberInfo) {
-
+            if ("db_fail".equals(memberInfo.getName())) {
+                throw new RuntimeException("fail_to_save_member");
+            }
         }
 
         @Override
