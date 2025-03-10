@@ -10,6 +10,8 @@ import org.swyp.weddy.domain.member.entity.Member;
 
 import java.util.Map;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 class AuthServiceTest {
     private AuthService authService;
 
@@ -24,6 +26,14 @@ class AuthServiceTest {
 
     @Nested
     class ProcessKakaoLoginTest {
+
+        @DisplayName("카카오 로그인에 성공한다")
+        @Test
+        public void success_kakao_login() {
+            TokenInfo tokenInfo = authService.processKakaoLogin("login_success");
+            assertThat(tokenInfo).isNotNull();
+        }
+
         @DisplayName("카카오 서버로부터 엑세스 토큰을 가져오지 못했을 때")
         @Test
         public void fail_to_retrieve_access_token_from_kakao_server() {
@@ -103,7 +113,7 @@ class AuthServiceTest {
 
         @Override
         public Member selectByOAuthId(String oAuthId) {
-            return null;
+            return new Member(1L, "x@y", "t", "", "");
         }
     }
 
@@ -111,7 +121,11 @@ class AuthServiceTest {
 
         @Override
         public TokenInfo generateToken(Authentication authentication) {
-            return null;
+            return new TokenInfo(
+                    "x",
+                    "y",
+                    "z"
+            );
         }
 
         @Override
