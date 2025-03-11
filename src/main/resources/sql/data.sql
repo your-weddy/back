@@ -22,8 +22,6 @@ INSERT INTO checklist (member_id, d_day, created_at, updated_at, is_deleted)
 VALUES (1, '2030-03-01 12:00:00', NOW(), NOW(), 0);
 
 -- 3. large_category_item 및 small_category_item 데이터 삽입
-
--- 3. large_category_item 및 small_category_item 데이터 삽입
 -- "결혼 준비 시작"
 INSERT INTO large_category_item (checklist_id, title, created_at, updated_at, is_deleted)
 VALUES (1, '결혼 준비 시작', NOW(), NOW(), 0);
