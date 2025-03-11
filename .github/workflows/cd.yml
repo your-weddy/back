@@ -63,7 +63,7 @@ jobs:
             [ -s "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh" ] && . "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh"
           
             cd /home/$EC2_USER/app
-            PID=\$(ps aux | grep '[j]ava.*-jar' | awk '{print \$2}')
+            PID=$(pgrep -f 'java.*weddy.*jar')
           
             if [ -n "\$PID" ]; then
               echo "Killing existing Java process: $PID"
@@ -88,7 +88,7 @@ jobs:
               --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > nohup.out 2>&1 &
           
             sleep 30
-            if ps aux | grep '[j]ava.*-jar'; then
+            if pgrep -f 'java.*weddy.*jar'; then
               echo "Application started successfully"
             else
               echo "Application failed to start"
