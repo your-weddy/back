@@ -86,13 +86,25 @@ jobs:
               --KAKAO_REDIRECT_URL="$KAKAO_REDIRECT_URL" \
               --AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
               --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > nohup.out 2>&1 &
+
+
+            echo "Checking if application starts..."
+            MAX_WAIT=180  
+            INTERVAL=10    
+            ELAPSED=0    
           
-            sleep 30
-            if pgrep -f 'java.*weddy.*jar'; then
-              echo "Application started successfully"
-            else
-              echo "Application failed to start"
-              cat nohup.out
-              exit 1
-            fi
+            while [ \$ELAPSED -lt \$MAX_WAIT ]; do
+              if pgrep -f 'java.*weddy.*jar' > /dev/null; then
+                echo "Application started successfully after \$ELAPSED seconds"
+                exit 0
+              fi
+              sleep \$INTERVAL
+              ELAPSED=\$((ELAPSED + INTERVAL))
+              echo "Waited \$ELAPSED seconds..."
+            done
+          
+            echo "Application failed to start within 180 seconds"
+            cat nohup.out
+            exit 1
+          
           EOF
