@@ -23,7 +23,6 @@ public interface SmallCatApiSpec {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "목록 조회 성공", content = @Content(schema = @Schema(implementation = SmallCatItemPreviewResponse.class))),
             @ApiResponse(responseCode = "400", description = "잘못된 요청 파라미터", content = @Content),
-            @ApiResponse(responseCode = "404", description = "체크리스트 또는 대분류를 찾을 수 없음", content = @Content)
     })
     ResponseEntity<List<SmallCatItemPreviewResponse>> getSmallCatItemList(
             @Parameter(description = "체크리스트 ID", required = true, example = "1") Long checklistId,
@@ -43,7 +42,8 @@ public interface SmallCatApiSpec {
     @Operation(summary = "소분류 항목 추가", description = "새로운 소분류 항목을 추가합니다.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "항목 추가 성공", content = @Content(schema = @Schema(implementation = Long.class))),
-            @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터", content = @Content)
+            @ApiResponse(responseCode = "400", description = "잘못된 요청 데이터", content = @Content),
+            @ApiResponse(responseCode = "500", description = "항목 추가 실패", content = @Content)
     })
     ResponseEntity<Long> postItem(
             @Parameter(description = "소분류 항목 추가 요청 데이터", required = true) SmallCatItemPostRequest request);
@@ -61,7 +61,7 @@ public interface SmallCatApiSpec {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "삭제 성공", content = @Content(schema = @Schema(implementation = Boolean.class))),
             @ApiResponse(responseCode = "400", description = "잘못된 요청 파라미터", content = @Content),
-            @ApiResponse(responseCode = "404", description = "항목을 찾을 수 없음", content = @Content)
+            @ApiResponse(responseCode = "500", description = "항목 삭제 실패", content = @Content)
     })
     ResponseEntity<Boolean> deleteItem(
             @Parameter(description = "체크리스트 ID", required = true, example = "1") Long checklistId,
@@ -72,7 +72,7 @@ public interface SmallCatApiSpec {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "전체 삭제 성공", content = @Content(schema = @Schema(implementation = Boolean.class))),
             @ApiResponse(responseCode = "400", description = "잘못된 요청 파라미터", content = @Content),
-            @ApiResponse(responseCode = "404", description = "체크리스트 또는 대분류를 찾을 수 없음", content = @Content)
+            @ApiResponse(responseCode = "500", description = "항목 삭제 실패", content = @Content)
     })
     ResponseEntity<Boolean> deleteAllItems(
             @Parameter(description = "체크리스트 ID", required = true, example = "1") Long checklistId,
