@@ -85,7 +85,7 @@ jobs:
               --KAKAO_CLIENT_ID="$KAKAO_CLIENT_ID" \
               --KAKAO_REDIRECT_URL="$KAKAO_REDIRECT_URL" \
               --AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
-              --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > nohup.out 2>&1 &
+              --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > /dev/null 2>&1 &
 
 
             echo "Checking if application starts..."
@@ -104,7 +104,6 @@ jobs:
             done
           
             echo "Application failed to start within 180 seconds"
-            cat nohup.out
             exit 1
           
           EOF
