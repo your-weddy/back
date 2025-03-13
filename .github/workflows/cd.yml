@@ -63,11 +63,11 @@ jobs:
             [ -s "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh" ] && . "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh"
           
             cd /home/$EC2_USER/app
-            PID=$(pgrep -f 'java.*weddy.*jar')
+            PID=\$(pgrep -f 'java.*weddy.*jar')
           
-            if [ -n "$PID" ]; then
-              echo "Killing existing Java process: $PID"
-              kill -9 $PID
+            if [ -n "\$PID" ]; then
+              echo "Killing existing Java process: \$PID"
+              kill -9 \$PID
               sleep 1
           
               echo "Checking if application is killed..."
@@ -75,19 +75,19 @@ jobs:
               INTERVAL=3    
               ELAPSED=0    
             
-              while [ $ELAPSED -lt $MAX_WAIT ]; do
+              while [ \$ELAPSED -lt \$MAX_WAIT ]; do
                 if pgrep -f 'java.*weddy.*jar' > /dev/null; then
-                  echo "Waiting for process $PID to terminate... ($ELAPSED seconds elapsed)"
-                  sleep $INTERVAL
+                  echo "Waiting for process \$PID to terminate... (\$ELAPSED seconds elapsed)"
+                  sleep \$INTERVAL
                   ELAPSED=$((ELAPSED + INTERVAL))
                 else
-                  echo "Process $PID terminated successfully after $ELAPSED seconds"
+                  echo "Process \$PID terminated successfully after \$ELAPSED seconds"
                   break
                 fi
               done
               
-              if [ $ELAPSED -ge $MAX_WAIT ]; then
-                echo "Error: Process $PID did not terminate within $MAX_WAIT seconds"
+              if [ \$ELAPSED -ge \$MAX_WAIT ]; then
+                echo "Error: Process \$PID did not terminate within \$MAX_WAIT seconds"
                 exit 1
               fi
             else
@@ -122,7 +122,7 @@ jobs:
                 exit 0
               fi
               sleep \$INTERVAL
-              ELAPSED=\$((ELAPSED + INTERVAL))
+              ELAPSED=$((ELAPSED + INTERVAL))
               echo "Waited \$ELAPSED seconds..."
             done
           
