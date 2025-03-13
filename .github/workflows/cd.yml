@@ -63,6 +63,7 @@ jobs:
             [ -s "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh" ] && . "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh"
           
             cd /home/$EC2_USER/app
+            echo "Checking for running Java processes..."
             PID=\$(pgrep -f 'java.*weddy.*jar')
           
             if [ -n "\$PID" ]; then
