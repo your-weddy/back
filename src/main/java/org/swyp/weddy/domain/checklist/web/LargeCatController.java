@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/checklist/large-cat-item")
-public class LargeCatController {
+public class LargeCatController implements LargeCatApiSpec {
     private final LargeCatService largeCatService;
     private final ChecklistService checklistService;
     private final FilteringService filteringService;
@@ -47,19 +47,20 @@ public class LargeCatController {
     @GetMapping
     public ResponseEntity<List<LargeCatItemResponse>> getAllItems(
             @RequestParam(name = "memberId") String memberId,
-            @RequestParam(name = "itemStatuses", required = false, defaultValue = "") String itemStatuses
+            @RequestParam(name = "itemStatuses", required = false, defaultValue = "") String itemStatuses,
+            @RequestParam(name = "itemAssignees", required = false, defaultValue = "") String itemAssignees
     ) {
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistResponse checklist = checklistService.findChecklist(dto);
 
         Long checklistId = checklist.getId();
-        if (itemStatuses.equals("")) {
+        if (itemStatuses.equals("") && itemAssignees.equals("")) {
             List<LargeCatItemResponse> allItems = largeCatService.findAllItems(checklistId);
             return ResponseEntity.ok().body(allItems);
         }
 
-        List<LargeCatItemResponse> allItems = filteringService.filterByStatus(
-                FilterByStatusDto.from(checklistId, itemStatuses)
+        List<LargeCatItemResponse> allItems = filteringService.filterBy(
+                FilteringDto.of(checklistId, itemStatuses, itemAssignees)
         );
         return ResponseEntity.ok().body(allItems);
     }

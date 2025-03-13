@@ -19,5 +19,5 @@ public interface SmallCatService {
     boolean deleteAll(Long checklistId, Long largeCatItemId);
     boolean moveItem(SmallCatItemMoveDto dto);
 
-    List<SmallCatItemPreviewResponse> findItemPreviewsByStatus(SmallCatItemSelectDto smallDto);
+    List<SmallCatItemPreviewResponse> findItemPreviewsBy(SmallCatItemSelectDto smallDto);
 }
