@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "file-storage", description = "파일 저장소 API")
-public interface FileStorageApiSpec {
+public interface StorageApiSpec {
 
     @Operation(summary = "파일 업로드", description = "새로운 파일을 업로드하고 파일 URL을 반환합니다.")
     @ApiResponses(value = {

@@ -23,12 +23,12 @@ import java.time.Duration;
 
 @Slf4j
 @Service
-public class FileStorageService {
+public class StorageService {
     private final S3Client s3Client;
     private final S3Presigner s3Presigner;
     private final String bucketName;
 
-    public FileStorageService(S3Client s3Client, S3Presigner s3Presigner, @Value("${aws.s3.bucket}") String bucketName) {
+    public StorageService(S3Client s3Client, S3Presigner s3Presigner, @Value("${aws.s3.bucket}") String bucketName) {
         this.s3Client = s3Client;
         this.s3Presigner = s3Presigner;
         this.bucketName = bucketName;

@@ -23,18 +23,18 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-class FileStorageServiceTest {
+class StorageServiceTest {
     private S3Client s3Client;
     private S3Presigner s3Presigner;
     private String bucketName;
-    private FileStorageService fileStorageService;
+    private StorageService storageService;
 
     @BeforeEach
     void setUp() {
         s3Client = mock(S3Client.class);
         s3Presigner = mock(S3Presigner.class);
         bucketName = "mockName";
-        fileStorageService = new FileStorageService(s3Client, s3Presigner, bucketName);
+        storageService = new StorageService(s3Client, s3Presigner, bucketName);
     }
 
     @Nested
@@ -61,7 +61,7 @@ class FileStorageServiceTest {
             when(s3Presigner.presignGetObject(any(GetObjectPresignRequest.class))).thenReturn(presignedRequest);
 
             //when
-            String result = fileStorageService.uploadFile(mockFile);
+            String result = storageService.uploadFile(mockFile);
 
             //then
             assertThat(result).isNotNull();
@@ -77,7 +77,7 @@ class FileStorageServiceTest {
                     .thenThrow(new RuntimeException("S3 delete failed"));
 
             // when, then
-            assertThatThrownBy(() -> fileStorageService.deleteFile(fileUrl))
+            assertThatThrownBy(() -> storageService.deleteFile(fileUrl))
                     .isInstanceOf(FileDeleteException.class) ;
             verify(s3Client, times(1)).deleteObject(any(DeleteObjectRequest.class));
         }
@@ -94,7 +94,7 @@ class FileStorageServiceTest {
             when(s3Client.deleteObject(any(DeleteObjectRequest.class))).thenReturn(null);
 
             // when
-            fileStorageService.deleteFile(fileUrl);
+            storageService.deleteFile(fileUrl);
 
             // then
             verify(s3Client, times(1)).deleteObject(any(DeleteObjectRequest.class));
@@ -109,7 +109,7 @@ class FileStorageServiceTest {
                     .thenThrow(new RuntimeException("S3 delete failed"));
 
             // when, then
-            assertThatThrownBy(()-> fileStorageService.deleteFile(fileUrl))
+            assertThatThrownBy(()-> storageService.deleteFile(fileUrl))
                     .isInstanceOf(FileDeleteException.class);
             verify(s3Client, times(1)).deleteObject(any(DeleteObjectRequest.class));
         }

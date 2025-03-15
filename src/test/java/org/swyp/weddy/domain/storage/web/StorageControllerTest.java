@@ -5,18 +5,18 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-import org.swyp.weddy.domain.storage.service.FileStorageService;
+import org.swyp.weddy.domain.storage.service.StorageService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
-class FileControllerTest {
-    private FileController fileController;
-    private FileStorageService fileStorageService;
+class StorageControllerTest {
+    private StorageController storageController;
+    private StorageService storageService;
     @BeforeEach
     void setUp() {
-        fileStorageService = mock(FileStorageService.class);
-        fileController = new FileController(fileStorageService);
+        storageService = mock(StorageService.class);
+        storageController = new StorageController(storageService);
     }
 
     @DisplayName("파일 업로드를 요청을 받을 수 있다")
@@ -24,14 +24,14 @@ class FileControllerTest {
     void upload_file() {
         //given
         MultipartFile mockMultipartFile = new MockMultipartFile("mock", "test".getBytes());
-        when(fileStorageService.uploadFile(mockMultipartFile)).thenReturn("test-url");
+        when(storageService.uploadFile(mockMultipartFile)).thenReturn("test-url");
 
         //when
-        var result = fileController.uploadFile(mockMultipartFile);
+        var result = storageController.uploadFile(mockMultipartFile);
 
         //then
         assertEquals(200, result.getStatusCodeValue());
-        verify(fileStorageService, times(1)).uploadFile(mockMultipartFile);
+        verify(storageService, times(1)).uploadFile(mockMultipartFile);
 
     }
 
@@ -41,9 +41,9 @@ class FileControllerTest {
         //given
         String mockFileUrl = "test-url";
         //when
-        fileStorageService.deleteFile(mockFileUrl);
+        storageService.deleteFile(mockFileUrl);
         //then
-        verify(fileStorageService, times(1)).deleteFile(mockFileUrl);
+        verify(storageService, times(1)).deleteFile(mockFileUrl);
 
     }
 }
