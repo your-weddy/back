@@ -17,7 +17,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("checklist/large-cat-item/small-cat-Item")
-public class SmallCatController {
+public class SmallCatController implements SmallCatApiSpec{
 
     private final SmallCatService smallCatService;
 
