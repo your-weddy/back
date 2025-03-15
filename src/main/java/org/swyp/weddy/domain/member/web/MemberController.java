@@ -10,7 +10,7 @@ import org.swyp.weddy.domain.member.web.response.MemberResponse;
 
 @RestController
 @RequestMapping("/member")
-public class MemberController {
+public class MemberController implements MemberApiSpec {
     private final MemberService memberService;
 
     public MemberController(MemberService memberService) {
