@@ -7,7 +7,7 @@ import org.swyp.weddy.domain.storage.service.FileStorageService;
 
 @RestController
 @RequestMapping("/api/files")
-public class FileController {
+public class FileController implements FileStorageApiSpec {
     private final FileStorageService storageService;
 
     public FileController(FileStorageService storageService) {
