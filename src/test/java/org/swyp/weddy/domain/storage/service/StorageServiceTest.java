@@ -27,14 +27,14 @@ class StorageServiceTest {
     private S3Client s3Client;
     private S3Presigner s3Presigner;
     private String bucketName;
-    private StorageService storageService;
+    private StorageServiceImpl storageService;
 
     @BeforeEach
     void setUp() {
         s3Client = mock(S3Client.class);
         s3Presigner = mock(S3Presigner.class);
         bucketName = "mockName";
-        storageService = new StorageService(s3Client, s3Presigner, bucketName);
+        storageService = new StorageServiceImpl(s3Client, s3Presigner, bucketName);
     }
 
     @Nested

@@ -5,17 +5,17 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
-import org.swyp.weddy.domain.storage.service.StorageService;
+import org.swyp.weddy.domain.storage.service.StorageServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 class StorageControllerTest {
     private StorageController storageController;
-    private StorageService storageService;
+    private StorageServiceImpl storageService;
     @BeforeEach
     void setUp() {
-        storageService = mock(StorageService.class);
+        storageService = mock(StorageServiceImpl.class);
         storageController = new StorageController(storageService);
     }
 
