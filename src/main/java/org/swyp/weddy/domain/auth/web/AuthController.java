@@ -22,7 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthApiSpec {
 
     @Value("${app.home-page-url}")
     private String HOME_PAGE_URL;
