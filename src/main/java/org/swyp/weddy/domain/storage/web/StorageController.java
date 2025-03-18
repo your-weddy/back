@@ -3,14 +3,14 @@ package org.swyp.weddy.domain.storage.web;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.swyp.weddy.domain.storage.service.FileStorageService;
+import org.swyp.weddy.domain.storage.service.StorageServiceImpl;
 
 @RestController
 @RequestMapping("/api/files")
-public class FileController {
-    private final FileStorageService storageService;
+public class StorageController implements StorageApiSpec {
+    private final StorageServiceImpl storageService;
 
-    public FileController(FileStorageService storageService) {
+    public StorageController(StorageServiceImpl storageService) {
         this.storageService = storageService;
     }
 
