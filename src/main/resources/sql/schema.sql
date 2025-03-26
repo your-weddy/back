@@ -74,3 +74,8 @@ ALTER TABLE `small_category_item`
 
 ALTER TABLE `small_category_item`
     ADD FOREIGN KEY (`assignee_id`) REFERENCES `small_category_item_assignee` (`id`);
+
+-- 인덱스 추가
+CREATE INDEX idx_checklist_del_seq ON large_category_item(checklist_id, is_deleted, sequence);
+
+CREATE INDEX idx_large_del_seq ON small_category_item(large_category_item_id, is_deleted, sequence);
