@@ -74,3 +74,5 @@ ALTER TABLE `small_category_item`
 
 ALTER TABLE `small_category_item`
     ADD FOREIGN KEY (`assignee_id`) REFERENCES `small_category_item_assignee` (`id`);
+
+CREATE index idx_oauth_id ON member(oauth_id);
