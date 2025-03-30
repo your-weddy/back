@@ -2,7 +2,6 @@ package org.swyp.weddy.domain.checklist.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 import org.swyp.weddy.domain.checklist.service.ChecklistService;
 import org.swyp.weddy.domain.checklist.service.FilteringService;
@@ -54,20 +53,9 @@ public class LargeCatController implements LargeCatApiSpec {
         ChecklistDto dto = ChecklistDto.from(memberId);
         ChecklistResponse checklist = checklistService.findChecklist(dto);
 
-        StopWatch stopWatch = new StopWatch();
-        stopWatch.start();
-
         Long checklistId = checklist.getId();
         if (itemStatuses.equals("") && itemAssignees.equals("")) {
             List<LargeCatItemResponse> allItems = largeCatService.findAllItems(checklistId);
-
-            stopWatch.stop();
-
-            System.out.println("Execution time: " + stopWatch.getTotalTimeMillis() + " ms");
-            // 또는 더 자세한 출력
-            log.debug(stopWatch.prettyPrint());
-            System.out.println(stopWatch.prettyPrint());
-
             return ResponseEntity.ok().body(allItems);
         }
 
