@@ -11,6 +11,8 @@ import java.util.List;
 public interface SmallCatService {
 
     List<SmallCatItemPreviewResponse> findItemPreviews(Long checklistId, Long largeCatItemId);
+
+    List<SmallCatItemPreviewResponse> findItemPreviewsByChecklistId(Long checklistId);
     SmallCatItemResponse findItem(Long checklistId, Long largeCatItemId, Long smallCatItemId);
 
     Long addItem(SmallCatItemDto dto);

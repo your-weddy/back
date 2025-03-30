@@ -117,15 +117,14 @@ public class LargeCatServiceImpl implements LargeCatService {
             throw new LargeCatItemNotExistsException(ErrorCode.NOT_EXISTS);
         }
 
+        List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviewsByChecklistId(checklistId);
+
         List<LargeCatItemResponse> result = new ArrayList<>();
         for (LargeCatItem item : allItems) {
-            List<SmallCatItemPreviewResponse> itemPreviews = smallCatService.findItemPreviews(
-                    checklistId, item.getId()
-            );
-
-            LargeCatItemResponse itemWithSmallItems = LargeCatItemResponse.from(item).withSmallCatItems(itemPreviews);
+            LargeCatItemResponse itemWithSmallItems = LargeCatItemResponse.from(item).withAllSmallCatItems(itemPreviews);
             result.add(itemWithSmallItems);
         }
+
 
         return result;
     }
