@@ -4,6 +4,7 @@ import org.swyp.weddy.domain.checklist.entity.LargeCatItem;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LargeCatItemResponse {
     private Long id;
@@ -28,6 +29,13 @@ public class LargeCatItemResponse {
 
     public LargeCatItemResponse withSmallCatItems(List<SmallCatItemPreviewResponse> smallCatItems) {
         this.smallCatItems = smallCatItems != null ? smallCatItems : Collections.emptyList();
+        return this;
+    }
+
+    public LargeCatItemResponse withAllSmallCatItems(List<SmallCatItemPreviewResponse> smallCatItems) {
+        this.smallCatItems = smallCatItems.stream()
+                .filter(item -> item.getLargeCatItemId().equals(this.id))
+                .collect(Collectors.toList());
         return this;
     }
 

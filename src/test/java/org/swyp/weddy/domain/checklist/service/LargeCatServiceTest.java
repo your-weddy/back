@@ -206,6 +206,11 @@ class LargeCatServiceTest {
         }
 
         @Override
+        public List<SmallCatItemPreviewResponse> findItemPreviewsByChecklistId(Long checklistId) {
+            return List.of();
+        }
+
+        @Override
         public SmallCatItemResponse findItem(Long checklistId, Long largeCatItemId, Long smallCatItemId) {
             return null;
         }

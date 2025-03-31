@@ -13,6 +13,7 @@ public interface SmallCatMapper {
 
     List<SmallCatItemPreview> selectItemPreviews(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId);
     List<SmallCatItemPreview> selectItemPreviewsBy(SmallCatItemSelectDto dto);
+    List<SmallCatItemPreview> findItemPreviewsByChecklistId(@Param("checklistId")Long checklistId);
     SmallCatItem selectItem(@Param("checklistId")Long checklistId, @Param("largeCatItemId")Long largeCatItemId, @Param("smallCatItemId")Long smallCatItemId);
     Long insertItem(SmallCatItem smallCatItem);
 
