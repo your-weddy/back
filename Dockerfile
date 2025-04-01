@@ -1,19 +1,12 @@
-FROM eclipse-temurin:21-jdk
-
+# 빌드 단계
+FROM eclipse-temurin:21-jdk AS builder
 WORKDIR /back
-
-# 프로젝트 소스 복사
 COPY . .
+RUN ./gradlew clean build
 
-# Gradle 캐시 최적화를 위해 Gradle Wrapper 실행 권한 부여
-RUN chmod +x gradlew
-
-# 프로젝트 빌드 (bootJar 실행)
-RUN ./gradlew clean bootJar
-
-# 빌드된 JAR 파일을 app.jar로 복사
-RUN cp build/libs/*.jar app.jar
-
+# 실행 단계
+FROM eclipse-temurin:21-jre
+WORKDIR /back
+COPY --from=builder /back/build/libs/weddy-0.0.1-SNAPSHOT.jar /back/weddy.jar
 EXPOSE 8080
-
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
+CMD ["java", "-Dspring.profiles.active=local", "-jar", "weddy.jar"]
