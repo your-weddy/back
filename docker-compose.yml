@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  app:
+    # 이미지 이름 설정
+    image: weddy:latest
+    build:
+      context: .
+      dockerfile: Dockerfile-prod # 개발환경시 Dockerfile-dev로 설정
+    ports:
+      - "8080:8080"
+    # 서비스 간 의존성 설정(mysql 서비스 실행 후 실행)
+    depends_on: 
+      mysql: 
+        condition: service_healthy
+    # 환경변수 설정
+    env_file: 
+      - .env
+
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DBNAME}
+      - MYSQL_USER=${MYSQL_USERNAME}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "3306:3306"
+    # DB데이터 저장 설정 - 볼륨
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
