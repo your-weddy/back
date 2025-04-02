@@ -1,0 +1,6 @@
+mysql-data/
+.git/
+.gradle/
+build/
+*.md
+.env 
