@@ -3,6 +3,7 @@ services:
   app:
     # 이미지 이름 설정
     image: weddy:latest
+    # 빌드 설정이 있으면 해당설정으로 이미지를 만든다. 없을 경우 Doker Hub에서 이미지 가져옴.
     build:
       context: .
       dockerfile: Dockerfile-prod # 개발환경시 Dockerfile-dev로 설정
