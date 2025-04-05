@@ -3,4 +3,5 @@ mysql-data/
 .gradle/
 build/
 *.md
-.env 
+.env
+.idea
