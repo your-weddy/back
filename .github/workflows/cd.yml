@@ -1,133 +1,133 @@
-name: Deploy to EC2
-
-on:
-  push:
-    branches:
-      - main
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
-        with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Build with Gradle
-        run: ./gradlew clean build
-
-      - name: Prepare SSH Key
-        env:
-          EC2_KEY: ${{ secrets.EC2_KEY }}
-        run: |
-          echo "$EC2_KEY" > weddy-key.pem
-          chmod 400 weddy-key.pem
-
-      - name: Copy JAR to EC2
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-        run: |
-          ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST "rm -f /home/$EC2_USER/app/*.jar"
-          echo "Starting rsync transfer..."
-          rsync -avz --progress -e "ssh -i weddy-key.pem -o StrictHostKeyChecking=no" ./build/libs/weddy-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/app/ || { echo "rsync failed"; exit 1; }
-          echo "rsync completed"
-
-      - name: Deploy to EC2
-        env:
-          EC2_HOST: ${{ secrets.EC2_HOST }}
-          EC2_USER: ${{ secrets.EC2_USER }}
-          MYSQL_URL: ${{ secrets.MYSQL_URL }}
-          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
-          MYSQL_DBNAME: ${{ secrets.MYSQL_DBNAME }}
-          MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
-          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-          AUTHORIZE_URIS: ${{ secrets.AUTHORIZE_URIS }}
-          CORS_URIS: ${{ secrets.CORS_URIS }}
-          LOGIN_PAGE_URL: ${{ secrets.LOGIN_PAGE_URL }}
-          HOME_PAGE_URL: ${{ secrets.HOME_PAGE_URL }}
-          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
-          KAKAO_REDIRECT_URL: ${{ secrets.KAKAO_REDIRECT_URL }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_ACCESS_KEY_SECRET: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
-        run: |
-          ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
-          
-            # SDKMAN 환경 로드
-            [ -s "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh" ] && . "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh"
-          
-            cd /home/$EC2_USER/app
-            echo "Checking for running Java processes..."
-            PID=\$(pgrep -f 'java.*weddy.*jar')
-          
-            if [ -n "\$PID" ]; then
-              echo "Killing existing Java process: \$PID"
-              kill -9 \$PID
-              sleep 1
-          
-              echo "Checking if application is killed..."
-              MAX_WAIT=30  
-              INTERVAL=3    
-              ELAPSED=0    
-            
-              while [ \$ELAPSED -lt \$MAX_WAIT ]; do
-                if pgrep -f 'java.*weddy.*jar' > /dev/null; then
-                  echo "Waiting for process \$PID to terminate... (\$ELAPSED seconds elapsed)"
-                  sleep \$INTERVAL
-                  ELAPSED=$((ELAPSED + INTERVAL))
-                else
-                  echo "Process \$PID terminated successfully after \$ELAPSED seconds"
-                  break
-                fi
-              done
-              
-              if [ \$ELAPSED -ge \$MAX_WAIT ]; then
-                echo "Error: Process \$PID did not terminate within \$MAX_WAIT seconds"
-                exit 1
-              fi
-            else
-              echo "No existing Java process found."
-            fi
-          
-            nohup java -Dspring.profiles.active=prod -jar weddy-0.0.1-SNAPSHOT.jar \
-              --MYSQL_URL="$MYSQL_URL" \
-              --MYSQL_PORT="$MYSQL_PORT" \
-              --MYSQL_DBNAME="$MYSQL_DBNAME" \
-              --MYSQL_USERNAME="$MYSQL_USERNAME" \
-              --MYSQL_PASSWORD="$MYSQL_PASSWORD" \
-              --JWT_SECRET="$JWT_SECRET" \
-              --AUTHORIZE_URIS="$AUTHORIZE_URIS" \
-              --CORS_URIS="$CORS_URIS" \
-              --LOGIN_PAGE_URL="$LOGIN_PAGE_URL" \
-              --HOME_PAGE_URL="$HOME_PAGE_URL" \
-              --KAKAO_CLIENT_ID="$KAKAO_CLIENT_ID" \
-              --KAKAO_REDIRECT_URL="$KAKAO_REDIRECT_URL" \
-              --AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
-              --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > /dev/null 2>&1 &
-
-
-            echo "Checking if application starts..."
-            MAX_WAIT=180  
-            INTERVAL=10    
-            ELAPSED=0    
-          
-            while [ \$ELAPSED -lt \$MAX_WAIT ]; do
-              if pgrep -f 'java.*weddy.*jar' > /dev/null; then
-                echo "Application started successfully after \$ELAPSED seconds"
-                exit 0
-              fi
-              sleep \$INTERVAL
-              ELAPSED=$((ELAPSED + INTERVAL))
-              echo "Waited \$ELAPSED seconds..."
-            done
-          
-            echo "Application failed to start within 180 seconds"
-            exit 1
-          
-          EOF
+#name: Deploy to EC2
+#
+#on:
+#  push:
+#    branches:
+#      - main
+#
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up JDK 21
+#        uses: actions/setup-java@v4
+#        with:
+#          java-version: '21'
+#          distribution: 'temurin'
+#
+#      - name: Build with Gradle
+#        run: ./gradlew clean build
+#
+#      - name: Prepare SSH Key
+#        env:
+#          EC2_KEY: ${{ secrets.EC2_KEY }}
+#        run: |
+#          echo "$EC2_KEY" > weddy-key.pem
+#          chmod 400 weddy-key.pem
+#
+#      - name: Copy JAR to EC2
+#        env:
+#          EC2_HOST: ${{ secrets.EC2_HOST }}
+#          EC2_USER: ${{ secrets.EC2_USER }}
+#        run: |
+#          ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST "rm -f /home/$EC2_USER/app/*.jar"
+#          echo "Starting rsync transfer..."
+#          rsync -avz --progress -e "ssh -i weddy-key.pem -o StrictHostKeyChecking=no" ./build/libs/weddy-0.0.1-SNAPSHOT.jar $EC2_USER@$EC2_HOST:/home/$EC2_USER/app/ || { echo "rsync failed"; exit 1; }
+#          echo "rsync completed"
+#
+#      - name: Deploy to EC2
+#        env:
+#          EC2_HOST: ${{ secrets.EC2_HOST }}
+#          EC2_USER: ${{ secrets.EC2_USER }}
+#          MYSQL_URL: ${{ secrets.MYSQL_URL }}
+#          MYSQL_PORT: ${{ secrets.MYSQL_PORT }}
+#          MYSQL_DBNAME: ${{ secrets.MYSQL_DBNAME }}
+#          MYSQL_USERNAME: ${{ secrets.MYSQL_USERNAME }}
+#          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+#          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+#          AUTHORIZE_URIS: ${{ secrets.AUTHORIZE_URIS }}
+#          CORS_URIS: ${{ secrets.CORS_URIS }}
+#          LOGIN_PAGE_URL: ${{ secrets.LOGIN_PAGE_URL }}
+#          HOME_PAGE_URL: ${{ secrets.HOME_PAGE_URL }}
+#          KAKAO_CLIENT_ID: ${{ secrets.KAKAO_CLIENT_ID }}
+#          KAKAO_REDIRECT_URL: ${{ secrets.KAKAO_REDIRECT_URL }}
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+#          AWS_ACCESS_KEY_SECRET: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
+#        run: |
+#          ssh -i weddy-key.pem -o StrictHostKeyChecking=no $EC2_USER@$EC2_HOST << EOF
+#
+#            # SDKMAN 환경 로드
+#            [ -s "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh" ] && . "/home/$EC2_USER/.sdkman/bin/sdkman-init.sh"
+#
+#            cd /home/$EC2_USER/app
+#            echo "Checking for running Java processes..."
+#            PID=\$(pgrep -f 'java.*weddy.*jar')
+#
+#            if [ -n "\$PID" ]; then
+#              echo "Killing existing Java process: \$PID"
+#              kill -9 \$PID
+#              sleep 1
+#
+#              echo "Checking if application is killed..."
+#              MAX_WAIT=30
+#              INTERVAL=3
+#              ELAPSED=0
+#
+#              while [ \$ELAPSED -lt \$MAX_WAIT ]; do
+#                if pgrep -f 'java.*weddy.*jar' > /dev/null; then
+#                  echo "Waiting for process \$PID to terminate... (\$ELAPSED seconds elapsed)"
+#                  sleep \$INTERVAL
+#                  ELAPSED=$((ELAPSED + INTERVAL))
+#                else
+#                  echo "Process \$PID terminated successfully after \$ELAPSED seconds"
+#                  break
+#                fi
+#              done
+#
+#              if [ \$ELAPSED -ge \$MAX_WAIT ]; then
+#                echo "Error: Process \$PID did not terminate within \$MAX_WAIT seconds"
+#                exit 1
+#              fi
+#            else
+#              echo "No existing Java process found."
+#            fi
+#
+#            nohup java -Dspring.profiles.active=prod -jar weddy-0.0.1-SNAPSHOT.jar \
+#              --MYSQL_URL="$MYSQL_URL" \
+#              --MYSQL_PORT="$MYSQL_PORT" \
+#              --MYSQL_DBNAME="$MYSQL_DBNAME" \
+#              --MYSQL_USERNAME="$MYSQL_USERNAME" \
+#              --MYSQL_PASSWORD="$MYSQL_PASSWORD" \
+#              --JWT_SECRET="$JWT_SECRET" \
+#              --AUTHORIZE_URIS="$AUTHORIZE_URIS" \
+#              --CORS_URIS="$CORS_URIS" \
+#              --LOGIN_PAGE_URL="$LOGIN_PAGE_URL" \
+#              --HOME_PAGE_URL="$HOME_PAGE_URL" \
+#              --KAKAO_CLIENT_ID="$KAKAO_CLIENT_ID" \
+#              --KAKAO_REDIRECT_URL="$KAKAO_REDIRECT_URL" \
+#              --AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" \
+#              --AWS_ACCESS_KEY_SECRET="$AWS_ACCESS_KEY_SECRET" > /dev/null 2>&1 &
+#
+#
+#            echo "Checking if application starts..."
+#            MAX_WAIT=180
+#            INTERVAL=10
+#            ELAPSED=0
+#
+#            while [ \$ELAPSED -lt \$MAX_WAIT ]; do
+#              if pgrep -f 'java.*weddy.*jar' > /dev/null; then
+#                echo "Application started successfully after \$ELAPSED seconds"
+#                exit 0
+#              fi
+#              sleep \$INTERVAL
+#              ELAPSED=$((ELAPSED + INTERVAL))
+#              echo "Waited \$ELAPSED seconds..."
+#            done
+#
+#            echo "Application failed to start within 180 seconds"
+#            exit 1
+#
+#          EOF
