@@ -3,7 +3,7 @@ name: CD Pipeline
 on:
   push:
     branches:
-      - issue-110
+      - main
 
 jobs:
   build-and-deploy:
