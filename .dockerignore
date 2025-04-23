@@ -4,4 +4,7 @@ mysql-data/
 build/
 *.md
 .env
-.idea
+.idea/
+.out/
+req.http
+LICENSE
