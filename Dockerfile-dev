@@ -1,13 +1,13 @@
 # 빌드 단계
 
 #베이스 이미지 생성. 도커 컨테이너를 특정 초기 이미지를 기반으로 세팅.
-FROM eclipse-temurin:21-jdk AS builder
+FROM eclipse-temurin:21-jdk-alpine AS builder
 WORKDIR /back
 COPY . .
 RUN ./gradlew clean build 
 
 # 실행 단계 
-FROM eclipse-temurin:21-jre
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /back
 COPY --from=builder /back/build/libs/weddy-0.0.1-SNAPSHOT.jar /back/weddy.jar 
 # 도커 컨테이너가 8080포트를 사용할 것임을 선언 
