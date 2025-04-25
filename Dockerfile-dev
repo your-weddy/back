@@ -1,16 +1,29 @@
 # 빌드 단계
-
-#베이스 이미지 생성. 도커 컨테이너를 특정 초기 이미지를 기반으로 세팅.
 FROM eclipse-temurin:21-jdk-alpine AS builder
 WORKDIR /back
-COPY . .
-RUN ./gradlew clean build 
+COPY gradlew .
+COPY gradle gradle
+COPY build.gradle settings.gradle ./
+RUN ./gradlew dependencies --no-daemon
 
-# 실행 단계 
+COPY src src
+RUN ./gradlew clean bootJar --no-daemon
+
+# JAR 레이어 추출 단계
+FROM eclipse-temurin:21-jre-alpine AS extractor
+WORKDIR /back
+COPY --from=builder /back/build/libs/weddy-0.0.1-SNAPSHOT.jar weddy.jar
+RUN java -Djarmode=layertools -jar weddy.jar extract
+
+
+# 실행 단계
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /back
-COPY --from=builder /back/build/libs/weddy-0.0.1-SNAPSHOT.jar /back/weddy.jar 
-# 도커 컨테이너가 8080포트를 사용할 것임을 선언 
-EXPOSE 8080 
-# 도커 컨테이너가 시작될 때 실행될 기본 명령어
-CMD ["java", "-Dspring.profiles.active=local", "-jar", "weddy.jar"]
+COPY --from=extractor /back/dependencies/ ./
+COPY --from=extractor /back/spring-boot-loader/ ./
+COPY --from=extractor /back/snapshot-dependencies/ ./
+COPY --from=extractor /back/application/ ./
+# 도커 컨테이너가 8080포트를 사용할 것임을 선언
+EXPOSE 8080
+# 도커 컨테이너가 시작될 때 실행될 고정 명령어
+ENTRYPOINT ["java", "-Dspring.profiles.active=local", "org.springframework.boot.loader.launch.JarLauncher"]
