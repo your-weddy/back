@@ -17,8 +17,8 @@ public class StorageConfig {
     private final String region;
 
     public StorageConfig(@Value("${aws.access-key-id}") String accessKey,
-                         @Value("${aws.secret-access-key}") String secretKey,
-                         @Value("${aws.region}") String region) {
+        @Value("${aws.secret-access-key}") String secretKey,
+        @Value("${aws.region}") String region) {
         this.accessKey = accessKey;
         this.secretKey = secretKey;
         this.region = region;
@@ -28,17 +28,17 @@ public class StorageConfig {
     public S3Client s3Client() {
         AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
         return S3Client.builder()
-                .region(Region.of(region))
-                .credentialsProvider(StaticCredentialsProvider.create(credentials))
-                .build();
+            .region(Region.of(region))
+            .credentialsProvider(StaticCredentialsProvider.create(credentials))
+            .build();
     }
 
     @Bean
     public S3Presigner s3Presigner() {
         AwsBasicCredentials credentials = AwsBasicCredentials.create(accessKey, secretKey);
         return S3Presigner.builder()
-                .region(Region.of(region))
-                .credentialsProvider(StaticCredentialsProvider.create(credentials))
-                .build();
+            .region(Region.of(region))
+            .credentialsProvider(StaticCredentialsProvider.create(credentials))
+            .build();
     }
 }

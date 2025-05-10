@@ -1,7 +1,9 @@
 mysql-data/
 .git/
-.gradle/
 build/
 *.md
 .env
-.idea
+.idea/
+.out/
+req.http
+LICENSE
